@@ -16,13 +16,20 @@ npm run web
 ```
 #### Backend
 ```
-Windows
+Windows#
 python -m venv venv   
 .\venv\Scripts\Activate
 
 
-linux
-python3 -m venv btpenv 
-source btpenv/bin/activate
+linux#
+python3 -m venv venv 
+source venv/bin/activate
+
+pip install -r requirements.txt
+
+
+Creating Model#
+python manage.py makemigrations
+python manage.py migrate
 
 ```
