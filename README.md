@@ -7,8 +7,12 @@ To know a person Hearing Loss, generally we use a Pure Tone Audiometer. To use t
 
 ### Local Dev
 ```
+
 cd audiometer
 npm i
 npm run web
+
+```
+
 
 ```
