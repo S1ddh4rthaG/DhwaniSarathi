@@ -3,9 +3,9 @@ from .models import User
 from .serializers import UserSerializer
 from django.http import JsonResponse
 from rest_framework.parsers import JSONParser
+from django.views.decorators.csrf import csrf_exempt
 
-
-
+@csrf_exempt
 def user_list(request):
     
     if(request.method == 'GET'):
