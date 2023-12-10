@@ -37,8 +37,10 @@ Intialize Db data/ Creating Models in DB
 python manage.py makemigrations
 python manage.py migrate
 
+
 Running server
 
+cd Audiobackend
 python manage.py runserver 192.168.1.5:80 
 ## here 192.168.1.5 is the server on which expo is running
 ```
