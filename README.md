@@ -16,6 +16,8 @@ npm run web
 ```
 #### Backend
 ```
+Create a Virtual Environment
+
 Windows#
 python -m venv venv   
 .\venv\Scripts\Activate
@@ -25,30 +27,41 @@ linux#
 python3 -m venv venv 
 source venv/bin/activate
 
+Install requirements
+
 pip install -r requirements.txt
 
+Intialize Db data/ Creating Models in DB
 
-Creating Model#
 python manage.py makemigrations
 python manage.py migrate
 
+Running server
+
+python manage.py runserver 192.168.1.5:80 
+## here 192.168.1.5 is the server on which expo is running
+
+
 ```
+### ADMIN
+
+USERNAME - admin
+PASSWORD - admin
 
 
+## Reference
 
-# Reference
-
-## Expo Router Example
+### Expo Router Example
 
 Use [`expo-router`](https://expo.github.io/router) to build native navigation using files in the `app/` directory.
 
-## 🚀 How to use
+### 🚀 How to use
 
 ```sh
 npx create-expo-app -e with-router
 ```
 
-## 📝 Notes
+### 📝 Notes
 
 - [Expo Router: Docs](https://expo.github.io/router)
 - [Expo Router: Repo](https://github.com/expo/router)
