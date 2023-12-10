@@ -9,13 +9,14 @@ To know a person Hearing Loss, generally we use a Pure Tone Audiometer. To use t
 
 #### Frontend
 ```
-cd audiometer
+cd Audiometernew
 npm i
 npm run web
-
 ```
 #### Backend
 ```
+cd backend
+
 Create a Virtual Environment
 
 Windows#
@@ -40,8 +41,6 @@ Running server
 
 python manage.py runserver 192.168.1.5:80 
 ## here 192.168.1.5 is the server on which expo is running
-
-
 ```
 ### ADMIN
 
