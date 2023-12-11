@@ -52,6 +52,6 @@ python manage.py migrate
 cd backend
 python manage.py runserver 192.168.1.5:80/192.168.1.5:8081 
 
-#here 192.168.1.5 is the server on which expo is running
+#here 192.168.1.5 is the ip address on which expo is running
 
 ```
