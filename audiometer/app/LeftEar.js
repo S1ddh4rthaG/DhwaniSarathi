@@ -12,7 +12,7 @@ const LeftEar = () => {
     <View style={styles.container}>
       <Text style={styles.title}>Left Ear</Text>
       <Image style={styles.image}
-        source={require('./assets/rightear.png')}
+        source={require('./assets/leftear.png')}
         resizeMode='cover'/>
       
       <TouchableOpacity style={styles.Button}>

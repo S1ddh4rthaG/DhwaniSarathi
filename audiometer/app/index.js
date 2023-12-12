@@ -11,6 +11,7 @@ import FillDetails from "./FillDetails";
 import BeforeYouStart from "./BeforeYouStart";
 import LeftEar from "./LeftEar";
 import Results from "./Results";
+import Login from "./Login"; 
 const Stack = createStackNavigator();
 
 // export default function Page() {
@@ -30,13 +31,13 @@ const Stack = createStackNavigator();
 
 function Page() {
   return (
-    <Stack.Navigator>
+    <Stack.Navigator initialRouteName="Login">
       <Stack.Screen
         name="Home"
-        component={LeftEar}
+        component={Home}
         options={{
           headerTitle: () => <Header name="Hertz hEARing Test" />,
-          headerTitleAlign: "left", // Center the header title
+          headerTitleAlign: "Signin", // Center the header title
           headerRight: () => (
             <View style={{ flexDirection: "row", alignItems: "center" }}>
               <TouchableOpacity style={{ marginRight: 15 }}>
@@ -54,8 +55,36 @@ function Page() {
           headerStyle: {
             
             height: 70,
-            borderBottomLeftRadius: 10,
-            borderBottomRightRadius: 10,
+            backgroundColor: "#D4AF37",
+            
+          },
+        }}
+      />
+
+
+    <Stack.Screen
+        name="Login"
+        component={Login}
+        options={{
+          headerTitle: () => <Header name="Login" />,
+          headerTitleAlign: "Signin", // Center the header title
+          headerRight: () => (
+            <View style={{ flexDirection: "row", alignItems: "center" }}>
+              {/* <TouchableOpacity style={{ marginRight: 15 }}>
+                <MaterialCommunityIcons
+                  style={styles.button}
+                  name="account-circle"
+                  size={28}
+                  color="black"
+                />
+              </TouchableOpacity> */}
+
+              {/* Additional icons or content for the right side */}
+            </View>
+          ),
+          headerStyle: {
+            
+            height: 70,
             backgroundColor: "#D4AF37",
             
           },
@@ -85,8 +114,6 @@ function Page() {
           headerStyle: {
             
             height: 70,
-            borderBottomLeftRadius: 10,
-            borderBottomRightRadius: 10,
             backgroundColor: "#D4AF37",
             
           },
@@ -116,8 +143,6 @@ function Page() {
           headerStyle: {
             
             height: 70,
-            borderBottomLeftRadius: 10,
-            borderBottomRightRadius: 10,
             backgroundColor: "#D4AF37",
             
           },
@@ -147,8 +172,6 @@ function Page() {
           headerStyle: {
             
             height: 70,
-            borderBottomLeftRadius: 10,
-            borderBottomRightRadius: 10,
             backgroundColor: "#D4AF37",
             
           },
@@ -178,8 +201,35 @@ function Page() {
           headerStyle: {
             
             height: 70,
-            borderBottomLeftRadius: 10,
-            borderBottomRightRadius: 10,
+            backgroundColor: "#D4AF37",
+            
+          },
+        }}
+      />
+
+    <Stack.Screen
+        name="Results"
+        component={Results}
+        options={{
+          headerTitle: () => <Header name="Hertz hEARing Test" />,
+          headerTitleAlign: "left", // Center the header title
+          headerRight: () => (
+            <View style={{ flexDirection: "row", alignItems: "center" }}>
+              <TouchableOpacity style={{ marginRight: 15 }}>
+                <MaterialCommunityIcons
+                  style={styles.button}
+                  name="account-circle"
+                  size={28}
+                  color="black"
+                />
+              </TouchableOpacity>
+
+              {/* Additional icons or content for the right side */}
+            </View>
+          ),
+          headerStyle: {
+            
+            height: 70,
             backgroundColor: "#D4AF37",
             
           },
