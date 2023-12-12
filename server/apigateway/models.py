@@ -13,10 +13,12 @@ class LoginInfo(models.Model):
     
 class User(models.Model):
     UID = models.CharField(primary_key=True, max_length=100, default=uuid.uuid4)
-    username = models.CharField(max_length=100, unique=True)
+    UserName = models.CharField(max_length=100, unique=True)
+    Age = models.IntegerField(default=0)
+    Gender = models.CharField(max_length=10,default="male")
 
     def __str__(self):
-        return self.username
+        return self.UserName
     
 class Educator(models.Model):
     EID = models.CharField(primary_key=True, max_length=100, default=uuid.uuid4)
@@ -38,7 +40,8 @@ class Classroom(models.Model):
 class Assignment(models.Model):
     AID = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     CID = models.ForeignKey('Classroom', on_delete=models.CASCADE)
-    Deadline = models.DateTimeField(default=timezone.now)
+    AssignmentName = models.CharField(max_length=100 , default="Sample Assignment")
+    Deadline = models.DateTimeField(default= (timezone.now()+timezone.timedelta(days=7)).strftime('%Y-%m-%d %H:%M:%S%z'))
 
     def __str__(self):
         return f"Assignment {self.AID} in Classroom {self.CID}"
