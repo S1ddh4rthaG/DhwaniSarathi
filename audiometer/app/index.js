@@ -1,22 +1,26 @@
 import { StyleSheet, Text, View } from "react-native";
-import Signin from './Signin';
-import Home from './Home';
+import { NavigationContainer } from "@react-navigation/native";
+import { createStackNavigator } from "@react-navigation/stack";
+import Signin from "./Signin";
+import Home from "./Home";
 import FillDetails from "./FillDetails";
 import BeforeYouStart from "./BeforeYouStart";
 import RightEar from "./RightEar";
 import LeftEar from "./LeftEar";
 import Results from "./Results";
+const stack = createStackNavigator();
+
 export default function Page() {
   return (
-    // <View style={styles.container}>
-    //   <View style={styles.main}>
-    //     <Text style={styles.title}>Hello World</Text>
-    //     <Text style={styles.subtitle}>This is the first page of your app.</Text>
-    //   </View>
-    // </View>
-    <View style={{ flex: 1 }}>
-      <Results />
-    </View>
+    <NavigationContainer independent={true}>
+      <stack.Navigator initialRouteName="Signin">
+        <stack.Screen
+          name="Signin"
+          component={Signin}
+          options={{ headerShown: false }}
+        />
+      </stack.Navigator>
+    </NavigationContainer>
   );
 }
 

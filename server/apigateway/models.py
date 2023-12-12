@@ -1,5 +1,9 @@
 import uuid
 from django.db import models
+from django.db import models
+from django.db.models import JSONField
+from django.utils import timezone
+
 
 class User(models.Model):
     UID = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
@@ -28,7 +32,25 @@ class Classroom(models.Model):
 class Assignment(models.Model):
     AID = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     CID = models.ForeignKey('Classroom', on_delete=models.CASCADE)
-    Timestamp = models.DateTimeField(auto_now_add=True)
+    Deadline = models.DateTimeField(default=timezone.now)
 
     def __str__(self):
         return f"Assignment {self.AID} in Classroom {self.CID}"
+    
+class UserAssignmentResults(models.Model):
+    AID = models.ForeignKey(Assignment, on_delete=models.CASCADE)
+    UID = models.ForeignKey(User, on_delete=models.CASCADE)
+    CID = models.ForeignKey(Classroom, on_delete=models.CASCADE)
+    Timestamp = models.DateTimeField(auto_now_add=True)
+    Results = JSONField()  # Field changed to JSONField for storing JSON objects
+
+    def __str__(self):
+        return f"User: {self.UID} - Assignment: {self.AID}"
+
+class UserOnlyResults(models.Model):
+    UID = models.ForeignKey(User, on_delete=models.CASCADE)
+    Timestamp = models.DateTimeField(auto_now_add=True)
+    Results = JSONField()  # Field changed to JSONField for storing JSON objects
+
+    def __str__(self):
+        return f"User: {self.UID} - Timestamp: {self.Timestamp}"
