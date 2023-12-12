@@ -1,3 +1,4 @@
+
 import React from "react";
 import { StyleSheet, View, TouchableOpacity } from "react-native";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
@@ -9,11 +10,12 @@ import Signin from "./Signin";
 import FillDetails from "./FillDetails";
 import BeforeYouStart from "./BeforeYouStart";
 import LeftEar from "./LeftEar";
-
+import Results from "./Results";
 const Stack = createStackNavigator();
 
 // export default function Page() {
 //   return (
+
 //     // <View style={styles.container}>
 //     //   <View style={styles.main}>
 //     //     <Text style={styles.title}>Hello World</Text>
@@ -184,6 +186,8 @@ function Page() {
         }}
       />
     </Stack.Navigator>
+
+
   );
 }
 
