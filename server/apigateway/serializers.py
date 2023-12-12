@@ -4,7 +4,7 @@ from .models import User, Educator, Classroom, Assignment, UserAssignmentResults
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
-        fields = ['UID', 'username']
+        fields = ['UID', 'UserName','Age','Gender']
 
 class EducatorSerializer(serializers.ModelSerializer):
     class Meta:
@@ -19,7 +19,7 @@ class ClassroomSerializer(serializers.ModelSerializer):
 class AssignmentSerializer(serializers.ModelSerializer):
     class Meta:
         model = Assignment
-        fields = ['AID', 'CID', 'Deadline']
+        fields = ['AID', 'CID','AssignmentName','Deadline']
 
 class UserAssignmentResultsSerializer(serializers.ModelSerializer):
     class Meta:
