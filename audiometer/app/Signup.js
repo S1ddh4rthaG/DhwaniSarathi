@@ -1,7 +1,7 @@
 // Signup.js
 import React, { useState } from 'react';
 import { View, Text, TextInput, Button, StyleSheet, TouchableOpacity} from 'react-native';
-import {Picker} from '@react-native-picker/picker'; 
+//import {Picker} from '@react-native-picker/picker'; 
 
 const Signup = () => {
   const [name, setName] = useState('');
@@ -74,7 +74,7 @@ const Signup = () => {
         placeholderTextColor="grey"
       />
 
-      <Text style={styles.subtitle}>User Type</Text>
+      {/* <Text style={styles.subtitle}>User Type</Text>
       <Picker
         selectedValue={userType}
         style={styles.picker}
@@ -83,7 +83,7 @@ const Signup = () => {
       >
         <Picker.Item style={styles.pickerItem} label="User" value="user" />
         <Picker.Item label="Educator" value="educator" />
-      </Picker>
+      </Picker> */}
 
       <TouchableOpacity style={styles.Button} onPress={handleSignup}>
         <Text style={styles.buttonText}>Sign Up</Text>

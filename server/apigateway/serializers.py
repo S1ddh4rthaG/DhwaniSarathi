@@ -1,5 +1,10 @@
 from rest_framework import serializers
-from .models import User, Educator, Classroom, Assignment, UserAssignmentResults, UserOnlyResults
+from .models import  LoginInfo, User, Educator, Classroom, Assignment, UserAssignmentResults, UserOnlyResults
+
+class LoginInfoSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = LoginInfo
+        fields = ['FID', 'type']
 
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
