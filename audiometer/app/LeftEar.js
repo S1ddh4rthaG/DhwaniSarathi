@@ -1,7 +1,9 @@
 import React ,{useState}from 'react';
-import { View, Text, Image,  TouchableOpacity, StyleSheet } from 'react-native';
+import { View, StyleView, Text, Image,  TouchableOpacity, StyleSheet } from 'react-native';
 import Slider from '@react-native-community/slider';
-
+import {NavigationContainer} from "@react-navigation/native"; 
+import {createStackNavigator} from "@react-navigation/stack"; 
+import {MaterialCommunityIcons} from "@expo/vector-icons"; 
 
   
 const LeftEar = () => {
@@ -125,7 +127,7 @@ const styles = StyleSheet.create({
     color: 'white',
     textAlign: 'center',
     fontSize: 20,
-    fontWeight: 'bold'
+    //fontWeight: 'bold'
   },
 
   input: {

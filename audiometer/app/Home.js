@@ -1,8 +1,45 @@
 import React from 'react';
 import { Box, IconButton, HStack, Icon, MaterialIcons, StatusBar, View, Text, TouchableOpacity, StyleSheet } from 'react-native';
 // import {AppBar} from 'react-native-paper'; 
+import {useNavigation} from '@react-navigation/native'; 
+
+// const Home = () => {
+ 
+//   return (
+//     <View style={styles.container}>
+
+     
+     
+//       <TouchableOpacity style={styles.Button}>
+//         <Text style={styles.buttonText}>Start Full Test</Text>
+//       </TouchableOpacity>
+
+//       <TouchableOpacity style={styles.Button1}>
+//         <Text style={styles.buttonText}>Test Single Frequency</Text>
+//       </TouchableOpacity>
+
+//       <TouchableOpacity style={styles.Button}>
+//         <Text style={styles.buttonText}>Calibration</Text>
+//       </TouchableOpacity>
+
+//       <TouchableOpacity style={styles.Button}>
+//         <Text style={styles.buttonText}>Test Results</Text>
+//       </TouchableOpacity>
+
+//       <TouchableOpacity style={styles.Button}>
+//         <Text style={styles.buttonText}>Instructions</Text>
+//       </TouchableOpacity>
+
+      
+//     </View>
+    
+//   );
+// };
+
+
 
 const Home = () => {
+  const navigation= useNavigation()
   return (
     <View style={styles.container}>
 
@@ -67,7 +104,6 @@ const styles = StyleSheet.create({
     backgroundColor: '#D4AF37', // Greenish Yellow
     marginTop: 20,
     borderRadius: 20,
-    paddingHorizontal: 100,
     marginBottom: 5,
     paddingVertical: 15,
     width: "100%"
@@ -77,7 +113,6 @@ const styles = StyleSheet.create({
     backgroundColor: '#D4AF37', // Greenish Yellow
     marginTop: 20,
     borderRadius: 20,
-    paddingHorizontal: 100,
     marginBottom: 5,
     paddingVertical: 15,
     marginBottom: 80,

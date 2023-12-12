@@ -88,14 +88,14 @@ const styles = StyleSheet.create({
     textAlign: "center"
   },
   title2: {
-    fontSize : 25, 
+    fontSize : 20, 
     color: 'white',
     marginBottom: 30,
     textAlign: "left", 
    
   }, 
   subtitle: {
-    fontSize: 18,
+    fontSize: 15,
     color: 'white',
     marginBottom: 10,
     textAlign: "left",
@@ -126,7 +126,7 @@ const styles = StyleSheet.create({
     color: 'white',
     textAlign: 'center',
     fontSize: 20,
-    fontWeight: 'bold'
+    // fontWeight: 'bold'
   },
 
   input: {

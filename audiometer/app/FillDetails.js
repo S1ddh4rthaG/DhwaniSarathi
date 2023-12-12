@@ -90,7 +90,6 @@ const styles = StyleSheet.create({
   },
   title: {
     fontSize: 30,
-    fontWeight: 'bold',
     color: 'white',
     marginBottom: 40, 
     textAlign: "center"
@@ -135,13 +134,14 @@ const styles = StyleSheet.create({
     color: 'white',
     textAlign: 'center',
     fontSize: 15,
-    fontWeight: 'bold'
+    
   },
 
   input: {
     height: 40,
     borderColor: 'white',
     borderWidth: 1,
+    borderRadius: 10,
     marginBottom: 20,
     paddingHorizontal: 10,
     width: '100%',
