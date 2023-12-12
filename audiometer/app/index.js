@@ -12,8 +12,8 @@ import BeforeYouStart from "./BeforeYouStart";
 import LeftEar from "./LeftEar";
 import Results from "./Results";
 import Login from "./Login";
-import Signup from "./Signup"; 
-
+import Signup from "./Signup";
+import Signout from "./Signout";
 import { FIREBASE_AUTH } from "../FirebaseConfig.js";
 import { onAuthStateChanged } from "firebase/auth";
 
@@ -47,7 +47,6 @@ function Page() {
         }}
       />
 
-
       <Stack.Screen
         name="Signup"
         component={Signup}
@@ -69,16 +68,13 @@ function Page() {
             </View>
           ),
           headerStyle: {
-            
             height: 70,
             backgroundColor: "#D4AF37",
-            
           },
         }}
       />
 
-
-    <Stack.Screen
+      <Stack.Screen
         name="Login"
         component={Login}
         options={{
@@ -260,7 +256,7 @@ export default () => {
 
   return (
     <NavigationContainer independent={true}>
-      {user ? <Page /> : <Login />}
+      {user ? <Signout /> : <Login />}
     </NavigationContainer>
   );
 };

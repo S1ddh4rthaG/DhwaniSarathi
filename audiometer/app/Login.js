@@ -19,7 +19,7 @@ const Login = ({ navigation }) => {
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
   const auth = FIREBASE_AUTH;
-  const sighnIn = async () => {
+  const signIn = async () => {
     setLoading(true);
     try {
       const response = await signInWithEmailAndPassword(
@@ -27,7 +27,6 @@ const Login = ({ navigation }) => {
         username,
         password
       );
-      console.log(response);
     } catch (error) {
       console.log(error);
     } finally {
@@ -76,7 +75,7 @@ const Login = ({ navigation }) => {
         placeholderTextColor="grey"
         textAlign="center"
       />
-      <TouchableOpacity style={styles.Button}>
+      <TouchableOpacity style={styles.Button} onPress={signIn}> 
         <Text style={styles.buttonText}>Login</Text>
       </TouchableOpacity>
 

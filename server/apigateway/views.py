@@ -1,7 +1,7 @@
 from django.shortcuts import render, HttpResponse
 from django.utils import timezone
-from .models import User, Educator, Classroom, Assignment, UserAssignmentResults, UserOnlyResults
-from .serializers import UserSerializer, EducatorSerializer, ClassroomSerializer, AssignmentSerializer , UserAssignmentResultsSerializer , UserOnlyResultsSerializer
+from .models import  LoginInfo, User, Educator, Classroom, Assignment, UserAssignmentResults, UserOnlyResults
+from .serializers import  LoginInfoSerializer, UserSerializer, EducatorSerializer, ClassroomSerializer, AssignmentSerializer , UserAssignmentResultsSerializer , UserOnlyResultsSerializer
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from rest_framework import status
@@ -9,6 +9,28 @@ import datetime
 
 # views for User
 # url/users
+@api_view(['GET', 'POST'])
+def login_authentication(request,FID):
+    """
+    Authenticate a user.
+    """
+    try:
+        logininfo = LoginInfo.objects.get(FID=FID)
+    except LoginInfo.DoesNotExist:
+        return Response(status=status.HTTP_404_NOT_FOUND)
+    
+    if(request.method == 'GET'):
+        serializer = LoginInfoSerializer(logininfo)
+        return Response(serializer.data)
+        
+    if(request.method == 'POST'):
+        serializer = LoginInfoSerializer(data=request.data)
+        if(serializer.is_valid()):
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+    
+        
 @api_view(['GET', 'POST'])
 def user_list(request):
     """
