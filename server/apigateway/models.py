@@ -4,16 +4,22 @@ from django.db import models
 from django.db.models import JSONField
 from django.utils import timezone
 
+class LoginInfo(models.Model):
+    FID = models.CharField(primary_key=True, max_length=100,  default=uuid.uuid4)
+    type = models.IntegerField()
+    def __str__(self):
+        return self.username
 
+    
 class User(models.Model):
-    UID = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
+    UID = models.CharField(primary_key=True, max_length=100, default=uuid.uuid4)
     username = models.CharField(max_length=100, unique=True)
 
     def __str__(self):
         return self.username
     
 class Educator(models.Model):
-    EID = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
+    EID = models.CharField(primary_key=True, max_length=100, default=uuid.uuid4)
     EducatorName = models.CharField(max_length=100)
     InstituteName = models.CharField(max_length=150)
 

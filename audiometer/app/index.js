@@ -1,5 +1,5 @@
-
 import React from "react";
+import { useState, useEffect } from "react";
 import { StyleSheet, View, TouchableOpacity } from "react-native";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { NavigationContainer } from "@react-navigation/native";
@@ -11,25 +11,13 @@ import FillDetails from "./FillDetails";
 import BeforeYouStart from "./BeforeYouStart";
 import LeftEar from "./LeftEar";
 import Results from "./Results";
-import Login from "./Login"; 
+import Login from "./Login";
 import Signup from "./Signup"; 
 
+import { FIREBASE_AUTH } from "../FirebaseConfig.js";
+import { onAuthStateChanged } from "firebase/auth";
+
 const Stack = createStackNavigator();
-
-// export default function Page() {
-//   return (
-
-//     // <View style={styles.container}>
-//     //   <View style={styles.main}>
-//     //     <Text style={styles.title}>Hello World</Text>
-//     //     <Text style={styles.subtitle}>This is the first page of your app.</Text>
-//     //   </View>
-//     // </View>
-//     <View style={{flex:1}}>
-//       <LeftEar/>
-//     </View>
-//   );
-// }
 
 function Page() {
   return (
@@ -39,7 +27,7 @@ function Page() {
         component={Home}
         options={{
           headerTitle: () => <Header name="Hertz hEARing Test" />,
-          headerTitleAlign: "Signin", // Center the header title
+          headerTitleAlign: "Signin",
           headerRight: () => (
             <View style={{ flexDirection: "row", alignItems: "center" }}>
               <TouchableOpacity style={{ marginRight: 15 }}>
@@ -50,15 +38,11 @@ function Page() {
                   color="black"
                 />
               </TouchableOpacity>
-
-              {/* Additional icons or content for the right side */}
             </View>
           ),
           headerStyle: {
-            
             height: 70,
             backgroundColor: "#D4AF37",
-            
           },
         }}
       />
@@ -115,10 +99,8 @@ function Page() {
             </View>
           ),
           headerStyle: {
-            
             height: 70,
             backgroundColor: "#D4AF37",
-            
           },
         }}
       />
@@ -144,10 +126,8 @@ function Page() {
             </View>
           ),
           headerStyle: {
-            
             height: 70,
             backgroundColor: "#D4AF37",
-            
           },
         }}
       />
@@ -173,10 +153,8 @@ function Page() {
             </View>
           ),
           headerStyle: {
-            
             height: 70,
             backgroundColor: "#D4AF37",
-            
           },
         }}
       />
@@ -202,10 +180,8 @@ function Page() {
             </View>
           ),
           headerStyle: {
-            
             height: 70,
             backgroundColor: "#D4AF37",
-            
           },
         }}
       />
@@ -231,15 +207,13 @@ function Page() {
             </View>
           ),
           headerStyle: {
-            
             height: 70,
             backgroundColor: "#D4AF37",
-            
           },
         }}
       />
 
-    <Stack.Screen
+      <Stack.Screen
         name="Results"
         component={Results}
         options={{
@@ -260,16 +234,12 @@ function Page() {
             </View>
           ),
           headerStyle: {
-            
             height: 70,
             backgroundColor: "#D4AF37",
-            
           },
         }}
       />
     </Stack.Navigator>
-
-
   );
 }
 
@@ -280,9 +250,17 @@ const styles = StyleSheet.create({
 });
 
 export default () => {
+  const [user, setUser] = useState(null); // Initialize user state as null
+  useEffect(() => {
+    onAuthStateChanged(FIREBASE_AUTH, (user) => {
+      console.log("user", user);
+      setUser(user);
+    });
+  }, []);
+
   return (
     <NavigationContainer independent={true}>
-      <Page />
+      {user ? <Page /> : <Login />}
     </NavigationContainer>
   );
 };
