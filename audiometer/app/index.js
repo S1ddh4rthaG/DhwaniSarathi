@@ -1,10 +1,11 @@
 import { StyleSheet, Text, View } from "react-native";
-import Signin from './Signin'; 
-import Home from './Home'; 
+import Signin from './Signin';
+import Home from './Home';
 import FillDetails from "./FillDetails";
-import BeforeYouStart from "./BeforeYouStart"; 
+import BeforeYouStart from "./BeforeYouStart";
 import RightEar from "./RightEar";
 import LeftEar from "./LeftEar";
+import Results from "./Results";
 export default function Page() {
   return (
     // <View style={styles.container}>
@@ -13,8 +14,8 @@ export default function Page() {
     //     <Text style={styles.subtitle}>This is the first page of your app.</Text>
     //   </View>
     // </View>
-    <View style={{flex:1}}>
-      <RightEar/>
+    <View style={{ flex: 1 }}>
+      <Results />
     </View>
   );
 }
