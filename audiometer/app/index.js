@@ -12,6 +12,8 @@ import BeforeYouStart from "./BeforeYouStart";
 import LeftEar from "./LeftEar";
 import Results from "./Results";
 import Login from "./Login"; 
+import Signup from "./Signup"; 
+
 const Stack = createStackNavigator();
 
 // export default function Page() {
@@ -31,7 +33,7 @@ const Stack = createStackNavigator();
 
 function Page() {
   return (
-    <Stack.Navigator initialRouteName="Login">
+    <Stack.Navigator initialRouteName="Signup">
       <Stack.Screen
         name="Home"
         component={Home}
@@ -48,6 +50,36 @@ function Page() {
                   color="black"
                 />
               </TouchableOpacity>
+
+              {/* Additional icons or content for the right side */}
+            </View>
+          ),
+          headerStyle: {
+            
+            height: 70,
+            backgroundColor: "#D4AF37",
+            
+          },
+        }}
+      />
+
+
+      <Stack.Screen
+        name="Signup"
+        component={Signup}
+        options={{
+          headerTitle: () => <Header name="Sign Up" />,
+          headerTitleAlign: "Signin", // Center the header title
+          headerRight: () => (
+            <View style={{ flexDirection: "row", alignItems: "center" }}>
+              {/* <TouchableOpacity style={{ marginRight: 15 }}>
+                <MaterialCommunityIcons
+                  style={styles.button}
+                  name="account-circle"
+                  size={28}
+                  color="black"
+                />
+              </TouchableOpacity> */}
 
               {/* Additional icons or content for the right side */}
             </View>
