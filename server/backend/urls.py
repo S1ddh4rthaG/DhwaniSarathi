@@ -16,8 +16,23 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
-from apigateway.views import user_endpoint
+from apigateway.views import user_list, user_detail, educator_list, educator_detail, educator_classrooms, classroom_list, classroom_detail, classroom_assignments, assignment_list, assignment_detail, assignment_userassignmentresults, assignment_validate,userassignmentresults_list, userassignmentresults_detail, useronlyresults_list, useronlyresults_detail
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('users/', user_endpoint),
+    path('users/', user_list),
+    path('users/<str:UID>/', user_detail),
+    path('educators/', educator_list),
+    path('educators/<str:EID>/', educator_detail),
+    path('educators/<str:EID>/classrooms/', educator_classrooms),
+    path('classrooms/', classroom_list),
+    path('classrooms/<str:CID>/', classroom_detail),
+    path('classrooms/<str:CID>/assignments/', classroom_assignments),
+    path('assignments/', assignment_list),
+    path('assignments/<str:AID>/', assignment_detail),
+    path('assignments/<str:AID>/userassignmentresults/', assignment_userassignmentresults),
+    path('assignments/<str:AID>/validate/',assignment_validate),
+    path('userassignmentresults/', userassignmentresults_list),
+    path('userassignmentresults/<str:UID>/', userassignmentresults_detail),
+    path('useronlyresults/', useronlyresults_list),
+    path('useronlyresults/<str:UID>/', useronlyresults_detail),
 ]
