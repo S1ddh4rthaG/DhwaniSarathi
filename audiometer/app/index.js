@@ -16,6 +16,7 @@ import Signup from "./Signup";
 import Signout from "./Signout";
 import { FIREBASE_AUTH } from "../FirebaseConfig.js";
 import { onAuthStateChanged } from "firebase/auth";
+import AudiometryTest from "./AudiometryTest.js";
 
 const Stack = createStackNavigator();
 
@@ -256,7 +257,8 @@ export default () => {
 
   return (
     <NavigationContainer independent={true}>
-      {user ? <Signout /> : <Login />}
+      {/* {user ? <Signout /> : <Login />} */}
+      <AudiometryTest />
     </NavigationContainer>
   );
 };
