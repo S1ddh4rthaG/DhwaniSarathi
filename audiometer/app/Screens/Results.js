@@ -1,46 +1,52 @@
 import React from 'react';
 import { View, Text, StyleSheet, Image } from 'react-native';
-
+// import './locales/i18n'; 
+import {useTranslation} from 'react-i18next'; 
 const Results = () => {
     const leftEar_result = "Bad";
     const rightEar_result = "Good";
+    const {t,i18n} =useTranslation(); 
+    // const [currentLanguage, setLanguage] = useState('en'); 
+    // const changeLanguage= value=>{
+    //     i18n.changeLanguage(value)
+    //     .then(()=>setLanguage(value))
+    //     .catch(err => console.log(err)); 
+    // }
     return (
         <View style={{ backgroundColor: 'black', justifyContent: 'center', flex: 1, }}>
-            <Text style={styles.title}>Test Results</Text>
+            <Text style={styles.title}>{t('Test Results')}</Text>
             <View style={styles.container}>
 
-
                 <View style={styles.tableRow}>
-                    <Text style={styles.headerText}>Left Ear</Text>
-                    <Text style={styles.headerText}>Right Ear</Text>
+                    <Text style={styles.headerText}>{t('Left Ear')}</Text>
+                    <Text style={styles.headerText}>{t('Right Ear')}</Text>
                 </View>
 
                 <View style={styles.tableRow}>
                     <Image
                         style={styles.image}
-                        source={require('./assets/leftear.png')}
+                        source={require('../assets/leftear.png')}
                         resizeMode='cover'
                     />
                     <Image
                         style={styles.image}
-                        source={require('./assets/rightear.png')}
+                        source={require('../assets/rightear.png')}
                         resizeMode='cover'
                     />
                 </View>
 
                 <View style={styles.tableRow}>
                     <Text style={[styles.resultText, leftEar_result === 'Good' ? styles.goodResult : styles.badResult]}>
-                        {leftEar_result}
+                        {t(leftEar_result)}
                     </Text>
                     <Text style={[styles.resultText, rightEar_result === 'Good' ? styles.goodResult : styles.badResult]}>
-                        {rightEar_result}
+                        {t(rightEar_result)}
                     </Text>
                 </View>
 
                 <View style={styles.tableRow}>
-                    <Text style={styles.graphText}>Graph</Text>
+                    <Text style={styles.graphText}>{t('Graph')}</Text>
                 </View>
-
 
             </View >
         </View>

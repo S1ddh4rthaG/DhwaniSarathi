@@ -1,28 +1,33 @@
 import React ,{useState}from 'react';
 import { View, Text, Image,  TouchableOpacity, StyleSheet } from 'react-native';
 import Slider from '@react-native-community/slider';
-
+// import './locales/i18n'; 
+import {useTranslation} from 'react-i18next'; 
 
   
 const RightEar = () => {
-   
+  const {t,i18n} =useTranslation(); 
+  // const [currentLanguage, setLanguage] = useState('en'); 
+  // const changeLanguage= value=>{
+  //   i18n.changeLanguage(value)
+  //   .then(()=>setLanguage(value))
+  //   .catch(err => console.log(err)); 
+  // }
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Right Ear</Text>
-      <Image style={styles.image}
-        source={require('./assets/rightear.png')}
-        resizeMode='cover'/>
+      <Text style={styles.title}>{t('Right Ear')}</Text>
+      <Image style={styles.image} source={require('../assets/rightear.png')} resizeMode='cover' />
       
       <TouchableOpacity style={styles.Button}>
-        <Text style={styles.buttonText}>Frequency 1000HZ</Text>
+        <Text style={styles.buttonText}>{t('Frequency 1000HZ')}</Text>
       </TouchableOpacity>
       
-       <TouchableOpacity style={styles.Button}>
-        <Text style={styles.buttonText}>Intensity 20DB</Text>
+      <TouchableOpacity style={styles.Button}>
+        <Text style={styles.buttonText}>{t('Intensity 20DB')}</Text>
       </TouchableOpacity>
 
       <TouchableOpacity style={styles.Button1}>
-        <Text style={styles.buttonText1}>Press if you hear a beep</Text>
+        <Text style={styles.buttonText1}>{t('Press if you hear a beep')}</Text>
       </TouchableOpacity>
     </View>
   );

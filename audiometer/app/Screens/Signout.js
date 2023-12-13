@@ -9,7 +9,7 @@ import {
   StyleSheet,
 } from "react-native";
 
-import { FIREBASE_AUTH } from "../FirebaseConfig.js";
+import { FIREBASE_AUTH } from "../../FirebaseConfig.js";
 
 const Signout = ({ navigation }) => {
   return (

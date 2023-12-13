@@ -8,58 +8,59 @@ import {
   Button,
   StyleSheet,
 } from "react-native";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+// import './locales/i18n';
+import { t, useTranslation } from "react-i18next";
+
 import {
   signInWithEmailAndPassword,
-  createUserWithEmailAndPassword,
 } from "firebase/auth";
-import { FIREBASE_AUTH } from "../FirebaseConfig.js";
+
+import { FIREBASE_AUTH } from "../../FirebaseConfig.js";
+
 
 const Login = ({ navigation }) => {
+  const { t, i18n } = useTranslation();
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
   const auth = FIREBASE_AUTH;
+
   const signIn = async () => {
     setLoading(true);
+
     try {
       const response = await signInWithEmailAndPassword(
         auth,
         username,
         password
       );
-    } catch (error) {
-      console.log(error);
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  const signUp = async () => {
-    setLoading(true);
-    try {
-      const response = await createUserWithEmailAndPassword(
-        auth,
-        username,
-        password
-      );
       console.log(response);
+      if (response) {
+        try {
+          await AsyncStorage.setItem("userId", response.user.uid);
+          
+        } catch (error) {
+          console.error("Error storing userId:", error);
+        }
+      } else {
+        alert("Invalid Credentials");
+      }
+      const userId = await AsyncStorage.getItem('userId');
+      console.log(userId);
+      navigation.navigate("Home");
     } catch (error) {
       console.log(error);
     } finally {
       setLoading(false);
     }
-  };
-  const handleLogin = () => {
-    // Implement authentication logic here
-    console.log("Logging in with:", username, password);
-    // Add your authentication logic here
   };
 
   return (
     <View style={styles.container}>
-      <Text style={styles.title2}>Login</Text>
+      <Text style={styles.title2}>{t("Login")}</Text>
       <TextInput
-        placeholder="Email"
+        placeholder={t("Email")}
         value={username}
         onChangeText={(text) => setUsername(text)}
         style={styles.input}
@@ -67,7 +68,7 @@ const Login = ({ navigation }) => {
         textAlign="center"
       />
       <TextInput
-        placeholder="Password"
+        placeholder={t("Password")}
         value={password}
         onChangeText={(text) => setPassword(text)}
         secureTextEntry
@@ -75,15 +76,20 @@ const Login = ({ navigation }) => {
         placeholderTextColor="grey"
         textAlign="center"
       />
-      <TouchableOpacity style={styles.Button} onPress={signIn}> 
-        <Text style={styles.buttonText}>Login</Text>
+      <TouchableOpacity style={styles.Button} onPress={signIn}>
+        <Text style={styles.buttonText}>{t("Login")}</Text>
       </TouchableOpacity>
 
       <Text style={styles.educatorText}>
-        Dont have an Account? Sign Up here
+        {t("Don't have an Account? Sign Up here")}
       </Text>
-      <TouchableOpacity style={styles.Button} onPress={signUp}>
-        <Text style={styles.buttonText}>Sign up</Text>
+      <TouchableOpacity
+        style={styles.Button}
+        onPress={() => {
+          navigation.navigate("Signup");
+        }}
+      >
+        <Text style={styles.buttonText}>{t("Sign up")}</Text>
       </TouchableOpacity>
     </View>
   );

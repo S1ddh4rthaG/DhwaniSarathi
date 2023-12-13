@@ -1,7 +1,7 @@
 import React from 'react';
 import { View, Text, StyleSheet, Image, SafeAreaView } from 'react-native';
 import Carousel from 'react-native-snap-carousel';
-import AssignmentList from './EducatorComponents/AssignmentList';
+import AssignmentList from './AssignmentList';
 export default class EducatorHome extends React.Component {
 
 

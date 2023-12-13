@@ -1,10 +1,18 @@
 
-import React from 'react';
+import React , {useState} from 'react';
 import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
-
+// import './locales/i18n'; 
+ import {useTranslation} from 'react-i18next'; 
 const Header=(props)=>{
+  // const [currentLanguage, setLanguage] = useState('en'); 
+  // const changeLanguage= value=>{
+  //   i18n.changeLanguage(value)
+  //   .then(()=>setLanguage(value))
+  //   .catch(err => console.log(err)); 
+  // }
+  const {t,i18n} =useTranslation(); 
     return(
-        <View style={{marginLeft:15}}>
+        <View style={{marginLeft:15, alignSelf: 'center'}}>
             <Text style={styles.title}>
                 {props.name}
             </Text>
@@ -53,7 +61,7 @@ const styles = StyleSheet.create({
       fontSize: 20,
       fontWeight: 'bold',
       color: 'black',
-      
+      alignContent: 'center'
     },
     title2: {
       fontSize : 25, 

@@ -4,7 +4,7 @@ from .models import  LoginInfo, User, Educator, Classroom, Assignment, UserAssig
 class LoginInfoSerializer(serializers.ModelSerializer):
     class Meta:
         model = LoginInfo
-        fields = ['FID', 'type']
+        fields = ['FID', 'Type']
 
 class UserSerializer(serializers.ModelSerializer):
     class Meta:

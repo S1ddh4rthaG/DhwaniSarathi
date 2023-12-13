@@ -1,30 +1,52 @@
 import React ,{useState}from 'react';
-import { View, StyleView, Text, Image,  TouchableOpacity, StyleSheet } from 'react-native';
+import { View, Text, Image,  TouchableOpacity, StyleSheet } from 'react-native';
 import Slider from '@react-native-community/slider';
-import {NavigationContainer} from "@react-navigation/native"; 
-import {createStackNavigator} from "@react-navigation/stack"; 
-import {MaterialCommunityIcons} from "@expo/vector-icons"; 
+// import './locales/i18n'; 
+ import {useTranslation} from 'react-i18next'; 
 
   
-const LeftEar = () => {
-   
+const BeforeYouStart = ({navigation}) => {
+    
+  const [loudness, setLoudness]= useState(40); 
+  const handleLoudnessChange = (value)=>{
+    setLoudness(value); 
+  }
+  //const [currentLanguage, setLanguage] = useState('hi'); 
+  const {t,i18n} =useTranslation(); 
+  // const changeLanguage= value=>{
+  //   i18n.changeLanguage(value)
+  //   .then(()=>setLanguage(value))
+  //   .catch(err => console.log(err)); 
+  // }
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Left Ear</Text>
+      <Text style={styles.title}>{t('Before You Start..')}</Text>
       <Image style={styles.image}
-        source={require('./assets/leftear.png')}
+        source={require('../assets/nosoundwhite.png')}
         resizeMode='cover'/>
-      
-      <TouchableOpacity style={styles.Button}>
-        <Text style={styles.buttonText}>Frequency 1000HZ</Text>
-      </TouchableOpacity>
-      
-       <TouchableOpacity style={styles.Button}>
-        <Text style={styles.buttonText}>Intensity 20DB</Text>
-      </TouchableOpacity>
+      <Text style={styles.title2}>{t('Quiet Place')}</Text>
 
-      <TouchableOpacity style={styles.Button1}>
-        <Text style={styles.buttonText1}>Press if you hear a beep</Text>
+      <Image style={styles.image}
+        source={require('../assets/headphones.png')}
+        resizeMode='cover'/>
+      <Text style={styles.title2}>{t('Headphones')}</Text>
+
+      <Text style={styles.title2}>{t('Ambient Sound')}</Text>
+      <View style={styles.sliderContainer}>
+      <Text style={styles.sliderLabel}>0</Text>
+      <Slider style={styles.slider}
+        minimumValue={0}
+        maximumValue={1000}
+        onValueChange={handleLoudnessChange}
+        minimumTrackTintColor= "#D4AF37"
+        maximumTrackTinkColor="white"
+        thumbTintColor="#D4AF37"/>
+      <Text style={styles.sliderLabel1}>{t('Loud')}</Text>
+
+      
+      </View>
+      <TouchableOpacity style={styles.Button} onPress={()=>{navigation.navigate('RightEar')}}>
+        <Text style={styles.buttonText}>{t('Proceed to Test!!')}</Text>
       </TouchableOpacity>
     </View>
   );
@@ -61,27 +83,27 @@ const styles = StyleSheet.create({
     
   },
   image: {
-    width: 100,
-    height: 100,
+    width: 70,
+    height: 70,
     alignContent: 'center',
-    marginBottom: 100
+    marginBottom: 10
   },
   title: {
     fontSize: 30,
     fontWeight: 'bold',
     color: 'white',
-    marginBottom: 60, 
+    marginBottom: 40, 
     textAlign: "center"
   },
   title2: {
-    fontSize : 25, 
+    fontSize : 20, 
     color: 'white',
     marginBottom: 30,
     textAlign: "left", 
    
   }, 
   subtitle: {
-    fontSize: 18,
+    fontSize: 15,
     color: 'white',
     marginBottom: 10,
     textAlign: "left",
@@ -91,23 +113,8 @@ const styles = StyleSheet.create({
     marginTop: 20,
     borderRadius: 10,
     paddingVertical: 20,
-
+    paddingHorizontal: 80,
     width: '100%'
-  },
-
-  Button1: {
-    backgroundColor: '#D4AF37', // Greenish Yellow
-    marginTop: 50,
-    borderRadius: 10,
-    paddingVertical: 20,
-
-    width: '100%'
-  },
-  buttonText1: {
-    color: 'black',
-    textAlign: 'center',
-    fontSize: 20,
-    fontWeight: 'bold'
   },
   educatorContainer: {
     marginTop: 20,
@@ -127,7 +134,7 @@ const styles = StyleSheet.create({
     color: 'white',
     textAlign: 'center',
     fontSize: 20,
-    //fontWeight: 'bold'
+    // fontWeight: 'bold'
   },
 
   input: {
@@ -143,4 +150,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default LeftEar;
+export default BeforeYouStart;
