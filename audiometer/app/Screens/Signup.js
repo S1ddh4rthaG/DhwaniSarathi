@@ -21,6 +21,7 @@ const Signup = ({ navigation }) => {
   const [confirmPassword, setConfirmPassword] = useState("");
   const [userType, setUserType] = useState("User");
   const [age, setAge] = useState("");
+
   const auth = FIREBASE_AUTH;
 
   const handleSignup = async () => {
@@ -30,27 +31,24 @@ const Signup = ({ navigation }) => {
         email,
         password
       );
-
-      //TODO: Fix this logic
       if (response) {
-        navigation.navigate("Home");
-        // const dbcreate = await fetch(
-        //   `http://192.168.1.5/login/${response.user.uid}/`,
-        //   {
-        //     method: "POST",
-        //     headers: {
-        //       "Content-Type": "application/json",
-        //     },
-        //     body: JSON.stringify({
-        //       FID: response.user.uid,
-        //       Type: userType === "User" ? 0 : 1,
-        //     }),
-        //   }
-        // );
-        // console.log(dbcreate);
+        const createUserDB = await fetch(
+          `http://192.168.1.5/login/${response.user.uid}/`,
+          {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+              FID: response.user.uid,
+              Type: userType === "User" ? 0 : 1,
+            }),
+          }
+        );
+        console.log(createUserDB);
       }
-
       console.log(response);
+      navigation.navigate("Home");
     } catch (error) {
       console.log(error);
     }

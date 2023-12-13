@@ -8,16 +8,13 @@ import {
   Button,
   StyleSheet,
 } from "react-native";
-import AsyncStorage from "@react-native-async-storage/async-storage";
+
 // import './locales/i18n';
 import { t, useTranslation } from "react-i18next";
 
-import {
-  signInWithEmailAndPassword,
-} from "firebase/auth";
+import { signInWithEmailAndPassword } from "firebase/auth";
 
 import { FIREBASE_AUTH } from "../../FirebaseConfig.js";
-
 
 const Login = ({ navigation }) => {
   const { t, i18n } = useTranslation();
@@ -35,19 +32,7 @@ const Login = ({ navigation }) => {
         username,
         password
       );
-      console.log(response);
-      if (response) {
-        try {
-          await AsyncStorage.setItem("userId", response.user.uid);
-          
-        } catch (error) {
-          console.error("Error storing userId:", error);
-        }
-      } else {
-        alert("Invalid Credentials");
-      }
-      const userId = await AsyncStorage.getItem('userId');
-      console.log(userId);
+
       navigation.navigate("Home");
     } catch (error) {
       console.log(error);
