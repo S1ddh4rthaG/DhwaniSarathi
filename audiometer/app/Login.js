@@ -1,7 +1,8 @@
 // Login.js
 import React, { useState } from 'react';
 import { View, TouchableOpacity, Text, TextInput, Button, StyleSheet } from 'react-native';
-
+// import './locales/i18n'; 
+import {useTranslation} from 'react-i18next'; 
 const Login = ({ navigation }) => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
@@ -12,37 +13,44 @@ const Login = ({ navigation }) => {
     // Add your authentication logic here
   };
 
+  // const [currentLanguage, setLanguage] = useState('en'); 
+  // const changeLanguage= value=>{
+  //   i18n.changeLanguage(value)
+  //   .then(()=>setLanguage(value))
+  //   .catch(err => console.log(err)); 
+  // }
+
   return (
     <View style={styles.container}>
-      <Text style={styles.title2}>Login</Text>
-      <TextInput
-        placeholder="Username"
-        value={username}
-        onChangeText={(text) => setUsername(text)}
-        style={styles.input}
-        placeholderTextColor='grey'
-        textAlign='center'
-      />
-      <TextInput
-        placeholder="Password"
-        value={password}
-        onChangeText={(text) => setPassword(text)}
-        secureTextEntry
-        style={styles.input}
-        placeholderTextColor='grey'
-        textAlign='center'
-      />
-      <TouchableOpacity style={styles.Button}>
-        <Text style={styles.buttonText}>Login</Text>
-      </TouchableOpacity>
+    <Text style={styles.title2}>{t('Login')}</Text>
+    <TextInput
+      placeholder={t('Username')}
+      value={username}
+      onChangeText={(text) => setUsername(text)}
+      style={styles.input}
+      placeholderTextColor='grey'
+      textAlign='center'
+    />
+    <TextInput
+      placeholder={t('Password')}
+      value={password}
+      onChangeText={(text) => setPassword(text)}
+      secureTextEntry
+      style={styles.input}
+      placeholderTextColor='grey'
+      textAlign='center'
+    />
+    <TouchableOpacity style={styles.Button}>
+      <Text style={styles.buttonText}>{t('Login')}</Text>
+    </TouchableOpacity>
 
+  
+      <Text style={styles.educatorText}>{t("Don't have an Account? Sign Up here")}</Text>
+      <TouchableOpacity style={styles.Button}>
+        <Text style={styles.buttonText}>{t('Sign up')}</Text>
+      </TouchableOpacity>
     
-        <Text style={styles.educatorText}>Dont have an Account? Sign Up here</Text>
-        <TouchableOpacity style={styles.Button}>
-          <Text style={styles.buttonText}>Sign up</Text>
-        </TouchableOpacity>
-      
-    </View>
+  </View>
   );
 };
 

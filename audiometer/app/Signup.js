@@ -2,8 +2,16 @@
 import React, { useState } from 'react';
 import { View, Text, TextInput, Button, StyleSheet, TouchableOpacity} from 'react-native';
 import {Picker} from '@react-native-picker/picker'; 
-
+// import './locales/i18n'; 
+import {useTranslation} from 'react-i18next'; 
 const Signup = () => {
+  const {t,i18n} =useTranslation(); 
+  // const [currentLanguage, setLanguage] = useState('en'); 
+  // const changeLanguage= value=>{
+  //   i18n.changeLanguage(value)
+  //   .then(()=>setLanguage(value))
+  //   .catch(err => console.log(err)); 
+  // }
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -19,74 +27,74 @@ const Signup = () => {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.subtitle}>Name</Text>
+      <Text style={styles.subtitle}>{t('Name')}</Text>
       <TextInput
         style={styles.input}
-        placeholder="Enter your name"
-        onChangeText={(text) => setName(text)}
+        placeholder={t('Enter your name')}
+        onChangeText={text => setName(text)}
         value={name}
         textAlign="left"
         color="white"
         placeholderTextColor="grey"
       />
 
-      <Text style={styles.subtitle}>Email</Text>
+      <Text style={styles.subtitle}>{t('Email')}</Text>
       <TextInput
         style={styles.input}
-        placeholder="Enter your email id"
-        onChangeText={(text) => setEmail(text)}
+        placeholder={t('Enter your email id')}
+        onChangeText={text => setEmail(text)}
         value={email}
         textAlign="left"
         color="white"
         placeholderTextColor="grey"
       />
 
-      <Text style={styles.subtitle}>Age</Text>
+      <Text style={styles.subtitle}>{t('Age')}</Text>
       <TextInput
         style={styles.input}
-        placeholder="Enter your Age"
-        onChangeText={(text) => setAge(text)}
+        placeholder={t('Enter your Age')}
+        onChangeText={text => setAge(text)}
         value={age}
         textAlign="left"
         color="white"
         placeholderTextColor="grey"
       />
 
-      <Text style={styles.subtitle}>Password</Text>
+      <Text style={styles.subtitle}>{t('Password')}</Text>
       <TextInput
         style={styles.input}
-        placeholder="Enter your password"
-        onChangeText={(text) => setPassword(text)}
+        placeholder={t('Enter your password')}
+        onChangeText={text => setPassword(text)}
         value={password}
         textAlign="left"
         color="white"
         placeholderTextColor="grey"
       />
 
-      <Text style={styles.subtitle}>Confirm Password</Text>
+      <Text style={styles.subtitle}>{t('Confirm Password')}</Text>
       <TextInput
         style={styles.input}
-        placeholder="Confirm Password"
-        onChangeText={(text) => setConfirmPassword(text)}
+        placeholder={t('Confirm Password')}
+        onChangeText={text => setConfirmPassword(text)}
         value={confirmPassword}
         textAlign="left"
         color="white"
         placeholderTextColor="grey"
       />
 
-      <Text style={styles.subtitle}>User Type</Text>
+      <Text style={styles.subtitle}>{t('User Type')}</Text>
       <Picker
         selectedValue={userType}
         style={styles.picker}
         itemStyle={styles.pickerItem}
-        onValueChange={(itemValue) => setUserType(itemValue)}
+        onValueChange={itemValue => setUserType(itemValue)}
       >
-        <Picker.Item style={styles.pickerItem} label="User" value="user" />
-        <Picker.Item label="Educator" value="educator" />
+        <Picker.Item style={styles.pickerItem} label={t('User')} value="user" />
+        <Picker.Item label={t('Educator')} value="educator" />
       </Picker>
 
       <TouchableOpacity style={styles.Button} onPress={handleSignup}>
-        <Text style={styles.buttonText}>Sign Up</Text>
+        <Text style={styles.buttonText}>{t('Sign Up')}</Text>
       </TouchableOpacity>
     </View>
   );
@@ -132,8 +140,8 @@ const styles = StyleSheet.create({
     backgroundColor: '#D4AF37',
     marginTop: 20,
     borderRadius: 10,
-    paddingVertical: 10,
-    width: '60%',
+    paddingVertical: 5,
+    width: '50%',
     alignSelf: 'center',
   },
   buttonText: {

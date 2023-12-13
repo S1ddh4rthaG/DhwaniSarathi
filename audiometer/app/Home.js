@@ -1,68 +1,43 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Box, IconButton, HStack, Icon, MaterialIcons, StatusBar, View, Text, TouchableOpacity, StyleSheet } from 'react-native';
 // import {AppBar} from 'react-native-paper'; 
 import {useNavigation} from '@react-navigation/native'; 
-
-// const Home = () => {
- 
-//   return (
-//     <View style={styles.container}>
-
-     
-     
-//       <TouchableOpacity style={styles.Button}>
-//         <Text style={styles.buttonText}>Start Full Test</Text>
-//       </TouchableOpacity>
-
-//       <TouchableOpacity style={styles.Button1}>
-//         <Text style={styles.buttonText}>Test Single Frequency</Text>
-//       </TouchableOpacity>
-
-//       <TouchableOpacity style={styles.Button}>
-//         <Text style={styles.buttonText}>Calibration</Text>
-//       </TouchableOpacity>
-
-//       <TouchableOpacity style={styles.Button}>
-//         <Text style={styles.buttonText}>Test Results</Text>
-//       </TouchableOpacity>
-
-//       <TouchableOpacity style={styles.Button}>
-//         <Text style={styles.buttonText}>Instructions</Text>
-//       </TouchableOpacity>
-
-      
-//     </View>
-    
-//   );
-// };
-
+// import './locales/i18n';  
+import {useTranslation} from 'react-i18next';
 
 
 const Home = () => {
   const navigation= useNavigation()
+  const {t,i18n} =useTranslation(); 
+  // const [currentLanguage, setLanguage] = useState('en'); 
+  // const changeLanguage= value=>{
+  //   i18n.changeLanguage(value)
+  //   .then(()=>setLanguage(value))
+  //   .catch(err => console.log(err)); 
+  // }
   return (
     <View style={styles.container}>
 
      
      
       <TouchableOpacity style={styles.Button}>
-        <Text style={styles.buttonText}>Start Full Test</Text>
+        <Text style={styles.buttonText}>{t('Start Full Test')}</Text>
       </TouchableOpacity>
 
       <TouchableOpacity style={styles.Button1}>
-        <Text style={styles.buttonText}>Test Single Frequency</Text>
+        <Text style={styles.buttonText}>{t('Test Single Frequency')}</Text>
       </TouchableOpacity>
 
       <TouchableOpacity style={styles.Button}>
-        <Text style={styles.buttonText}>Calibration</Text>
+        <Text style={styles.buttonText}>{t('Calibration')}</Text>
       </TouchableOpacity>
 
       <TouchableOpacity style={styles.Button}>
-        <Text style={styles.buttonText}>Test Results</Text>
+        <Text style={styles.buttonText}>{t('Test Results')}</Text>
       </TouchableOpacity>
 
       <TouchableOpacity style={styles.Button}>
-        <Text style={styles.buttonText}>Instructions</Text>
+        <Text style={styles.buttonText}>{t('Instructions')}</Text>
       </TouchableOpacity>
 
       

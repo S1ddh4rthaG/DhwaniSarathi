@@ -1,20 +1,29 @@
-import React from 'react';
+import React , {useState} from 'react';
 import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
-
+// import './locales/i18n'; 
+import {useTranslation} from 'react-i18next'; 
 const Signin = () => {
+
+  // const [currentLanguage, setLanguage] = useState('en'); 
+  // const changeLanguage= value=>{
+  //   i18n.changeLanguage(value)
+  //   .then(()=>setLanguage(value))
+  //   .catch(err => console.log(err)); 
+  // }
+  const {t,i18n} =useTranslation(); 
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Hertz hEARing Test</Text>
-      <Text style={styles.subtitle}>Digital audiometer</Text>
+      <Text style={styles.title}>{t('Hertz hEARing Test')}</Text>
+      <Text style={styles.subtitle}>{t('Digital audiometer')}</Text>
 
       <TouchableOpacity style={styles.getStartedButton}>
-        <Text style={styles.buttonText}>Get Started</Text>
+        <Text style={styles.buttonText}>{t('Get Started')}</Text>
       </TouchableOpacity>
 
       <View style={styles.educatorContainer}>
-        <Text style={styles.educatorText}>Are you an educator?</Text>
+        <Text style={styles.educatorText}>{t('Are you an educator?')}</Text>
         <TouchableOpacity style={styles.educatorButton}>
-          <Text style={styles.buttonText}>Sign up</Text>
+          <Text style={styles.buttonText}>{t('Sign up')}</Text>
         </TouchableOpacity>
       </View>
     </View>

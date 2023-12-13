@@ -1,5 +1,5 @@
 
-import React from "react";
+import React , {useState} from "react";
 import { StyleSheet, View, TouchableOpacity } from "react-native";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { NavigationContainer } from "@react-navigation/native";
@@ -13,7 +13,9 @@ import LeftEar from "./LeftEar";
 import Results from "./Results";
 import Login from "./Login"; 
 import Signup from "./Signup"; 
-
+import i18n from './locales/i18n'; 
+import {useTranslation} from 'react-i18next';
+import { I18nextProvider } from "react-i18next";  
 const Stack = createStackNavigator();
 
 // export default function Page() {
@@ -32,13 +34,21 @@ const Stack = createStackNavigator();
 // }
 
 function Page() {
+  // const [currentLanguage, setLanguage] = useState('hi'); 
+  // const changeLanguage= value=>{
+  //   i18n.changeLanguage(value)
+  //   .then(()=>setLanguage(value))
+  //   .catch(err => console.log(err)); 
+  // }
+  const {t} =useTranslation(); 
   return (
-    <Stack.Navigator initialRouteName="Signup">
+    <Stack.Navigator initialRouteName="Home">
       <Stack.Screen
+        
         name="Home"
         component={Home}
         options={{
-          headerTitle: () => <Header name="Hertz hEARing Test" />,
+          headerTitle: () => <Header name={t("Hertz hEARing Test")} />,
           headerTitleAlign: "Signin", // Center the header title
           headerRight: () => (
             <View style={{ flexDirection: "row", alignItems: "center" }}>
@@ -66,9 +76,10 @@ function Page() {
 
       <Stack.Screen
         name="Signup"
+        alignItems="center"
         component={Signup}
         options={{
-          headerTitle: () => <Header name="Sign Up" />,
+          headerTitle: () => <Header name={t("Sign Up")} />,
           headerTitleAlign: "Signin", // Center the header title
           headerRight: () => (
             <View style={{ flexDirection: "row", alignItems: "center" }}>
@@ -85,7 +96,6 @@ function Page() {
             </View>
           ),
           headerStyle: {
-            
             height: 70,
             backgroundColor: "#D4AF37",
             
@@ -98,7 +108,7 @@ function Page() {
         name="Login"
         component={Login}
         options={{
-          headerTitle: () => <Header name="Login" />,
+          headerTitle: () => <Header name={t("Login")} />,
           headerTitleAlign: "Signin", // Center the header title
           headerRight: () => (
             <View style={{ flexDirection: "row", alignItems: "center" }}>
@@ -127,8 +137,8 @@ function Page() {
         name="Signin"
         component={Signin}
         options={{
-          headerTitle: () => <Header name="Hertz hEARing Test" />,
-          headerTitleAlign: "left", // Center the header title
+          headerTitle: () => <Header name={t("Hertz hEARing Test")} />,
+          headerTitleAlign: "center", // Center the header title
           headerRight: () => (
             <View style={{ flexDirection: "row", alignItems: "center" }}>
               <TouchableOpacity style={{ marginRight: 15 }}>
@@ -156,7 +166,7 @@ function Page() {
         name="FillDetails"
         component={FillDetails}
         options={{
-          headerTitle: () => <Header name="Hertz hEARing Test" />,
+          headerTitle: () => <Header name={t("Hertz hEARing Test")} />,
           headerTitleAlign: "left", // Center the header title
           headerRight: () => (
             <View style={{ flexDirection: "row", alignItems: "center" }}>
@@ -185,8 +195,8 @@ function Page() {
         name="BeforeYouStart"
         component={BeforeYouStart}
         options={{
-          headerTitle: () => <Header name="Hertz hEARing Test" />,
-          headerTitleAlign: "left", // Center the header title
+          headerTitle: () => <Header name={t("Hertz hEARing Test")} />,
+          heeaderTitlAlign: "left", // Center the header title
           headerRight: () => (
             <View style={{ flexDirection: "row", alignItems: "center" }}>
               <TouchableOpacity style={{ marginRight: 15 }}>
@@ -214,7 +224,7 @@ function Page() {
         name="LeftEar"
         component={LeftEar}
         options={{
-          headerTitle: () => <Header name="Hertz hEARing Test" />,
+          headerTitle: () => <Header name={t("Hertz hEARing Test")} />,
           headerTitleAlign: "left", // Center the header title
           headerRight: () => (
             <View style={{ flexDirection: "row", alignItems: "center" }}>
@@ -243,7 +253,7 @@ function Page() {
         name="Results"
         component={Results}
         options={{
-          headerTitle: () => <Header name="Hertz hEARing Test" />,
+          headerTitle: () => <Header name={t("Hertz hEARing Test")} />,
           headerTitleAlign: "left", // Center the header title
           headerRight: () => (
             <View style={{ flexDirection: "row", alignItems: "center" }}>
@@ -281,8 +291,10 @@ const styles = StyleSheet.create({
 
 export default () => {
   return (
+    <I18nextProvider i18n={i18n}>
     <NavigationContainer independent={true}>
       <Page />
     </NavigationContainer>
+    </I18nextProvider>
   );
 };

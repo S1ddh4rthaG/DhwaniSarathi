@@ -1,7 +1,8 @@
 import React ,{useState}from 'react';
 import { View, TextInput, Text, TouchableOpacity, StyleSheet } from 'react-native';
 
-
+// import './locales/i18n'; 
+import {useTranslation} from 'react-i18next'; 
   
 const FillDetails = () => {
     const [name, setName] = useState('');
@@ -20,63 +21,66 @@ const FillDetails = () => {
     const handleClassroomCodeChange = (inputText) => {
         setClassroomCode(inputText);
     };
-    
+    const {t,i18n} =useTranslation(); 
+    // const [currentLanguage, setLanguage] = useState('en'); 
+    // const changeLanguage= value=>{
+    //   i18n.changeLanguage(value)
+    //   .then(()=>setLanguage(value))
+    //   .catch(err => console.log(err)); 
+    // }
     
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Fill Your Details</Text>
-      <Text style={styles.subtitle}>Name</Text>
-      <TextInput
-        style={styles.input}
-        placeholder="Enter your name"
-        onChangeText={handleNameChange}
-        value={name}
-        textAlign="left"  // Set text alignment to left
-        color="white"
-        placeholderTextColor="grey"
-    
-      />
+            <Text style={styles.title}>{t('Fill Your Details')}</Text>
+            <Text style={styles.subtitle}>{t('Name')}</Text>
+            <TextInput
+                style={styles.input}
+                placeholder={t('Enter your name')}
+                onChangeText={handleNameChange}
+                value={name}
+                textAlign="left"  // Set text alignment to left
+                color="white"
+                placeholderTextColor="grey"
+            />
 
-    <Text style={styles.subtitle}>Age</Text>
-    <TextInput
-        style={styles.input}
-        placeholder="Enter your age"
-        onChangeText={handleAgeChange}
-        value={age}
-        textAlign="left"  // Set text alignment to left
-        color="white"
-        placeholderTextColor="grey"
-    />
+            <Text style={styles.subtitle}>{t('Age')}</Text>
+            <TextInput
+                style={styles.input}
+                placeholder={t('Enter your age')}
+                onChangeText={handleAgeChange}
+                value={age}
+                textAlign="left"  // Set text alignment to left
+                color="white"
+                placeholderTextColor="grey"
+            />
 
+            <Text style={styles.title2}>{t('For Students')}</Text>
+            <Text style={styles.subtitle}>{t('Student Roll Number')}</Text>
+            <TextInput
+                style={styles.input}
+                placeholder={t('Enter your roll number')}
+                onChangeText={handleRollNumberChange}
+                value={rollNumber}
+                textAlign="left"  // Set text alignment to left
+                color="white"
+                placeholderTextColor="grey"
+            />
 
-    <Text style={styles.title2}>For Students </Text>
-    <Text style={styles.subtitle}>Student Roll Number</Text>
-      <TextInput
-        style={styles.input}
-        placeholder="Enter your roll number"
-        onChangeText={handleRollNumberChange}
-        value={rollNumber}
-        textAlign="left"  // Set text alignment to left
-        color="white"
-        placeholderTextColor="grey"
-      />
+            <Text style={styles.subtitle}>{t('Classroom Code')}</Text>
+            <TextInput
+                style={styles.input}
+                placeholder={t('Code provided by your teacher/educator')}
+                onChangeText={handleClassroomCodeChange}
+                value={classroomCode}
+                textAlign="left"  // Set text alignment to left
+                color="white"
+                placeholderTextColor="grey"
+            />
 
-
-    <Text style={styles.subtitle}>Classroom Code</Text>
-      <TextInput
-        style={styles.input}
-        placeholder="Code provided by your teacher/educator"
-        onChangeText={handleClassroomCodeChange}
-        value={classroomCode}
-        textAlign="left"  // Set text alignment to left
-        color="white"
-        placeholderTextColor="grey"
-      />
-
-    <TouchableOpacity style={styles.Button}>
-        <Text style={styles.buttonText}>Start Test</Text>
-      </TouchableOpacity>
-    </View>
+            <TouchableOpacity style={styles.Button}>
+                <Text style={styles.buttonText}>{t('Start Test')}</Text>
+            </TouchableOpacity>
+      </View>
   );
 };
 

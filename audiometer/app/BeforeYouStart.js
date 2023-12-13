@@ -1,7 +1,8 @@
 import React ,{useState}from 'react';
 import { View, Text, Image,  TouchableOpacity, StyleSheet } from 'react-native';
 import Slider from '@react-native-community/slider';
-
+// import './locales/i18n'; 
+ import {useTranslation} from 'react-i18next'; 
 
   
 const BeforeYouStart = () => {
@@ -10,20 +11,27 @@ const BeforeYouStart = () => {
   const handleLoudnessChange = (value)=>{
     setLoudness(value); 
   }
+  //const [currentLanguage, setLanguage] = useState('hi'); 
+  const {t,i18n} =useTranslation(); 
+  // const changeLanguage= value=>{
+  //   i18n.changeLanguage(value)
+  //   .then(()=>setLanguage(value))
+  //   .catch(err => console.log(err)); 
+  // }
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Before You Start..</Text>
+      <Text style={styles.title}>{t('Before You Start..')}</Text>
       <Image style={styles.image}
         source={require('./assets/nosoundwhite.png')}
         resizeMode='cover'/>
-      <Text style={styles.title2}>Quiet Place</Text>
+      <Text style={styles.title2}>{t('Quiet Place')}</Text>
 
       <Image style={styles.image}
         source={require('./assets/headphones.png')}
         resizeMode='cover'/>
-      <Text style={styles.title2}>Headphones</Text>
+      <Text style={styles.title2}>{t('Headphones')}</Text>
 
-      <Text style={styles.title2}>Ambient Sound</Text>
+      <Text style={styles.title2}>{t('Ambient Sound')}</Text>
       <View style={styles.sliderContainer}>
       <Text style={styles.sliderLabel}>0</Text>
       <Slider style={styles.slider}
@@ -33,12 +41,12 @@ const BeforeYouStart = () => {
         minimumTrackTintColor= "#D4AF37"
         maximumTrackTinkColor="white"
         thumbTintColor="#D4AF37"/>
-      <Text style={styles.sliderLabel1}>Loud</Text>
+      <Text style={styles.sliderLabel1}>{t('Loud')}</Text>
 
       
       </View>
       <TouchableOpacity style={styles.Button}>
-        <Text style={styles.buttonText}>Proceed to Test!!</Text>
+        <Text style={styles.buttonText}>{t('Proceed to Test!!')}</Text>
       </TouchableOpacity>
     </View>
   );
