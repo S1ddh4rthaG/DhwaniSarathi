@@ -90,7 +90,7 @@ const AssignmentList = () => {
     ]);
 
     const renderAppointmentCard = ({ item }) => (
-        <View style={[styles.card, { backgroundColor: 'white', borderTopWidth: 4, borderTopColor: '#D4AF37' }]}>
+        <View style={[styles.card, { backgroundColor: 'white', borderTopWidth: 4, borderTopColor: '#FFD700' }]}>
             <Text style={[styles.cardTitle, { color: 'black' }]}>{item.title}</Text>
             <View style={styles.cardDates}>
                 <Text style={styles.cardDate}>Progress {item.progress}</Text>
@@ -153,13 +153,13 @@ const styles = StyleSheet.create({
         fontSize: 20,
         fontWeight: 'bold',
         marginBottom: 10,
-        color: '#D4AF37',
+        color: '#FFD700',
     },
     searchInput: {
         height: 40,
         borderWidth: 1,
         borderRadius: 5,
-        borderColor: '#D4AF37',
+        borderColor: '#FFD700',
         marginBottom: 10,
         paddingHorizontal: 10,
         color: "white",

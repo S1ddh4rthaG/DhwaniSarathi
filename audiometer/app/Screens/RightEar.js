@@ -1,12 +1,11 @@
 import React ,{useState}from 'react';
-import { View, StyleView, Text, Image,  TouchableOpacity, StyleSheet } from 'react-native';
+import { View, Text, Image,  TouchableOpacity, StyleSheet } from 'react-native';
 import Slider from '@react-native-community/slider';
-import {NavigationContainer} from "@react-navigation/native"; 
-import {createStackNavigator} from "@react-navigation/stack"; 
-import {MaterialCommunityIcons} from "@expo/vector-icons";  
+// import './locales/i18n'; 
 import {useTranslation} from 'react-i18next'; 
+
   
-const LeftEar = () => {
+const RightEar = () => {
   const {t,i18n} =useTranslation(); 
   // const [currentLanguage, setLanguage] = useState('en'); 
   // const changeLanguage= value=>{
@@ -16,8 +15,8 @@ const LeftEar = () => {
   // }
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>{t('Left Ear')}</Text>
-      <Image style={styles.image} source={require('./assets/leftear.png')} resizeMode='cover' />
+      <Text style={styles.title}>{t('Right Ear')}</Text>
+      <Image style={styles.image} source={require('../assets/rightear.png')} resizeMode='cover' />
       
       <TouchableOpacity style={styles.Button}>
         <Text style={styles.buttonText}>{t('Frequency 1000HZ')}</Text>
@@ -100,7 +99,7 @@ const styles = StyleSheet.create({
   },
 
   Button1: {
-    backgroundColor: '#D4AF37', // Greenish Yellow
+    backgroundColor: '#FFD700', // Greenish Yellow
     marginTop: 50,
     borderRadius: 10,
     paddingVertical: 20,
@@ -122,7 +121,7 @@ const styles = StyleSheet.create({
     marginBottom: 10,
   },
   educatorButton: {
-    backgroundColor: '#D4AF37', // Greenish Yellow
+    backgroundColor: '#FFD700', // Greenish Yellow
     paddingVertical: 10,
     paddingHorizontal: 20,
     borderRadius: 10,
@@ -147,4 +146,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default LeftEar;
+export default RightEar;

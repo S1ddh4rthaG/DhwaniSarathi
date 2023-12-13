@@ -47,7 +47,7 @@
       "Username": "Username",
       "Password": "Password",
       "Don't have an Account? Sign Up here": "Don't have an Account? Sign Up here",
-      "Login": "Login"
-
+      "Login": "Login",
+      "Invalid Credentials": "Invalid Credentials"
     }
   }

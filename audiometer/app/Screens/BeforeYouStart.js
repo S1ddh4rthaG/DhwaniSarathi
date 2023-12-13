@@ -5,7 +5,7 @@ import Slider from '@react-native-community/slider';
  import {useTranslation} from 'react-i18next'; 
 
   
-const BeforeYouStart = () => {
+const BeforeYouStart = ({navigation}) => {
     
   const [loudness, setLoudness]= useState(40); 
   const handleLoudnessChange = (value)=>{
@@ -22,12 +22,12 @@ const BeforeYouStart = () => {
     <View style={styles.container}>
       <Text style={styles.title}>{t('Before You Start..')}</Text>
       <Image style={styles.image}
-        source={require('./assets/nosoundwhite.png')}
+        source={require('../assets/nosoundwhite.png')}
         resizeMode='cover'/>
       <Text style={styles.title2}>{t('Quiet Place')}</Text>
 
       <Image style={styles.image}
-        source={require('./assets/headphones.png')}
+        source={require('../assets/headphones.png')}
         resizeMode='cover'/>
       <Text style={styles.title2}>{t('Headphones')}</Text>
 
@@ -38,14 +38,14 @@ const BeforeYouStart = () => {
         minimumValue={0}
         maximumValue={1000}
         onValueChange={handleLoudnessChange}
-        minimumTrackTintColor= "#D4AF37"
+        minimumTrackTintColor= "#FFD700"
         maximumTrackTinkColor="white"
-        thumbTintColor="#D4AF37"/>
+        thumbTintColor="#FFD700"/>
       <Text style={styles.sliderLabel1}>{t('Loud')}</Text>
 
       
       </View>
-      <TouchableOpacity style={styles.Button}>
+      <TouchableOpacity style={styles.Button} onPress={()=>{navigation.navigate('RightEar')}}>
         <Text style={styles.buttonText}>{t('Proceed to Test!!')}</Text>
       </TouchableOpacity>
     </View>
@@ -83,24 +83,25 @@ const styles = StyleSheet.create({
     
   },
   image: {
-    width: 70,
-    height: 70,
+    width: 100,
+    height: 100,
     alignContent: 'center',
-    marginBottom: 10
+    alignSelf: 'center',
+    borderWidth: 1,
   },
   title: {
-    fontSize: 30,
-    fontWeight: 'bold',
+    fontSize: 24,
     color: 'white',
-    marginBottom: 40, 
-    textAlign: "center"
+    marginBottom: 20, 
+    textAlign: "center",
+    fontWeight: 'bold'
   },
   title2: {
-    fontSize : 20, 
+    fontSize : 18, 
+    fontWeight: 'bold',
     color: 'white',
-    marginBottom: 30,
+    marginBottom: 10,
     textAlign: "left", 
-   
   }, 
   subtitle: {
     fontSize: 15,
@@ -109,12 +110,13 @@ const styles = StyleSheet.create({
     textAlign: "left",
   },
   Button: {
-    backgroundColor: 'blue', // Greenish Yellow
+    backgroundColor: '#FFD700', // Greenish Yellow
     marginTop: 20,
-    borderRadius: 10,
-    paddingVertical: 20,
-    paddingHorizontal: 80,
-    width: '100%'
+    borderRadius: 20,
+    paddingVertical: 15,
+    width: "100%",
+    borderColor: 'white',
+    borderWidth: 3
   },
   educatorContainer: {
     marginTop: 20,
@@ -125,16 +127,16 @@ const styles = StyleSheet.create({
     marginBottom: 10,
   },
   educatorButton: {
-    backgroundColor: '#D4AF37', // Greenish Yellow
+    backgroundColor: '#FFD700', // Greenish Yellow
     paddingVertical: 10,
     paddingHorizontal: 20,
     borderRadius: 10,
   },
   buttonText: {
-    color: 'white',
+    color: 'black',
     textAlign: 'center',
-    fontSize: 20,
-    // fontWeight: 'bold'
+    fontSize: 18,
+    fontWeight: 'bold'
   },
 
   input: {

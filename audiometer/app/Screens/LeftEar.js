@@ -1,11 +1,12 @@
 import React ,{useState}from 'react';
-import { View, Text, Image,  TouchableOpacity, StyleSheet } from 'react-native';
+import { View, StyleView, Text, Image,  TouchableOpacity, StyleSheet } from 'react-native';
 import Slider from '@react-native-community/slider';
-// import './locales/i18n'; 
+import {NavigationContainer} from "@react-navigation/native"; 
+import {createStackNavigator} from "@react-navigation/stack"; 
+import {MaterialCommunityIcons} from "@expo/vector-icons";  
 import {useTranslation} from 'react-i18next'; 
-
   
-const RightEar = () => {
+const LeftEar = () => {
   const {t,i18n} =useTranslation(); 
   // const [currentLanguage, setLanguage] = useState('en'); 
   // const changeLanguage= value=>{
@@ -15,8 +16,8 @@ const RightEar = () => {
   // }
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>{t('Right Ear')}</Text>
-      <Image style={styles.image} source={require('./assets/rightear.png')} resizeMode='cover' />
+      <Text style={styles.title}>{t('Left Ear')}</Text>
+      <Image style={styles.image} source={require('../assets/leftear.png')} resizeMode='cover' />
       
       <TouchableOpacity style={styles.Button}>
         <Text style={styles.buttonText}>{t('Frequency 1000HZ')}</Text>
@@ -64,17 +65,17 @@ const styles = StyleSheet.create({
     
   },
   image: {
-    width: 100,
-    height: 100,
+    width: 150,
+    height: 150,
     alignContent: 'center',
-    marginBottom: 100
+    marginBottom: 40
   },
   title: {
-    fontSize: 30,
-    fontWeight: 'bold',
+    fontSize: 24,
     color: 'white',
-    marginBottom: 60, 
-    textAlign: "center"
+    marginBottom: 20, 
+    textAlign: "center",
+    fontWeight: 'bold'
   },
   title2: {
     fontSize : 25, 
@@ -90,21 +91,22 @@ const styles = StyleSheet.create({
     textAlign: "left",
   },
   Button: {
-    backgroundColor: 'blue', // Greenish Yellow
+    backgroundColor: '#FFD700', // Greenish Yellow
     marginTop: 20,
-    borderRadius: 10,
-    paddingVertical: 20,
-
-    width: '100%'
+    borderRadius: 20,
+    paddingVertical: 15,
+    width: "100%",
+    borderColor: 'white',
+    borderWidth: 3
   },
-
   Button1: {
-    backgroundColor: '#D4AF37', // Greenish Yellow
-    marginTop: 50,
-    borderRadius: 10,
-    paddingVertical: 20,
-
-    width: '100%'
+    backgroundColor: '#FFD700', // Greenish Yellow
+    marginTop: 20,
+    borderRadius: 20,
+    paddingVertical: 15,
+    width: "100%",
+    borderColor: 'white',
+    borderWidth: 3
   },
   buttonText1: {
     color: 'black',
@@ -121,13 +123,13 @@ const styles = StyleSheet.create({
     marginBottom: 10,
   },
   educatorButton: {
-    backgroundColor: '#D4AF37', // Greenish Yellow
+    backgroundColor: '#FFD700', // Greenish Yellow
     paddingVertical: 10,
     paddingHorizontal: 20,
     borderRadius: 10,
   },
   buttonText: {
-    color: 'white',
+    color: 'black',
     textAlign: 'center',
     fontSize: 20,
     //fontWeight: 'bold'
@@ -146,4 +148,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default RightEar;
+export default LeftEar;

@@ -4,7 +4,7 @@ import { Box, IconButton, HStack, Icon, MaterialIcons, StatusBar, View, Text, To
 import {useNavigation} from '@react-navigation/native'; 
 // import './locales/i18n';  
 import {useTranslation} from 'react-i18next';
-
+import {Image} from 'react-native'; 
 
 const Home = () => {
   const navigation= useNavigation()
@@ -17,10 +17,9 @@ const Home = () => {
   // }
   return (
     <View style={styles.container}>
-
      
-     
-      <TouchableOpacity style={styles.Button}>
+      <Image style={styles.image} source={require('../assets/audiometer.jpeg')} resizeMode='cover' />
+      <TouchableOpacity style={styles.Button} onPress={()=>navigation.navigate('FillDetails')}>
         <Text style={styles.buttonText}>{t('Start Full Test')}</Text>
       </TouchableOpacity>
 
@@ -74,24 +73,33 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
   },
-  
+  image: {
+    width: 200,
+    height: 200,
+    alignContent: 'center',
+    borderColor: '#FFD700',
+    borderCurve: 'circular',
+    borderRadius: 10,
+    borderWidth: 10,
+  },
   Button: {
-    backgroundColor: '#D4AF37', // Greenish Yellow
+    backgroundColor: '#FFD700', // Greenish Yellow
     marginTop: 20,
     borderRadius: 20,
-    marginBottom: 5,
     paddingVertical: 15,
-    width: "100%"
+    width: "100%",
+    borderColor: 'white',
+    borderWidth: 3
   },
   //new style created for the 2nd button as it has the padding below it as shown in the figma 
   Button1: {
-    backgroundColor: '#D4AF37', // Greenish Yellow
+    backgroundColor: '#FFD700', // Greenish Yellow
     marginTop: 20,
     borderRadius: 20,
-    marginBottom: 5,
     paddingVertical: 15,
-    marginBottom: 80,
-    width: "100%"
+    width: "100%",
+    borderColor: 'white',
+    borderWidth: 3
     
   },
   buttonText: {
@@ -99,6 +107,12 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     fontSize: 15,
     fontWeight: 'bold',
+  },
+
+  gif: {
+    width: '100%',
+    height: 200, // Adjust the height as needed
+    marginBottom: 20,
   },
 });
 

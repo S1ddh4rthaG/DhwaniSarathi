@@ -3,8 +3,8 @@ import { View, TextInput, Text, TouchableOpacity, StyleSheet } from 'react-nativ
 
 // import './locales/i18n'; 
 import {useTranslation} from 'react-i18next'; 
-  
-const FillDetails = () => {
+import {Image} from 'react-native'
+const FillDetails = ({navigation}) => {
     const [name, setName] = useState('');
     const [age, setAge]= useState(''); 
     const [rollNumber, setRollNumber]= useState(''); 
@@ -28,11 +28,16 @@ const FillDetails = () => {
     //   .then(()=>setLanguage(value))
     //   .catch(err => console.log(err)); 
     // }
+
+    const handleStartTest = () => {
+      //TODO: IF student store the details
+      navigation.navigate('BeforeYouStart');
+    }
     
   return (
     <View style={styles.container}>
             <Text style={styles.title}>{t('Fill Your Details')}</Text>
-            <Text style={styles.subtitle}>{t('Name')}</Text>
+            {/* <Text style={styles.subtitle}>{t('Name')}</Text>
             <TextInput
                 style={styles.input}
                 placeholder={t('Enter your name')}
@@ -52,9 +57,10 @@ const FillDetails = () => {
                 textAlign="left"  // Set text alignment to left
                 color="white"
                 placeholderTextColor="grey"
-            />
+            /> */}
 
             <Text style={styles.title2}>{t('For Students')}</Text>
+            <Image style={styles.image} source={require('../assets/forStudents.gif')} resizeMode='cover' />
             <Text style={styles.subtitle}>{t('Student Roll Number')}</Text>
             <TextInput
                 style={styles.input}
@@ -77,7 +83,7 @@ const FillDetails = () => {
                 placeholderTextColor="grey"
             />
 
-            <TouchableOpacity style={styles.Button}>
+            <TouchableOpacity style={styles.Button} onPress={handleStartTest}>
                 <Text style={styles.buttonText}>{t('Start Test')}</Text>
             </TouchableOpacity>
       </View>
@@ -93,32 +99,47 @@ const styles = StyleSheet.create({
     
   },
   title: {
-    fontSize: 30,
+    fontSize: 24,
     color: 'white',
-    marginBottom: 40, 
-    textAlign: "center"
+    marginBottom: 20, 
+    textAlign: "center",
+    fontWeight: 'bold'
+  },
+  image: {
+    width: 200,
+    height: 200,
+    alignContent: 'center',
+    borderColor: '#FFD700',
+    borderRadius: 10,
+    alignSelf: 'center',
+    borderWidth: 30,
+    marginTop: 5,
+    marginBottom: 20, 
   },
   title2: {
-    fontSize : 20, 
+    fontSize : 22, 
     fontWeight: 'bold',
     color: 'white',
-    marginBottom: 20,
+    marginBottom: 10,
     textAlign: "left", 
-    marginTop: 30,
+    marginTop: 20,
   }, 
   subtitle: {
-    fontSize: 18,
+    fontSize: 16,
     color: 'white',
-    marginBottom: 10,
+    marginBottom: 5,
+    fontWeight: 'bold',
     textAlign: "left",
   },
   Button: {
-    backgroundColor: 'blue', // Greenish Yellow
-    marginTop: 20,
-    borderRadius: 10,
-    paddingVertical: 20,
-    paddingHorizontal: 80,
-    width: '100%'
+    backgroundColor: '#FFD700', // Greenish Yellow
+    marginTop: 30,
+    borderRadius: 20,
+    paddingVertical: 15,
+    width: '100%',
+    alignItems: 'center',
+    borderColor: 'white',
+    borderWidth: 3
   },
   educatorContainer: {
     marginTop: 20,
@@ -129,28 +150,28 @@ const styles = StyleSheet.create({
     marginBottom: 10,
   },
   educatorButton: {
-    backgroundColor: '#D4AF37', // Greenish Yellow
+    backgroundColor: '#FFD700', // Greenish Yellow
     paddingVertical: 10,
     paddingHorizontal: 20,
     borderRadius: 10,
   },
   buttonText: {
-    color: 'white',
+    color: 'black',
     textAlign: 'center',
-    fontSize: 15,
-    
+    fontSize: 18,
+    fontWeight: 'bold'
   },
 
   input: {
     height: 40,
     borderColor: 'white',
     borderWidth: 1,
-    borderRadius: 10,
-    marginBottom: 20,
+    borderRadius: 8,
+    marginBottom: 10,
     paddingHorizontal: 10,
     width: '100%',
     color: 'white',
-    fontStyle: 'italic'
+    fontStyle: 'normal'
     
   },
 });

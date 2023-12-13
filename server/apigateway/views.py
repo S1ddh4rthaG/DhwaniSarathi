@@ -7,19 +7,15 @@ from rest_framework.response import Response
 from rest_framework import status
 import datetime
 
-# views for User
-# url/users
+
 @api_view(['GET', 'POST'])
 def login_authentication(request,FID):
     """
     Authenticate a user.
     """
-    try:
-        logininfo = LoginInfo.objects.get(FID=FID)
-    except LoginInfo.DoesNotExist:
-        return Response(status=status.HTTP_404_NOT_FOUND)
     
     if(request.method == 'GET'):
+        logininfo = LoginInfo.objects.get(FID=FID)
         serializer = LoginInfoSerializer(logininfo)
         return Response(serializer.data)
         
@@ -30,7 +26,8 @@ def login_authentication(request,FID):
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
     
-        
+ # views for User
+# url/users       
 @api_view(['GET', 'POST'])
 def user_list(request):
     """

@@ -9,7 +9,7 @@ import {
   StyleSheet,
 } from "react-native";
 
-import { FIREBASE_AUTH } from "../FirebaseConfig.js";
+import { FIREBASE_AUTH } from "../../FirebaseConfig.js";
 
 const Signout = ({ navigation }) => {
   return (
@@ -67,7 +67,7 @@ const styles = StyleSheet.create({
     alignContent: "center",
   },
   Button: {
-    backgroundColor: "#D4AF37",
+    backgroundColor: "#FFD700",
     paddingVertical: 10,
     paddingHorizontal: 60,
     marginBottom: 20,

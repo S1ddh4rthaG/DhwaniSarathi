@@ -2,7 +2,7 @@ import React , {useState} from 'react';
 import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
 // import './locales/i18n'; 
 import {useTranslation} from 'react-i18next'; 
-const Signin = () => {
+const GetStarted = () => {
 
   // const [currentLanguage, setLanguage] = useState('en'); 
   // const changeLanguage= value=>{
@@ -49,7 +49,7 @@ const styles = StyleSheet.create({
     marginBottom: 140,
   },
   getStartedButton: {
-    backgroundColor: '#D4AF37', // Greenish Yellow
+    backgroundColor: '#FFD700', // Greenish Yellow
     marginTop: 20,
     borderRadius: 25,
     paddingVertical: 10,
@@ -64,7 +64,7 @@ const styles = StyleSheet.create({
     marginBottom: 10,
   },
   educatorButton: {
-    backgroundColor: '#D4AF37', // Greenish Yellow
+    backgroundColor: '#FFD700', // Greenish Yellow
     paddingVertical: 10,
     paddingHorizontal: 20,
     borderRadius: 10,
@@ -75,4 +75,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default Signin;
+export default GetStarted;
