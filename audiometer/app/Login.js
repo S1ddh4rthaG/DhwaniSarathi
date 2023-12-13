@@ -8,6 +8,7 @@ import {
   signInWithEmailAndPassword,
   createUserWithEmailAndPassword,
 } from "firebase/auth";
+
 import { FIREBASE_AUTH } from "../FirebaseConfig.js";
 import Signup from './Signup.js';
 
@@ -32,24 +33,20 @@ const Login = ({ navigation }) => {
   };
 
   const signUp = async () => {
-    setLoading(true);
-    try {
-      const response = await createUserWithEmailAndPassword(
-        auth,
-        username,
-        password
-      );
-      console.log(response);
-    } catch (error) {
-      console.log(error);
-    } finally {
-      setLoading(false);
-    }
-  };
-  const handleLogin = () => {
-    // Implement authentication logic here
-    console.log("Logging in with:", username, password);
-    // Add your authentication logic here
+    navigation.navigate('Signup'); // Navigate to the SignUp screen
+    // setLoading(true);
+    // try {
+    //   const response = await createUserWithEmailAndPassword(
+    //     auth,
+    //     username,
+    //     password
+    //   );
+    //   console.log(response);
+    // } catch (error) {
+    //   console.log(error);
+    // } finally {
+    //   setLoading(false);
+    // }
   };
 
   // const [currentLanguage, setLanguage] = useState('en'); 

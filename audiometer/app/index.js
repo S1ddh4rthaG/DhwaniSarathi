@@ -271,7 +271,7 @@ export default () => {
   return (
     <I18nextProvider i18n={i18n}>
     <NavigationContainer independent={true}>
-      {user ? <Signout /> : <Login />}
+      {user ? <Signout /> : <Signup />}
     </NavigationContainer>
     </I18nextProvider>
   );

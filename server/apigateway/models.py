@@ -6,9 +6,9 @@ from django.utils import timezone
 
 class LoginInfo(models.Model):
     FID = models.CharField(primary_key=True, max_length=100,  default=uuid.uuid4)
-    type = models.IntegerField()
+    Type = models.IntegerField(default=0)
     def __str__(self):
-        return self.username
+        return self.FID
 
     
 class User(models.Model):
