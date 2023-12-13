@@ -1,71 +1,47 @@
 import React from 'react';
 import { View, Text, StyleSheet, Image, SafeAreaView } from 'react-native';
-import Carousel from 'react-native-snap-carousel';
-import AssignmentList from './AssignmentList';
-export default class EducatorHome extends React.Component {
 
-
-    constructor(props) {
-        super(props);
-        this.state = {
-            activeIndex: 0,
-            carouselItems: [
-                {
-                    title: "Item 1",
-                    text: "Text 1",
-                },
-                {
-                    title: "Item 2",
-                    text: "Text 2",
-                },
-                {
-                    title: "Item 3",
-                    text: "Text 3",
-                },
-                {
-                    title: "Item 4",
-                    text: "Text 4",
-                },
-                {
-                    title: "Item 5",
-                    text: "Text 5",
-                },
-            ]
-        }
-    }
-
-    _renderItem({ item, index }) {
-        return (
-            <View style={{
-                backgroundColor: 'floralwhite',
-                borderRadius: 5,
-                height: 250,
-                padding: 50,
-                marginLeft: 25,
-                marginRight: 25,
-            }}>
-                <Text style={{ fontSize: 30 }}>{item.title}</Text>
-                <Text>{item.text}</Text>
+export default function EducatorHome() {
+    return (
+        <SafeAreaView style={styles.container}>
+            <View style={styles.header}>
+                LOGO
             </View>
-
-        )
-    }
-
-    render() {
-        return (
-            <SafeAreaView style={{ flex: 1, backgroundColor: 'rebeccapurple', paddingTop: 50, }}>
-                <View style={{ flex: 1, flexDirection: 'row', justifyContent: 'center', }}>
-                    <Carousel
-                        layout={"default"}
-                        ref={ref => this.carousel = ref}
-                        data={this.state.carouselItems}
-                        sliderWidth={300}
-                        itemWidth={300}
-                        renderItem={this._renderItem}
-                        onSnapToItem={index => this.setState({ activeIndex: index })} />
-                </View>
-            </SafeAreaView>
-        );
-    }
+            <View style={styles.footer}>
+                <Text style={styles.title}>Welcome to Educator Home Screen</Text>
+            </View>
+        </SafeAreaView>
+    );
 }
 
+const styles = StyleSheet.create({
+    container: {
+        flex: 1,
+        backgroundColor: '#009387'
+    },
+    header: {
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center',
+        paddingHorizontal: 20,
+        paddingBottom: 50
+    },
+    footer: {
+        flex: 1,
+        backgroundColor: '#fff',
+        borderTopLeftRadius: 30,
+        borderTopRightRadius: 30,
+        paddingHorizontal: 20,
+        paddingVertical: 30
+    },
+    logo: {
+        width: 200,
+        height: 200,
+        resizeMode: 'contain'
+    },
+    title: {
+        color: '#05375a',
+        fontSize: 30,
+        fontWeight: 'bold'
+    }
+});
