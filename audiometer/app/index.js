@@ -1,5 +1,6 @@
 
-import React , {useState} from "react";
+import React from "react";
+import { useState, useEffect } from "react";
 import { StyleSheet, View, TouchableOpacity } from "react-native";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { NavigationContainer } from "@react-navigation/native";
@@ -16,22 +17,11 @@ import Signup from "./Signup";
 import i18n from './locales/i18n'; 
 import {useTranslation} from 'react-i18next';
 import { I18nextProvider } from "react-i18next";  
+import Signout from "./Signout";
+import { FIREBASE_AUTH } from "../FirebaseConfig.js";
+import { onAuthStateChanged } from "firebase/auth";
+
 const Stack = createStackNavigator();
-
-// export default function Page() {
-//   return (
-
-//     // <View style={styles.container}>
-//     //   <View style={styles.main}>
-//     //     <Text style={styles.title}>Hello World</Text>
-//     //     <Text style={styles.subtitle}>This is the first page of your app.</Text>
-//     //   </View>
-//     // </View>
-//     <View style={{flex:1}}>
-//       <LeftEar/>
-//     </View>
-//   );
-// }
 
 function Page() {
   // const [currentLanguage, setLanguage] = useState('hi'); 
@@ -50,6 +40,7 @@ function Page() {
         options={{
           headerTitle: () => <Header name={t("Hertz hEARing Test")} />,
           headerTitleAlign: "Signin", // Center the header title
+
           headerRight: () => (
             <View style={{ flexDirection: "row", alignItems: "center" }}>
               <TouchableOpacity style={{ marginRight: 15 }}>
@@ -60,19 +51,14 @@ function Page() {
                   color="black"
                 />
               </TouchableOpacity>
-
-              {/* Additional icons or content for the right side */}
             </View>
           ),
           headerStyle: {
-            
             height: 70,
             backgroundColor: "#D4AF37",
-            
           },
         }}
       />
-
 
       <Stack.Screen
         name="Signup"
@@ -98,13 +84,11 @@ function Page() {
           headerStyle: {
             height: 70,
             backgroundColor: "#D4AF37",
-            
           },
         }}
       />
 
-
-    <Stack.Screen
+      <Stack.Screen
         name="Login"
         component={Login}
         options={{
@@ -125,10 +109,8 @@ function Page() {
             </View>
           ),
           headerStyle: {
-            
             height: 70,
             backgroundColor: "#D4AF37",
-            
           },
         }}
       />
@@ -154,10 +136,8 @@ function Page() {
             </View>
           ),
           headerStyle: {
-            
             height: 70,
             backgroundColor: "#D4AF37",
-            
           },
         }}
       />
@@ -183,10 +163,8 @@ function Page() {
             </View>
           ),
           headerStyle: {
-            
             height: 70,
             backgroundColor: "#D4AF37",
-            
           },
         }}
       />
@@ -212,10 +190,8 @@ function Page() {
             </View>
           ),
           headerStyle: {
-            
             height: 70,
             backgroundColor: "#D4AF37",
-            
           },
         }}
       />
@@ -241,15 +217,13 @@ function Page() {
             </View>
           ),
           headerStyle: {
-            
             height: 70,
             backgroundColor: "#D4AF37",
-            
           },
         }}
       />
 
-    <Stack.Screen
+      <Stack.Screen
         name="Results"
         component={Results}
         options={{
@@ -270,16 +244,12 @@ function Page() {
             </View>
           ),
           headerStyle: {
-            
             height: 70,
             backgroundColor: "#D4AF37",
-            
           },
         }}
       />
     </Stack.Navigator>
-
-
   );
 }
 
@@ -290,10 +260,18 @@ const styles = StyleSheet.create({
 });
 
 export default () => {
+  const [user, setUser] = useState(null); // Initialize user state as null
+  useEffect(() => {
+    onAuthStateChanged(FIREBASE_AUTH, (user) => {
+      console.log("user", user);
+      setUser(user);
+    });
+  }, []);
+
   return (
     <I18nextProvider i18n={i18n}>
     <NavigationContainer independent={true}>
-      <Page />
+      {user ? <Signout /> : <Login />}
     </NavigationContainer>
     </I18nextProvider>
   );

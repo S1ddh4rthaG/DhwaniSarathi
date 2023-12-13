@@ -1,10 +1,15 @@
 from rest_framework import serializers
-from .models import User, Educator, Classroom, Assignment, UserAssignmentResults, UserOnlyResults
+from .models import  LoginInfo, User, Educator, Classroom, Assignment, UserAssignmentResults, UserOnlyResults
+
+class LoginInfoSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = LoginInfo
+        fields = ['FID', 'type']
 
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
-        fields = ['UID', 'username']
+        fields = ['UID', 'UserName','Age','Gender']
 
 class EducatorSerializer(serializers.ModelSerializer):
     class Meta:
@@ -19,7 +24,7 @@ class ClassroomSerializer(serializers.ModelSerializer):
 class AssignmentSerializer(serializers.ModelSerializer):
     class Meta:
         model = Assignment
-        fields = ['AID', 'CID', 'Deadline']
+        fields = ['AID', 'CID','AssignmentName','Deadline']
 
 class UserAssignmentResultsSerializer(serializers.ModelSerializer):
     class Meta:

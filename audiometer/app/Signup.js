@@ -4,6 +4,7 @@ import { View, Text, TextInput, Button, StyleSheet, TouchableOpacity} from 'reac
 import {Picker} from '@react-native-picker/picker'; 
 // import './locales/i18n'; 
 import {useTranslation} from 'react-i18next'; 
+
 const Signup = () => {
   const {t,i18n} =useTranslation(); 
   // const [currentLanguage, setLanguage] = useState('en'); 
