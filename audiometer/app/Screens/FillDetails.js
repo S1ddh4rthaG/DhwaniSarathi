@@ -4,7 +4,7 @@ import { View, TextInput, Text, TouchableOpacity, StyleSheet } from 'react-nativ
 // import './locales/i18n'; 
 import {useTranslation} from 'react-i18next'; 
   
-const FillDetails = () => {
+const FillDetails = ({navigation}) => {
     const [name, setName] = useState('');
     const [age, setAge]= useState(''); 
     const [rollNumber, setRollNumber]= useState(''); 
@@ -28,11 +28,16 @@ const FillDetails = () => {
     //   .then(()=>setLanguage(value))
     //   .catch(err => console.log(err)); 
     // }
+
+    const handleStartTest = () => {
+      //TODO: IF student store the details
+      navigation.navigate('BeforeYouStart');
+    }
     
   return (
     <View style={styles.container}>
             <Text style={styles.title}>{t('Fill Your Details')}</Text>
-            <Text style={styles.subtitle}>{t('Name')}</Text>
+            {/* <Text style={styles.subtitle}>{t('Name')}</Text>
             <TextInput
                 style={styles.input}
                 placeholder={t('Enter your name')}
@@ -52,7 +57,7 @@ const FillDetails = () => {
                 textAlign="left"  // Set text alignment to left
                 color="white"
                 placeholderTextColor="grey"
-            />
+            /> */}
 
             <Text style={styles.title2}>{t('For Students')}</Text>
             <Text style={styles.subtitle}>{t('Student Roll Number')}</Text>
@@ -77,7 +82,7 @@ const FillDetails = () => {
                 placeholderTextColor="grey"
             />
 
-            <TouchableOpacity style={styles.Button}>
+            <TouchableOpacity style={styles.Button} onPress={handleStartTest}>
                 <Text style={styles.buttonText}>{t('Start Test')}</Text>
             </TouchableOpacity>
       </View>

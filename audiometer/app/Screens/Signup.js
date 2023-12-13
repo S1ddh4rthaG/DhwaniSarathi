@@ -13,7 +13,7 @@ import { createUserWithEmailAndPassword } from "firebase/auth";
 import { FIREBASE_AUTH } from "../../FirebaseConfig.js";
 import { useTranslation } from "react-i18next";
 
-const Signup = () => {
+const Signup = ({ navigation }) => {
   const { t, i18n } = useTranslation();
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
@@ -30,22 +30,26 @@ const Signup = () => {
         email,
         password
       );
+
+      //TODO: Fix this logic
       if (response) {
-        const dbcreate = await fetch(
-          `http://192.168.1.5/login/${response.user.uid}/`,
-          {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify({
-              FID: response.user.uid,
-              Type: userType === "User" ? 0 : 1,
-            }),
-          }
-        );
-        console.log(dbcreate);
+        navigation.navigate("Home");
+        // const dbcreate = await fetch(
+        //   `http://192.168.1.5/login/${response.user.uid}/`,
+        //   {
+        //     method: "POST",
+        //     headers: {
+        //       "Content-Type": "application/json",
+        //     },
+        //     body: JSON.stringify({
+        //       FID: response.user.uid,
+        //       Type: userType === "User" ? 0 : 1,
+        //     }),
+        //   }
+        // );
+        // console.log(dbcreate);
       }
+
       console.log(response);
     } catch (error) {
       console.log(error);

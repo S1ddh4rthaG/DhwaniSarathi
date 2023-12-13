@@ -20,7 +20,7 @@ const Home = () => {
 
      
      
-      <TouchableOpacity style={styles.Button}>
+      <TouchableOpacity style={styles.Button} onPress={()=>navigation.navigate('FillDetails')}>
         <Text style={styles.buttonText}>{t('Start Full Test')}</Text>
       </TouchableOpacity>
 

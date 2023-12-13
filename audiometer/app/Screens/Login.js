@@ -18,6 +18,7 @@ const Login = ({ navigation }) => {
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
   const auth = FIREBASE_AUTH;
+
   const signIn = async () => {
     setLoading(true);
     try {
@@ -26,28 +27,19 @@ const Login = ({ navigation }) => {
         username,
         password
       );
+
+      if (response) {
+        //TODO: store userId as local storage
+        navigation.navigate("Home");
+      }
+      else{
+        alert("Invalid Credentials");
+      }
     } catch (error) {
       console.log(error);
     } finally {
       setLoading(false);
     }
-  };
-
-  const signUp = async () => {
-    navigation.navigate('Signup'); // Navigate to the SignUp screen
-    // setLoading(true);
-    // try {
-    //   const response = await createUserWithEmailAndPassword(
-    //     auth,
-    //     username,
-    //     password
-    //   );
-    //   console.log(response);
-    // } catch (error) {
-    //   console.log(error);
-    // } finally {
-    //   setLoading(false);
-    // }
   };
 
   // const [currentLanguage, setLanguage] = useState('en'); 
@@ -83,8 +75,8 @@ const Login = ({ navigation }) => {
 
   
       <Text style={styles.educatorText}>{t("Don't have an Account? Sign Up here")}</Text>
-      <TouchableOpacity style={styles.Button} onPress={signUp}>
-        <Text style={styles.buttonText}>{t('Sign up')}</Text>
+      <TouchableOpacity style={styles.Button} onPress={()=>{navigation.navigate('Signup')}}>
+        <Text style={styles.buttonText} >{t('Sign up')}</Text>
       </TouchableOpacity>
     
   </View>

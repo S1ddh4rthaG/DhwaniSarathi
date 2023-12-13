@@ -2,7 +2,7 @@ import React , {useState} from 'react';
 import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
 // import './locales/i18n'; 
 import {useTranslation} from 'react-i18next'; 
-const Signin = () => {
+const GetStarted = () => {
 
   // const [currentLanguage, setLanguage] = useState('en'); 
   // const changeLanguage= value=>{
@@ -75,4 +75,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default Signin;
+export default GetStarted;

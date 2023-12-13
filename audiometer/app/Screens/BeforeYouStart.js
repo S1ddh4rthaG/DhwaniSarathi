@@ -5,7 +5,7 @@ import Slider from '@react-native-community/slider';
  import {useTranslation} from 'react-i18next'; 
 
   
-const BeforeYouStart = () => {
+const BeforeYouStart = ({navigation}) => {
     
   const [loudness, setLoudness]= useState(40); 
   const handleLoudnessChange = (value)=>{
@@ -45,7 +45,7 @@ const BeforeYouStart = () => {
 
       
       </View>
-      <TouchableOpacity style={styles.Button}>
+      <TouchableOpacity style={styles.Button} onPress={()=>{navigation.navigate('RightEar')}}>
         <Text style={styles.buttonText}>{t('Proceed to Test!!')}</Text>
       </TouchableOpacity>
     </View>
