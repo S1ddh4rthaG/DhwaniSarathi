@@ -10,11 +10,12 @@
   },
   "dependencies": {
     "@expo/vector-icons": "^13.0.0",
-    "@react-native-async-storage/async-storage": "1.18.2",
+    "@react-native-async-storage/async-storage": "^1.18.2",
     "@react-native-community/slider": "4.4.2",
     "@react-native-picker/picker": "2.4.10",
     "@react-navigation/native": "^6.1.9",
     "@react-navigation/stack": "^6.3.20",
+    "deprecated-react-native-prop-types": "^5.0.0",
     "expo": "~49.0.15",
     "expo-constants": "~14.4.2",
     "expo-linking": "~5.0.2",
