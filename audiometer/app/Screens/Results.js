@@ -25,12 +25,12 @@ const Results = () => {
                 <View style={styles.tableRow}>
                     <Image
                         style={styles.image}
-                        source={require('./assets/leftear.png')}
+                        source={require('../assets/leftear.png')}
                         resizeMode='cover'
                     />
                     <Image
                         style={styles.image}
-                        source={require('./assets/rightear.png')}
+                        source={require('../assets/rightear.png')}
                         resizeMode='cover'
                     />
                 </View>

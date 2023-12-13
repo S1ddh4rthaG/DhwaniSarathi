@@ -10,7 +10,7 @@ import {
 } from "react-native";
 import { Picker } from "@react-native-picker/picker";
 import { createUserWithEmailAndPassword } from "firebase/auth";
-import { FIREBASE_AUTH } from "../FirebaseConfig.js";
+import { FIREBASE_AUTH } from "../../FirebaseConfig.js";
 import { useTranslation } from "react-i18next";
 
 const Signup = () => {

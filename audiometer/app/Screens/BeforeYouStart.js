@@ -22,12 +22,12 @@ const BeforeYouStart = () => {
     <View style={styles.container}>
       <Text style={styles.title}>{t('Before You Start..')}</Text>
       <Image style={styles.image}
-        source={require('./assets/nosoundwhite.png')}
+        source={require('../assets/nosoundwhite.png')}
         resizeMode='cover'/>
       <Text style={styles.title2}>{t('Quiet Place')}</Text>
 
       <Image style={styles.image}
-        source={require('./assets/headphones.png')}
+        source={require('../assets/headphones.png')}
         resizeMode='cover'/>
       <Text style={styles.title2}>{t('Headphones')}</Text>
 

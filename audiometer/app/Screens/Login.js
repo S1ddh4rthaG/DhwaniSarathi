@@ -2,17 +2,18 @@
 import React, { useState } from 'react';
 import { View, TouchableOpacity, Text, TextInput, Button, StyleSheet } from 'react-native';
 // import './locales/i18n'; 
-import {useTranslation} from 'react-i18next'; 
+import {t,useTranslation} from 'react-i18next'; 
 
 import {
   signInWithEmailAndPassword,
   createUserWithEmailAndPassword,
 } from "firebase/auth";
 
-import { FIREBASE_AUTH } from "../FirebaseConfig.js";
+import { FIREBASE_AUTH } from "../../FirebaseConfig.js";
 import Signup from './Signup.js';
 
 const Login = ({ navigation }) => {
+  const {t,i18n} =useTranslation(); 
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
