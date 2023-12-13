@@ -33,7 +33,7 @@ const Login = ({ navigation }) => {
         navigation.navigate("Home");
       }
       else{
-        alert("Invalid Credentials");
+        alert(t('Invalid Credentials'),style={ color: "red" ,onPress:()=>{console.log('Invalid Credentials')}});
       }
     } catch (error) {
       console.log(error);
