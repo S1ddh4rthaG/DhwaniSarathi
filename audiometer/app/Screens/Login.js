@@ -39,6 +39,7 @@ const Login = ({ navigation }) => {
       if (response) {
         try {
           await AsyncStorage.setItem("userId", response.user.uid);
+          
         } catch (error) {
           console.error("Error storing userId:", error);
         }
@@ -47,6 +48,7 @@ const Login = ({ navigation }) => {
       }
       const userId = await AsyncStorage.getItem('userId');
       console.log(userId);
+      navigation.navigate("Home");
     } catch (error) {
       console.log(error);
     } finally {
