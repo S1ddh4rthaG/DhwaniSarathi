@@ -2,23 +2,10 @@ import React from 'react';
 import { View, Text, StyleSheet, Image, ScrollView } from 'react-native';
 import { LineChart } from "react-native-chart-kit";
 import { Dimensions } from "react-native";
-
-import { AreaChart } from 'react-native-svg-charts'
-import { Dots, Line } from './AreaChartScreen/chartAdds'
-import { XAxis, YAxis } from 'react-native-svg-charts'
-import { SafeAreaView } from 'react-native'
+import { Chart, Line, Area, HorizontalAxis, VerticalAxis } from 'react-native-responsive-linechart'
 
 // import './locales/i18n'; 
 import { useTranslation } from 'react-i18next';
-
-const data2 = [50, 10, 40, 95, -4, -24, 85, 91, 35, 53, -53, 24, 50, -20, -80];
-
-const data3 = {
-    x: [1, 2, 3, 4, 5],
-    y: [1, 2, 3, 4, 8],
-    type: 'scatter',
-};
-const layout = { title: 'My cool chart!' };
 
 const screenWidth = Dimensions.get("window").width;
 
@@ -112,52 +99,50 @@ const Results = () => {
                     height={250}
                     chartConfig={chartConfig}
                 />
-
-                <AreaChart
-                    style={{ height: 200 }}
-                    data={data2}
-                    gridMin={-100}
-                    gridMax={120}
-                    contentInset={{ top: 30, bottom: 30 }}
-                    svg={{ fill: '#ADD8E6' }}>
-                    {/* <Grid /> */}
-                    <Line />
-                    <Dots />
-                </AreaChart>
-
-                <AreaChart style={{ height: 200 }} data={data2} svg={{ fill: '#ADD8E6' }} />
-                <SafeAreaView
-                    style={{ flexDirection: 'row', flex: 1 }}
-                    onLayout={(event) => {
-                        const { width } = event.nativeEvent.layout
-                        // setComponentWidth(width)
-                    }}>
-                    <YAxis
-                        data={data2}
-                        contentInset={{ top: 20, bottom: 20 }}
-                        min={-50}
-                        max={150}
-                        svg={{
-                            fill: 'grey',
-                            fontSize: 11,
-                        }}
-                        style={{ marginRight: 5, height: 300 }}
-                        numberOfTicks={10}
-                        formatLabel={(value) => `${value} km`}
-                    />
-                    <XAxis
-                        style={{ marginHorizontal: -10, width: 300, marginTop: 10 }}
-                        data={data2}
-                        formatLabel={(value, index) => index}
-                        contentInset={{ left: 10, right: 10 }}
-                        svg={{ fontSize: 10, fill: 'black' }}
-                    />
-                    {/* <AxisXLine width={componentWidth} />
-                        <AxisYLine />
-                        <HorizontalArrow />
-                        <VerticalArrow /> */}
-                </SafeAreaView>
             </View >
+
+            <Chart
+                style={{ height: 200 }}
+                data={[
+                    { x: 250, y: 15 },
+                    { x: 500, y: 10 },
+                    { x: 1000, y: 70 },
+                    { x: 2000, y: 30 },
+                    { x: 4000, y: 20 },
+                    { x: 8000, y: 55 },
+                ]}
+                padding={{ left: 40, bottom: 20, right: 20, top: 20 }}
+                xDomain={{ min: 0, max: 10000 }}
+                yDomain={{ min: -10, max: 140 }}
+            >
+                <VerticalAxis tickCount={11} theme={{
+                    axis: {
+                        visible: true,
+                        stroke: {
+                            color: 'white',
+                            width: 2,
+                            opacity: 1,
+                            dashArray: [],
+                        },
+                        dx: 0,
+                    }, labels: {
+                        visible: true,
+                        label: {
+                            color: 'white',
+                            fontSize: 10,
+                            fontWeight: 300,
+                            textAnchor: 'end',
+                            opacity: 1,
+                            dx: -4,
+                            dy: 4,
+                            rotation: 0,
+                        }, formatter: (v) => v.toFixed(0)
+                    }
+                }} />
+                <HorizontalAxis tickCount={6} />
+                <Area theme={{ gradient: { from: { color: '#ffa502' }, to: { color: '#ffa502', opacity: 0.4 } } }} />
+                <Line theme={{ stroke: { color: '#ffa502', width: 5 }, scatter: { default: { width: 4, height: 4, rx: 2 } } }} />
+            </Chart>
         </ScrollView>
     );
 };
