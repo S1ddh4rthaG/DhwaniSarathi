@@ -1,19 +1,26 @@
 // Login.js
-import React, { useState } from 'react';
-import { View, TouchableOpacity, Text, TextInput, Button, StyleSheet } from 'react-native';
-// import './locales/i18n'; 
-import {t,useTranslation} from 'react-i18next'; 
+import React, { useState } from "react";
+import {
+  View,
+  TouchableOpacity,
+  Text,
+  TextInput,
+  Button,
+  StyleSheet,
+} from "react-native";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+// import './locales/i18n';
+import { t, useTranslation } from "react-i18next";
 
 import {
   signInWithEmailAndPassword,
-  createUserWithEmailAndPassword,
 } from "firebase/auth";
 
 import { FIREBASE_AUTH } from "../../FirebaseConfig.js";
-import Signup from './Signup.js';
+
 
 const Login = ({ navigation }) => {
-  const {t,i18n} =useTranslation(); 
+  const { t, i18n } = useTranslation();
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
@@ -21,20 +28,25 @@ const Login = ({ navigation }) => {
 
   const signIn = async () => {
     setLoading(true);
+
     try {
       const response = await signInWithEmailAndPassword(
         auth,
         username,
         password
       );
-
+      console.log(response);
       if (response) {
-        //TODO: store userId as local storage
-        navigation.navigate("Home");
-      }
-      else{
+        try {
+          await AsyncStorage.setItem("userId", response.user.uid);
+        } catch (error) {
+          console.error("Error storing userId:", error);
+        }
+      } else {
         alert("Invalid Credentials");
       }
+      const userId = await AsyncStorage.getItem('userId');
+      console.log(userId);
     } catch (error) {
       console.log(error);
     } finally {
@@ -42,44 +54,42 @@ const Login = ({ navigation }) => {
     }
   };
 
-  // const [currentLanguage, setLanguage] = useState('en'); 
-  // const changeLanguage= value=>{
-  //   i18n.changeLanguage(value)
-  //   .then(()=>setLanguage(value))
-  //   .catch(err => console.log(err)); 
-  // }
-
   return (
     <View style={styles.container}>
-    <Text style={styles.title2}>{t('Login')}</Text>
-    <TextInput
-      placeholder={t('Email')}
-      value={username}
-      onChangeText={(text) => setUsername(text)}
-      style={styles.input}
-      placeholderTextColor='grey'
-      textAlign='center'
-    />
-    <TextInput
-      placeholder={t('Password')}
-      value={password}
-      onChangeText={(text) => setPassword(text)}
-      secureTextEntry
-      style={styles.input}
-      placeholderTextColor='grey'
-      textAlign='center'
-    />
-    <TouchableOpacity style={styles.Button} onPress={signIn}>
-      <Text style={styles.buttonText}>{t('Login')}</Text>
-    </TouchableOpacity>
-
-  
-      <Text style={styles.educatorText}>{t("Don't have an Account? Sign Up here")}</Text>
-      <TouchableOpacity style={styles.Button} onPress={()=>{navigation.navigate('Signup')}}>
-        <Text style={styles.buttonText} >{t('Sign up')}</Text>
+      <Text style={styles.title2}>{t("Login")}</Text>
+      <TextInput
+        placeholder={t("Email")}
+        value={username}
+        onChangeText={(text) => setUsername(text)}
+        style={styles.input}
+        placeholderTextColor="grey"
+        textAlign="center"
+      />
+      <TextInput
+        placeholder={t("Password")}
+        value={password}
+        onChangeText={(text) => setPassword(text)}
+        secureTextEntry
+        style={styles.input}
+        placeholderTextColor="grey"
+        textAlign="center"
+      />
+      <TouchableOpacity style={styles.Button} onPress={signIn}>
+        <Text style={styles.buttonText}>{t("Login")}</Text>
       </TouchableOpacity>
-    
-  </View>
+
+      <Text style={styles.educatorText}>
+        {t("Don't have an Account? Sign Up here")}
+      </Text>
+      <TouchableOpacity
+        style={styles.Button}
+        onPress={() => {
+          navigation.navigate("Signup");
+        }}
+      >
+        <Text style={styles.buttonText}>{t("Sign up")}</Text>
+      </TouchableOpacity>
+    </View>
   );
 };
 
