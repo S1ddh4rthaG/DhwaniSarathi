@@ -10,6 +10,7 @@ import {
 } from "react-native";
 import { Picker } from "@react-native-picker/picker";
 import { createUserWithEmailAndPassword } from "firebase/auth";
+import { baseurl } from "../Constants/ip.js";
 import { FIREBASE_AUTH } from "../../FirebaseConfig.js";
 import { useTranslation } from "react-i18next";
 
@@ -20,10 +21,10 @@ const Signup = ({ navigation }) => {
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [userType, setUserType] = useState("User");
-  const [age, setAge] = useState(50);
-  const [gender, setGender] = useState("Male");
-  const [educatorName, setEducatorName] = useState("dummy");
-  const [instituteName, setInstituteName] = useState("dummy");
+  const [age, setAge] = useState(0);
+  const [gender, setGender] = useState("male");
+  const [educatorName, setEducatorName] = useState("");
+  const [instituteName, setInstituteName] = useState("");
   const auth = FIREBASE_AUTH;
 
   const handleSignup = async () => {
@@ -33,23 +34,47 @@ const Signup = ({ navigation }) => {
         email,
         password
       );
+
       if (response) {
+        var payload = {
+          FID: response.user.uid,
+          Type: userType === "User" ? 0 : 1,
+        };
+
+        if (userType === "User") {
+          if (name == ""){
+            alert("Please enter your name");
+            return;
+          }
+          payload["UserName"] = name;
+          payload["Age"] = age;
+          payload["Gender"] = gender;
+        } else {
+          if (educatorName == ""){
+            alert("Please enter your name");
+            return;
+          }
+
+          if (instituteName == ""){
+            alert("Please enter your institute name");
+            return;
+          }
+          payload["EducatorName"] = educatorName;
+          payload["InstituteName"] = instituteName;
+        }
+
+        console.log(payload)
+
+        let url = baseurl + "/logininfos/";
+
         const createUserDB = await fetch(
-          `http://192.168.1.5/login/${response.user.uid}/`,
+          url,
           {
             method: "POST",
             headers: {
               "Content-Type": "application/json",
             },
-            body: JSON.stringify({
-              FID: response.user.uid,
-              Type: userType === "User" ? 0 : 1,
-              UserName: name,
-              Age: age,
-              Gender: gender,
-              EducatorName: educatorName,
-              InstituteName: instituteName,
-            }),
+            body: JSON.stringify(payload),
           }
         );
         console.log(createUserDB);

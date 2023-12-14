@@ -11,6 +11,7 @@ import {
 
 // import './locales/i18n';
 import { t, useTranslation } from "react-i18next";
+import {baseurl} from "../Constants/ip.js";
 
 import { signInWithEmailAndPassword } from "firebase/auth";
 import AsyncStorage from "@react-native-async-storage/async-storage";
@@ -33,7 +34,8 @@ const Login = ({ navigation }) => {
         password
       );
       if (response) {
-        const response1 = await fetch(`http://192.168.1.5/login/${response.user.uid}/`);
+        let url = `${baseurl}/login/${response.user.uid}/`;
+        const response1 = await fetch(url);
 
         if (response1.ok) {
           const data = await response1.json();
