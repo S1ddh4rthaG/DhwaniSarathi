@@ -1,11 +1,11 @@
 import React from 'react';
 import { View, Text, StyleSheet, Image } from 'react-native';
 // import './locales/i18n'; 
-import {useTranslation} from 'react-i18next'; 
+import { useTranslation } from 'react-i18next';
 const Results = () => {
     const leftEar_result = "Bad";
     const rightEar_result = "Good";
-    const {t,i18n} =useTranslation(); 
+    const { t, i18n } = useTranslation();
     // const [currentLanguage, setLanguage] = useState('en'); 
     // const changeLanguage= value=>{
     //     i18n.changeLanguage(value)

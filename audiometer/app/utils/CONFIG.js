@@ -75,3 +75,35 @@ export function RESULT(
     "response": response ? RESPONSES.YES : RESPONSES.NO
   }
 }
+
+// Audio files
+export const PureTones = {
+  '125lum': require(`../assets/puretones/tone_125Hz_left_um.wav`),
+  '125lm': require(`../assets/puretones/tone_125Hz_left_m.wav`),
+  '125rum': require(`../assets/puretones/tone_125Hz_right_um.wav`),
+  '125rm': require(`../assets/puretones/tone_125Hz_right_m.wav`),
+  '250lum': require(`../assets/puretones/tone_250Hz_left_um.wav`),
+  '250lm': require(`../assets/puretones/tone_250Hz_left_m.wav`),
+  '250rum': require(`../assets/puretones/tone_250Hz_right_um.wav`),
+  '250rm': require(`../assets/puretones/tone_250Hz_right_m.wav`),
+  '500lum': require(`../assets/puretones/tone_500Hz_left_um.wav`),
+  '500lm': require(`../assets/puretones/tone_500Hz_left_m.wav`),
+  '500rum': require(`../assets/puretones/tone_500Hz_right_um.wav`),
+  '500rm': require(`../assets/puretones/tone_500Hz_right_m.wav`),
+  '1000lum': require(`../assets/puretones/tone_1000Hz_left_um.wav`),
+  '1000lm': require(`../assets/puretones/tone_1000Hz_left_m.wav`),
+  '1000rum': require(`../assets/puretones/tone_1000Hz_right_um.wav`),
+  '1000rm': require(`../assets/puretones/tone_1000Hz_right_m.wav`),
+  '2000lum': require(`../assets/puretones/tone_2000Hz_left_um.wav`),
+  '2000lm': require(`../assets/puretones/tone_2000Hz_left_m.wav`),
+  '2000rum': require(`../assets/puretones/tone_2000Hz_right_um.wav`),
+  '2000rm': require(`../assets/puretones/tone_2000Hz_right_m.wav`),
+  '4000lum': require(`../assets/puretones/tone_4000Hz_left_um.wav`),
+  '4000lm': require(`../assets/puretones/tone_4000Hz_left_m.wav`),
+  '4000rum': require(`../assets/puretones/tone_4000Hz_right_um.wav`),
+  '4000rm': require(`../assets/puretones/tone_4000Hz_right_m.wav`),
+  '8000lum': require(`../assets/puretones/tone_8000Hz_left_um.wav`),
+  '8000lm': require(`../assets/puretones/tone_8000Hz_left_m.wav`),
+  '8000rum': require(`../assets/puretones/tone_8000Hz_right_um.wav`),
+  '8000rm': require(`../assets/puretones/tone_8000Hz_right_m.wav`),
+}

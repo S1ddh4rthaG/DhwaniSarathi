@@ -8,8 +8,10 @@
 //   "response": "yes" | "no"
 // }
 
-import { PureTone } from "./PureTone.js";
-import { FREQUENCY_PTS, AMPLITUDE_PTS, VOLUME_PTS, EARS, RESULT } from "./CONFIG";
+// import { PureTone } from "./PureTone.js";
+import { FREQUENCY_PTS, AMPLITUDE_PTS, VOLUME_PTS, EARS, RESULT, PureTones } from "./CONFIG";
+import { Audio } from 'expo-av';
+
 
 class Audiometry {
   constructor() {
@@ -18,7 +20,8 @@ class Audiometry {
     this.freq = FREQUENCY_PTS;
     this.amp = AMPLITUDE_PTS;
     this.vol = VOLUME_PTS;
-    this.OSC = new PureTone();
+    // this.OSC = new PureTone();
+    this.player = new Audio.Sound();
 
     this.Eptr = 0;
     this.Mptr = 0;
@@ -48,7 +51,8 @@ class Audiometry {
     this.Fptr = 0;
     this.Aptr = 0;
     this.Mptr = 0;
-    this.OSC = new PureTone();
+    // this.OSC = new PureTone();
+    this.player = new Audio.Sound();
   }
 
   // Getters for View
@@ -104,20 +108,17 @@ class Audiometry {
   }
 
   playTone() {
-    console.log("Playing tone: ", this.getFrequency(), 5, 44100, this.Eptr, this.getVol(), this.Mptr);
-    this.OSC.playTone(
-      this.getFrequency(),
-      5,
-      44100,
-      this.Eptr,
-      this.getVol(),
-      this.Mptr
-    );
+    this.player.unloadAsync();
 
+    const SoundFile = PureTones[this.getFrequency() + this.getEar()[0] + (this.getMask() == true ? 'm' : 'um')]
+    this.player.loadAsync(SoundFile).then(() => {
+      this.player.playAsync();
+      this.player.setVolumeAsync(this.getVol());
+    });
   }
 
   regResponse(response, onlyYes = true) {
-    this.OSC.stopTone();
+    this.player.unloadAsync();
     if (this.isTestOver()) return true;
 
     if (onlyYes && response) {

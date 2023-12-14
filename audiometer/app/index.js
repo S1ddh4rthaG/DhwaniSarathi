@@ -11,6 +11,7 @@ import FillDetails from "./Screens/FillDetails";
 import BeforeYouStart from "./Screens/BeforeYouStart";
 import LeftEar from "./Screens/LeftEar";
 import Results from "./Screens/Results";
+import JewelleryDetection from "./Screens/JewelleryDetection";
 import Login from "./Screens/Login";
 import Signup from "./Screens/Signup";
 import i18n from "./locales/i18n";
@@ -18,8 +19,8 @@ import { useTranslation } from "react-i18next";
 import { I18nextProvider } from "react-i18next";
 import Signout from "./Screens/Signout";
 import BeforeTest1 from "./newScreens/BeforeTest1";
-import BeforeTest2 from './newScreens/BeforeTest2';
-import BeforeTest3 from './newScreens/BeforeTest3'; 
+import BeforeTest2 from "./newScreens/BeforeTest2";
+import BeforeTest3 from "./newScreens/BeforeTest3";
 import { FIREBASE_AUTH } from "../FirebaseConfig.js";
 import { onAuthStateChanged } from "firebase/auth";
 import AudiometryTest from "./AudiometryTest.js";
@@ -60,11 +61,11 @@ export default () => {
     const { t } = useTranslation();
     return (
       //TODO: check if user is Educator or User
-      
-      <Stack.Navigator /*initialRouteName={user ? "Signout" : "Signup"}*/ initialRouteName="Home">
+
+      <Stack.Navigator initialRouteName={user ? "Signout" : "Signup"}>
         <Stack.Screen
           name="Home"
-          component={Home}
+          component={AudiometryTest}
           options={{
             headerTitle: () => <Header name={t("Hertz hEARing Test")} />,
             headerTitleAlign: "Signin", // Center the header title
@@ -87,7 +88,7 @@ export default () => {
               borderBottomLeftRadius: 10,
               borderBottomRightRadius: 10,
               borderWidth: 2,
-              borderColor: 'white'
+              borderColor: "white",
             },
           }}
         />
@@ -100,8 +101,9 @@ export default () => {
             headerTitle: () => <Header name={t("Sign Up")} />,
             headerTitleAlign: "Signin", // Center the header title
             headerRight: () => (
-              <View style={{ flexDirection: "row", alignItems: "center" }}>
-              </View>
+              <View
+                style={{ flexDirection: "row", alignItems: "center" }}
+              ></View>
             ),
             headerStyle: {
               height: 70,
@@ -109,7 +111,7 @@ export default () => {
               borderBottomLeftRadius: 10,
               borderBottomRightRadius: 10,
               borderWidth: 2,
-              borderColor: 'white'
+              borderColor: "white",
             },
           }}
         />
@@ -122,8 +124,9 @@ export default () => {
             headerTitle: () => <Header name={t("Before Test 1")} />,
             headerTitleAlign: "Signin", // Center the header title
             headerRight: () => (
-              <View style={{ flexDirection: "row", alignItems: "center" }}>
-              </View>
+              <View
+                style={{ flexDirection: "row", alignItems: "center" }}
+              ></View>
             ),
             headerStyle: {
               height: 70,
@@ -131,12 +134,10 @@ export default () => {
               borderBottomLeftRadius: 10,
               borderBottomRightRadius: 10,
               borderWidth: 2,
-              borderColor: 'white'
+              borderColor: "white",
             },
           }}
         />
-
-
 
         <Stack.Screen
           name="BeforeTest2"
@@ -146,8 +147,9 @@ export default () => {
             headerTitle: () => <Header name={t("Before Test 2")} />,
             headerTitleAlign: "Signin", // Center the header title
             headerRight: () => (
-              <View style={{ flexDirection: "row", alignItems: "center" }}>
-              </View>
+              <View
+                style={{ flexDirection: "row", alignItems: "center" }}
+              ></View>
             ),
             headerStyle: {
               height: 70,
@@ -155,14 +157,12 @@ export default () => {
               borderBottomLeftRadius: 10,
               borderBottomRightRadius: 10,
               borderWidth: 2,
-              borderColor: 'white'
+              borderColor: "white",
             },
           }}
         />
 
-
-
-      <Stack.Screen
+        <Stack.Screen
           name="BeforeTest3"
           alignItems="center"
           component={BeforeTest3}
@@ -170,8 +170,9 @@ export default () => {
             headerTitle: () => <Header name={t("Before Test 3")} />,
             headerTitleAlign: "Signin", // Center the header title
             headerRight: () => (
-              <View style={{ flexDirection: "row", alignItems: "center" }}>
-              </View>
+              <View
+                style={{ flexDirection: "row", alignItems: "center" }}
+              ></View>
             ),
             headerStyle: {
               height: 70,
@@ -179,7 +180,7 @@ export default () => {
               borderBottomLeftRadius: 10,
               borderBottomRightRadius: 10,
               borderWidth: 2,
-              borderColor: 'white'
+              borderColor: "white",
             },
           }}
         />
@@ -215,7 +216,6 @@ export default () => {
             headerTitleAlign: "Signin", // Center the header title
             headerRight: () => (
               <View style={{ flexDirection: "row", alignItems: "center" }}>
-               
               </View>
             ),
             headerStyle: {
@@ -224,7 +224,7 @@ export default () => {
               borderBottomLeftRadius: 10,
               borderBottomRightRadius: 10,
               borderWidth: 2,
-              borderColor: 'white'
+              borderColor: "white",
             },
           }}
         />
@@ -255,7 +255,7 @@ export default () => {
               borderBottomLeftRadius: 10,
               borderBottomRightRadius: 10,
               borderWidth: 2,
-              borderColor: 'white'
+              borderColor: "white",
             },
           }}
         />
@@ -284,7 +284,7 @@ export default () => {
               borderBottomLeftRadius: 10,
               borderBottomRightRadius: 10,
               borderWidth: 2,
-              borderColor: 'white'
+              borderColor: "white",
             },
           }}
         />
@@ -313,7 +313,7 @@ export default () => {
               borderBottomLeftRadius: 10,
               borderBottomRightRadius: 10,
               borderWidth: 2,
-              borderColor: 'white'
+              borderColor: "white",
             },
           }}
         />
@@ -344,7 +344,7 @@ export default () => {
               borderBottomLeftRadius: 10,
               borderBottomRightRadius: 10,
               borderWidth: 2,
-              borderColor: 'white'
+              borderColor: "white",
             },
           }}
         />
@@ -373,7 +373,7 @@ export default () => {
               borderBottomLeftRadius: 10,
               borderBottomRightRadius: 10,
               borderWidth: 2,
-              borderColor: 'white'
+              borderColor: "white",
             },
           }}
         />
@@ -401,7 +401,7 @@ export default () => {
               borderBottomLeftRadius: 10,
               borderBottomRightRadius: 10,
               borderWidth: 2,
-              borderColor: 'white'
+              borderColor: "white",
             },
           }}
         />
@@ -429,7 +429,7 @@ export default () => {
               borderBottomLeftRadius: 10,
               borderBottomRightRadius: 10,
               borderWidth: 2,
-              borderColor: 'white'
+              borderColor: "white",
             },
           }}
         />
