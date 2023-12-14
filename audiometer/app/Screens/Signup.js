@@ -7,7 +7,7 @@ import {
   Button,
   StyleSheet,
   TouchableOpacity,
-  Image
+  Image,
 } from "react-native";
 import { Picker } from "@react-native-picker/picker";
 import { createUserWithEmailAndPassword } from "firebase/auth";
@@ -43,7 +43,7 @@ const Signup = ({ navigation }) => {
         };
 
         if (userType === "User") {
-          if (name == ""){
+          if (name == "") {
             alert("Please enter your name");
             return;
           }
@@ -51,12 +51,12 @@ const Signup = ({ navigation }) => {
           payload["Age"] = age;
           payload["Gender"] = gender;
         } else {
-          if (educatorName == ""){
+          if (educatorName == "") {
             alert("Please enter your name");
             return;
           }
 
-          if (instituteName == ""){
+          if (instituteName == "") {
             alert("Please enter your institute name");
             return;
           }
@@ -64,20 +64,17 @@ const Signup = ({ navigation }) => {
           payload["InstituteName"] = instituteName;
         }
 
-        console.log(payload)
+        console.log(payload);
 
         let url = baseurl + "/logininfos/";
 
-        const createUserDB = await fetch(
-          url,
-          {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify(payload),
-          }
-        );
+        const createUserDB = await fetch(url, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(payload),
+        });
         console.log(createUserDB);
       }
       console.log(response);
@@ -89,17 +86,73 @@ const Signup = ({ navigation }) => {
 
   return (
     <View style={styles.container}>
-      <Image style={styles.image} source={require('../assets/signup.png')} resizeMode='cover' />
-      <Text style={styles.title2}>{t("Name")}</Text>
-      <TextInput
-        style={styles.input}
-        placeholder={t("Enter your name")}
-        onChangeText={(text) => setName(text)}
-        value={name}
-        textAlign="left"
-        color="black"
-        placeholderTextColor="black"
+      <Image
+        style={styles.image}
+        source={require("../assets/signup.png")}
+        resizeMode="cover"
       />
+      <Text style={styles.title2}>{t("User Type")}</Text>
+      <Picker
+        selectedValue={userType}
+        style={styles.picker}
+        itemStyle={styles.pickerItem}
+        onValueChange={(itemValue) => setUserType(itemValue)}
+      >
+        <Picker.Item style={styles.pickerItem} label={t("User")} value="User" />
+        <Picker.Item
+          style={styles.pickerItem}
+          label={t("Educator")}
+          value="Educator"
+        />
+      </Picker>
+
+      {userType === "User" ? (
+        <>
+          <Text style={styles.title2}>{t("Name")}</Text>
+          <TextInput
+            style={styles.input}
+            placeholder={t("Enter your name")}
+            onChangeText={(text) => setName(text)}
+            value={name}
+            textAlign="left"
+            color="black"
+            placeholderTextColor="black"
+          />
+          {/* <Text style={styles.title2}>{t("Age")}</Text>
+          <TextInput
+            style={styles.input}
+            placeholder={t("Enter your Age")}
+            onChangeText={(text) => setAge(text)}
+            value={String(age)} // Convert 'age' to string explicitly
+            textAlign="left"
+            color="black"
+            placeholderTextColor="black"
+          /> */}
+        </>
+      ) : (
+        <>
+          <Text style={styles.title2}>{t("Educator Name")}</Text>
+          <TextInput
+            style={styles.input}
+            placeholder={t("Enter your name")}
+            onChangeText={(text) => setEducatorName(text)}
+            value={educatorName} // Use the 'educatorName' state variable
+            textAlign="left"
+            color="black"
+            placeholderTextColor="black"
+          />
+          <Text style={styles.title2}>{t("Institute Name")}</Text>
+          <TextInput
+            style={styles.input}
+            placeholder={t("Enter Institute name")}
+            onChangeText={(text) => setInstituteName(text)}
+            value={instituteName} // Use the 'instituteName' state variable
+            textAlign="left"
+            color="black"
+            placeholderTextColor="black"
+          />
+        </>
+      )}
 
       <Text style={styles.title2}>{t("Email")}</Text>
       <TextInput
@@ -111,18 +164,6 @@ const Signup = ({ navigation }) => {
         color="black"
         placeholderTextColor="black"
       />
-
-      <Text style={styles.title2}>{t("Age")}</Text>
-      <TextInput
-        style={styles.input}
-        placeholder={t("Enter your Age")}
-        onChangeText={(text) => setAge(text)}
-        value={age}
-        textAlign="left"
-        color="black"
-        placeholderTextColor="black"
-      />
-
       <Text style={styles.title2}>{t("Password")}</Text>
       <TextInput
         style={styles.input}
@@ -145,37 +186,6 @@ const Signup = ({ navigation }) => {
         placeholderTextColor="black"
       />
 
-      <Text style={styles.title2}>{t("User Type")}</Text>
-      <Picker
-        selectedValue={userType}
-        style={styles.picker}
-        itemStyle={styles.pickerItem}
-        onValueChange={(itemValue) => setGender(itemValue)}
-      >
-        <Picker.Item style={styles.pickerItem} label={t("Male")} value="Male" />
-        <Picker.Item label={t("Female")} value="Female" />
-      </Picker>
-{/* 
-      <Text style={styles.subtitle}>{t("Educator Name")}</Text>
-      <TextInput
-        style={styles.input}
-        placeholder={t("Enter your name")}
-        onChangeText={(text) => setEducatorName(text)}
-        value={name}
-        textAlign="left"
-        color="white"
-        placeholderTextColor="grey"
-      />
-      <Text style={styles.subtitle}>{t("Institute Name")}</Text>
-      <TextInput
-        style={styles.input}
-        placeholder={t("Enter Institute name")}
-        onChangeText={(text) => setInstituteName(text)}
-        value={name}
-        textAlign="left"
-        color="white"
-        placeholderTextColor="grey"
-      /> */}
       <TouchableOpacity style={styles.Button} onPress={handleSignup}>
         <Text style={styles.buttonText}>{t("Sign Up")}</Text>
       </TouchableOpacity>
@@ -183,107 +193,105 @@ const Signup = ({ navigation }) => {
   );
 };
 
-
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#B5B6BA',
+    backgroundColor: "#B5B6BA",
     padding: 20,
-    justifyContent: 'flex-start',
-    borderColor: 'white',
+    justifyContent: "flex-start",
+    borderColor: "white",
     borderWidth: 5,
-    borderRadius: 10
+    borderRadius: 10,
   },
   sliderContainer: {
-    width: '80%',
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
+    width: "80%",
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
     marginBottom: 50,
   },
   sliderLabel: {
     fontSize: 15,
-    color: 'white',
+    color: "white",
   },
   sliderLabel1: {
     fontSize: 15,
-    color: 'red',
+    color: "red",
   },
   slider: {
     flex: 1,
-    width: '100%',
+    width: "100%",
   },
   image: {
     width: 50,
     height: 50,
-    alignContent: 'center',
-    alignSelf: 'center',
+    alignContent: "center",
+    alignSelf: "center",
   },
   title: {
     fontSize: 24,
-    color: 'black',
+    color: "black",
     marginBottom: 20,
-    textAlign: 'center',
-    fontWeight: 'bold',
+    textAlign: "center",
+    fontWeight: "bold",
     marginTop: 20,
   },
   title2: {
     fontSize: 18,
-    color: 'black',
+    color: "black",
     marginBottom: 5,
-    textAlign: 'left',
-    fontWeight: 'bold'
+    textAlign: "left",
+    fontWeight: "bold",
   },
-  pickerItem:{
-    color: 'black', 
-    backgroundColor: 'white'
-    
+  pickerItem: {
+    color: "black",
+    backgroundColor: "white",
   },
   subtitle: {
     fontSize: 15,
-    color: 'white',
+    color: "white",
     marginBottom: 10,
-    textAlign: 'left',
+    textAlign: "left",
   },
   Button: {
-    backgroundColor: '#0096FF', // Greenish Yellow
-    marginTop: 'auto', // Push the button to the bottom
+    backgroundColor: "#0096FF", // Greenish Yellow
+    marginTop: "auto", // Push the button to the bottom
     borderRadius: 10,
     paddingVertical: 15,
-    width: '100%',
-    borderColor: 'white',
+    width: "100%",
+    borderColor: "white",
     borderWidth: 1,
   },
   educatorContainer: {
     marginTop: 20,
-    alignItems: 'center',
+    alignItems: "center",
   },
   educatorText: {
-    color: 'white',
+    color: "white",
     marginBottom: 10,
   },
   educatorButton: {
-    backgroundColor: '#0096FF', // Greenish Yellow
+    backgroundColor: "#0096FF", // Greenish Yellow
     paddingVertical: 10,
     paddingHorizontal: 20,
     borderRadius: 10,
   },
   buttonText: {
-    color: 'black',
-    textAlign: 'center',
+    color: "black",
+    textAlign: "center",
     fontSize: 18,
-    fontWeight: 'bold',
+    fontWeight: "bold",
   },
 
   input: {
     height: 40,
-    borderColor: 'white',
+    borderColor: "white",
     borderWidth: 1,
     marginBottom: 10,
     paddingHorizontal: 10,
-    width: '100%',
-    color: 'white',
-    fontStyle: 'normal',
+    width: "100%",
+    color: "white",
+    fontStyle: "normal",
   },
 });
 

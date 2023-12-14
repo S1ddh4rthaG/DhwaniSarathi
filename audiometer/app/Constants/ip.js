@@ -1,3 +1,3 @@
-const ip = "ENTER IP"
+const ip = "192.168.1.5"
 
-export const baseurl = `http://${ip}:8000`;
+export const baseurl = `http://${ip}`;
