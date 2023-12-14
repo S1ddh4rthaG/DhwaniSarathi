@@ -1,54 +1,127 @@
 import React from 'react';
-import { View, Text, StyleSheet, Image } from 'react-native';
-// import './locales/i18n'; 
-import {useTranslation} from 'react-i18next'; 
-const Results = () => {
-    const leftEar_result = "Bad";
-    const rightEar_result = "Good";
-    const {t,i18n} =useTranslation(); 
-    // const [currentLanguage, setLanguage] = useState('en'); 
-    // const changeLanguage= value=>{
-    //     i18n.changeLanguage(value)
-    //     .then(()=>setLanguage(value))
-    //     .catch(err => console.log(err)); 
-    // }
+import { View, StyleSheet, Image } from 'react-native';
+import { VictoryChart, VictoryLine, VictoryAxis, VictoryTooltip, VictoryScatter } from 'victory-native';
+import { ScrollView } from 'react-native-gesture-handler';
+
+const CustomBackground = () => {
     return (
-        <View style={{ backgroundColor: 'black', justifyContent: 'center', flex: 1, }}>
-            <Text style={styles.title}>{t('Test Results')}</Text>
-            <View style={styles.container}>
+        <View style={styles.backgroundContainer}>
+            <Image
+                style={styles.backgroundImage}
+                source={require('../assets/audiogram-bg.png')}
+            />
+        </View>
+    );
+};
 
-                <View style={styles.tableRow}>
-                    <Text style={styles.headerText}>{t('Left Ear')}</Text>
-                    <Text style={styles.headerText}>{t('Right Ear')}</Text>
+const Results = ({ leftEarData, rightEarData }) => {
+    // Dummy data if leftEarData and rightEarData are not provided
+    if (!leftEarData || !rightEarData) {
+        leftEarData = [
+            { x: 0, y: 50 },
+            { x: 125, y: 40 },
+            { x: 250, y: 50 },
+            { x: 500, y: 30 },
+            { x: 1000, y: 70 },
+            { x: 2000, y: 100 },
+            { x: 4000, y: 90 },
+            { x: 8000, y: 120 },
+        ];
+
+        rightEarData = [
+            { x: 0, y: 10 },
+            { x: 125, y: 20 },
+            { x: 250, y: 60 },
+            { x: 500, y: 40 },
+            { x: 1000, y: 50 },
+            { x: 2000, y: 110 },
+            { x: 4000, y: 70 },
+            { x: 8000, y: 120 },
+        ];
+    }
+
+    const yTickCount = 12;
+
+    return (
+        <View style={styles.container}>
+            <ScrollView>
+                <CustomBackground />
+                <View style={styles.chartContainer}>
+                    <VictoryChart
+                        width={340} // Adjust the width as needed
+                        height={330} // Adjust the height as needed
+                        padding={{ top: 60, left: 35, right: 5, bottom: 35 }} // Adjust padding for proper alignment
+                        style={{ background: { opacity: 0 } }}
+                    >
+                        <VictoryLine
+                            data={leftEarData}
+                            style={{
+                                data: { strokeWidth: 4 },
+                            }}
+                        />
+
+                        <VictoryLine
+                            data={rightEarData}
+                            style={{
+                                data: { strokeWidth: 4, stroke: 'green' },
+                            }}
+                        />
+
+                        <VictoryScatter
+                            data={leftEarData}
+                            size={6}
+                            style={{
+                                data: { fill: 'red', shape: 'cross' },
+                            }}
+                            labels={({ datum }) => datum.x}
+                            labelComponent={
+                                <VictoryTooltip
+                                    dy={-15}
+                                    constrainToVisibleArea
+                                    renderInPortal={false}
+                                />
+                            }
+                        />
+
+                        <VictoryScatter
+                            data={rightEarData}
+                            size={6}
+                            style={{
+                                data: { fill: 'green', shape: 'circle' },
+                            }}
+                            labels={({ datum }) => datum.x}
+                            labelComponent={
+                                <VictoryTooltip
+                                    dy={-15}
+                                    constrainToVisibleArea
+                                    renderInPortal={false}
+                                />
+                            }
+                        />
+
+                        <VictoryAxis
+                            style={{
+                                ticks: { opacity: 0 },
+                                tickLabels: { opacity: 0 },
+                                axis: { opacity: 0 },
+                            }}
+                        />
+
+                        <VictoryAxis
+                            dependentAxis
+                            invertAxis={true}
+                            tickCount={yTickCount}
+                            style={{
+                                ticks: { opacity: 0 },
+                                tickLabels: { opacity: 0 },
+                                axis: { opacity: 0 },
+                            }}
+                            domain={[0, 120]}
+                        />
+                    </VictoryChart>
                 </View>
 
-                <View style={styles.tableRow}>
-                    <Image
-                        style={styles.image}
-                        source={require('../assets/leftear.png')}
-                        resizeMode='cover'
-                    />
-                    <Image
-                        style={styles.image}
-                        source={require('../assets/rightear.png')}
-                        resizeMode='cover'
-                    />
-                </View>
-
-                <View style={styles.tableRow}>
-                    <Text style={[styles.resultText, leftEar_result === 'Good' ? styles.goodResult : styles.badResult]}>
-                        {t(leftEar_result)}
-                    </Text>
-                    <Text style={[styles.resultText, rightEar_result === 'Good' ? styles.goodResult : styles.badResult]}>
-                        {t(rightEar_result)}
-                    </Text>
-                </View>
-
-                <View style={styles.tableRow}>
-                    <Text style={styles.graphText}>{t('Graph')}</Text>
-                </View>
-
-            </View >
+            </ScrollView>
         </View>
     );
 };
@@ -56,54 +129,26 @@ const Results = () => {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-
-        alignItems: 'stretch',
-        padding: 10,
-        backgroundColor: 'black',
     },
-    title: {
-        fontSize: 45,
-        fontWeight: 'bold',
-        color: 'white',
-        textAlign: 'center',
-        padding: 50,
+    backgroundContainer: {
+        position: 'absolute',
+        top: 0,
+        left: 0,
+        right: 0,
+        bottom: 0,
     },
-    tableRow: {
-        flexDirection: 'row',
-        justifyContent: 'space-between',
-        alignItems: 'center',
-        marginBottom: 10,
-    },
-    headerText: {
-        fontSize: 20,
+    backgroundImage: {
         flex: 1,
-        textAlign: 'center',
-        color: 'white',
-    },
-    image: {
-        width: '50%',
-
+        width: undefined,
+        height: undefined,
         resizeMode: 'cover',
     },
-    resultText: {
-        fontSize: 30,
-        flex: 1,
-        textAlign: 'center',
-        fontWeight: 'bold',
+    chartContainer: {
+        width: 355, // Adjust the width as needed
+        height: 300, // Adjust the height as needed
+        position: 'relative',
+        zIndex: 1,
     },
-    goodResult: {
-        color: 'green',
-    },
-    badResult: {
-        color: 'red',
-    },
-    graphText: {
-        fontSize: 20,
-        flex: 1,
-        textAlign: 'center',
-        color: 'white',
-    },
-
 });
 
 export default Results;
