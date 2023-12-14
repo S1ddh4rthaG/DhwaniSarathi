@@ -130,10 +130,10 @@ const styles = StyleSheet.create({
         fontSize: 22,
         color: "black",
         fontWeight: "600",
-        fontFamily: "Helvetica"
+
     },
     headtText: {
-        fontFamily: "Helvetica",
+
         color: "grey",
         fontWeight: "600",
         float: "left",
@@ -142,9 +142,9 @@ const styles = StyleSheet.create({
     },
     SubjectText: {
         color: "black",
-        fontWeight: "550",
+        fontWeight: "500",
         fontSize: 16,
-        fontFamily: "Helvetica",
+
         float: "left",
         marginLeft: 20,
         marginTop: 10
