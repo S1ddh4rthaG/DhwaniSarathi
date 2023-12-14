@@ -1,8 +1,6 @@
 import React, { Component } from "react";
-import { StyleSheet, Pressable, Text, View, Image, ImageBackground } from "react-native";
-import { useEffect, useState } from "react";
-import AsyncStorage from "@react-native-async-storage/async-storage";
-import image from "../../assets/background.png";
+import { StyleSheet, Pressable, Text, View, Image, ImageBackground, Button, Alert, TouchableOpacity, TextInput } from "react-native";
+import ClassroomList from "./ClassroomList";
 export default function EducatorHome() {
 
     const profile = {
@@ -19,7 +17,7 @@ export default function EducatorHome() {
 
                 <ImageBackground source={require('../../assets/background.png')}
                     style={styles.backgroundImage} />
-                <View style={[styles.content, { backgroundColor: 'white', opacity: '0.8' }]}>
+                <View style={[styles.content, { backgroundColor: 'white', opacity: '0.6' }]}>
                     <Text style={[styles.text, styles.heading]}>Educator Profile Page</Text>
                 </View>
 
@@ -40,12 +38,14 @@ export default function EducatorHome() {
                 <View style={styles.content}>
 
                     <View style={styles.profileDataContainer}>
-                        <Text style={styles.text}>{profile.Age} years</Text>
-                        <Text style={styles.text}>{profile.Gender}</Text>
-                        <Text style={styles.text}>ID: {profile.EducatorID}</Text>
+                        <Text style={styles.ptext}>{profile.Age} years</Text>
+                        <Text style={styles.ptext}>{profile.Gender}</Text>
+                        <Text style={styles.ptext}>ID: {profile.EducatorID}</Text>
                     </View>
 
                 </View>
+
+
             </View>
 
             <View style={styles.body}>
@@ -55,15 +55,34 @@ export default function EducatorHome() {
                     <Text style={styles.SubjectText}>30 Sept, 2022 </Text>
                 </Pressable>
                 <View styles={{
-                    flexDirection: 'row', display: "flex",
-                    flex: 1,
+                    flexDirection: 'row', alignItems: 'center',
                 }}>
-                    <Text style={[styles.text, { color: 'black' }]}>Create New Classroom</Text>
-                    <Pressable style={[styles.btn, { borderRadius: "100%" }]}>
-                        <Text style={{ color: 'white', alignContent: 'center', justifyContent: 'center', fontSize: 40, fontWeight: 'bold' }}>+</Text>
-                    </Pressable>
+
+
+                    {/* create a new classroom on button click here*/}
+                    <Text style={[styles.text, {
+                        color: 'black', borderColor: 'black', borderWidth: 1, borderRadius: 10, padding: 10, marginTop: 20,
+                        width: "80vw",
+                        height: 80,
+                        backgroundColor: "white",
+                        textAlign: "center",
+                    }]}>Create Classroom
+                        <TouchableOpacity style={styles.btn} onPress={() => Alert.alert('Button pressed')}>
+                            <Text style={styles.btnText}>+</Text>
+                        </TouchableOpacity>
+                    </Text>
+
+
                 </View>
+                <View style={{ width: '100%', backgroundColor: '#FFD700', height: 40, justifyContent: 'center' }}>
+                    <Text style={{ textAlign: 'center', color: 'black', fontWeight: 'bold', fontSize: 20 }}>Classrooms</Text>
+                </View>
+
+
+                <ClassroomList />
+
             </View>
+
         </View>
     );
 
@@ -136,14 +155,20 @@ const styles = StyleSheet.create({
         fontWeight: "600"
     },
     btn: {
-        backgroundColor: "#3B525F",
-        borderRadius: 10,
-        width: 50,
-        height: 50,
+        backgroundColor: "black",
+        borderRadius: "100%",
+        width: 40,
+        height: 40,
         alignItems: "center",
         justifyContent: "center",
         paddingBottom: 6,
-        elevation: 3
+        elevation: 3,
+        margin: 10,
+    },
+    btnText: {
+        color: 'white',
+        fontSize: 24,
+        fontWeight: 'bold',
     },
     body: {
         backgroundColor: "white",
@@ -181,6 +206,11 @@ const styles = StyleSheet.create({
     text: {
         fontSize: 16,
         color: 'black',
+        margin: 10,
+    },
+    ptext: {
+        fontSize: 16,
+        color: 'white',
         margin: 10,
     },
     heading: {
