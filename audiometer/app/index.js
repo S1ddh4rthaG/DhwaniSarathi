@@ -63,7 +63,7 @@ export default () => {
       <Stack.Navigator initialRouteName={user ? "Signout" : "Signup"}>
         <Stack.Screen
           name="Home"
-          component={Home}
+          component={AudiometryTest}
           options={{
             headerTitle: () => <Header name={t("Hertz hEARing Test")} />,
             headerTitleAlign: "Signin", // Center the header title
