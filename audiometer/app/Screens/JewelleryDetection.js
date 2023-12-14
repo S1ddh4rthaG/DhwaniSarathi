@@ -3,7 +3,6 @@ import { View, Text, StyleSheet, Image, Button, TouchableOpacity, ActivityIndica
 import { useTranslation } from 'react-i18next';
 import * as ImagePicker from 'expo-image-picker';
 import { ScrollView } from 'react-native-gesture-handler';
-import { REACT_APP_CLARIFAI_PAT } from 'react-native-dotenv';
 
 const JewelleryDetection = () => {
     const { t, i18n } = useTranslation();
@@ -40,7 +39,7 @@ const JewelleryDetection = () => {
         setLoading(true);
 
         // todo: move this to a config file
-        const PAT = REACT_APP_CLARIFAI_PAT;
+        const PAT = '801a0c9f83f9435b9fb6ea839034a0ce';
 
         const USER_ID = 'clarifai';
         const APP_ID = 'main';
