@@ -117,14 +117,15 @@ const ClassroomList = () => {
 
 const styles = StyleSheet.create({
     container: {
-        flex: 1,
+
         backgroundColor: '#B5B6BA',
         justifyContent: 'center',
-    
+
         borderColor: 'white',
         borderWidth: 5,
-        borderRadius: 10
-      },
+        borderRadius: 10,
+
+    },
     listContainer: {
         paddingHorizontal: 10
     },
