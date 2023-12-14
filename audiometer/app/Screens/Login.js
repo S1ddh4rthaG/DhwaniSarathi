@@ -13,7 +13,7 @@ import {
 import { t, useTranslation } from "react-i18next";
 
 import { signInWithEmailAndPassword } from "firebase/auth";
-
+import AsyncStorage from "@react-native-async-storage/async-storage";
 import { FIREBASE_AUTH } from "../../FirebaseConfig.js";
 
 const Login = ({ navigation }) => {
@@ -32,8 +32,23 @@ const Login = ({ navigation }) => {
         username,
         password
       );
+      if (response) {
+        const response1 = await fetch(`http://192.168.1.5/login/${response.user.uid}/`);
 
-      navigation.navigate("Home");
+        if (response1.ok) {
+          const data = await response1.json();
+
+          responseObject = data;
+
+          await AsyncStorage.setItem(
+            "userType",
+            JSON.stringify(responseObject.Type)
+          );
+        } else {
+          console.error("Failed to fetch user data:", response1.status);
+        }
+      }
+      navigation.navigate("Signout");
     } catch (error) {
       console.log(error);
     } finally {

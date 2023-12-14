@@ -20,8 +20,10 @@ const Signup = ({ navigation }) => {
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [userType, setUserType] = useState("User");
-  const [age, setAge] = useState("");
-
+  const [age, setAge] = useState(50);
+  const [gender, setGender] = useState("Male");
+  const [educatorName, setEducatorName] = useState("dummy");
+  const [instituteName, setInstituteName] = useState("dummy");
   const auth = FIREBASE_AUTH;
 
   const handleSignup = async () => {
@@ -42,13 +44,18 @@ const Signup = ({ navigation }) => {
             body: JSON.stringify({
               FID: response.user.uid,
               Type: userType === "User" ? 0 : 1,
+              UserName: name,
+              Age: age,
+              Gender: gender,
+              EducatorName: educatorName,
+              InstituteName: instituteName,
             }),
           }
         );
         console.log(createUserDB);
       }
       console.log(response);
-      navigation.navigate("Home");
+      navigation.navigate("Login");
     } catch (error) {
       console.log(error);
     }
@@ -56,16 +63,16 @@ const Signup = ({ navigation }) => {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.subtitle}>{t("Name")}</Text>
-      <TextInput
-        style={styles.input}
-        placeholder={t("Enter your name")}
-        onChangeText={(text) => setName(text)}
-        value={name}
-        textAlign="left"
-        color="white"
-        placeholderTextColor="grey"
-      />
+      <Text style={styles.subtitle}>{t("User Type")}</Text>
+      <Picker
+        selectedValue={userType}
+        style={styles.picker}
+        itemStyle={styles.pickerItem}
+        onValueChange={(itemValue) => setUserType(itemValue)}
+      >
+        <Picker.Item style={styles.pickerItem} label={t("User")} value="User" />
+        <Picker.Item label={t("Educator")} value="Educator" />
+      </Picker>
 
       <Text style={styles.subtitle}>{t("Email")}</Text>
       <TextInput
@@ -73,17 +80,6 @@ const Signup = ({ navigation }) => {
         placeholder={t("Enter your email id")}
         onChangeText={(text) => setEmail(text)}
         value={email}
-        textAlign="left"
-        color="white"
-        placeholderTextColor="grey"
-      />
-
-      <Text style={styles.subtitle}>{t("Age")}</Text>
-      <TextInput
-        style={styles.input}
-        placeholder={t("Enter your Age")}
-        onChangeText={(text) => setAge(text)}
-        value={age}
         textAlign="left"
         color="white"
         placeholderTextColor="grey"
@@ -111,17 +107,47 @@ const Signup = ({ navigation }) => {
         placeholderTextColor="grey"
       />
 
-      <Text style={styles.subtitle}>{t("User Type")}</Text>
+      <Text style={styles.subtitle}>{t("Name")}</Text>
+      <TextInput
+        style={styles.input}
+        placeholder={t("Enter your name")}
+        onChangeText={(text) => setName(text)}
+        value={name}
+        textAlign="left"
+        color="white"
+        placeholderTextColor="grey"
+      />
+      <Text style={styles.subtitle}>{t("Gender")}</Text>
       <Picker
         selectedValue={userType}
         style={styles.picker}
         itemStyle={styles.pickerItem}
-        onValueChange={(itemValue) => setUserType(itemValue)}
+        onValueChange={(itemValue) => setGender(itemValue)}
       >
-        <Picker.Item style={styles.pickerItem} label={t("User")} value="User" />
-        <Picker.Item label={t("Educator")} value="Educator" />
+        <Picker.Item style={styles.pickerItem} label={t("Male")} value="Male" />
+        <Picker.Item label={t("Female")} value="Female" />
       </Picker>
-
+{/* 
+      <Text style={styles.subtitle}>{t("Educator Name")}</Text>
+      <TextInput
+        style={styles.input}
+        placeholder={t("Enter your name")}
+        onChangeText={(text) => setEducatorName(text)}
+        value={name}
+        textAlign="left"
+        color="white"
+        placeholderTextColor="grey"
+      />
+      <Text style={styles.subtitle}>{t("Institute Name")}</Text>
+      <TextInput
+        style={styles.input}
+        placeholder={t("Enter Institute name")}
+        onChangeText={(text) => setInstituteName(text)}
+        value={name}
+        textAlign="left"
+        color="white"
+        placeholderTextColor="grey"
+      /> */}
       <TouchableOpacity style={styles.Button} onPress={handleSignup}>
         <Text style={styles.buttonText}>{t("Sign Up")}</Text>
       </TouchableOpacity>

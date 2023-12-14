@@ -1,5 +1,7 @@
 import React, { Component } from "react";
 import { StyleSheet, Pressable, Text, View, Image, ImageBackground } from "react-native";
+import { useEffect, useState } from "react";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 import image from "../../assets/background.png";
 export default function EducatorHome() {
 

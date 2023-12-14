@@ -7,6 +7,19 @@ from rest_framework.response import Response
 from rest_framework import status
 import datetime
 
+def user_create(data):
+    serializer = UserSerializer(data=data)
+    if serializer.is_valid():
+        serializer.save()
+        return serializer.data
+    return serializer.errors
+
+def educator_create(data):
+    serializer = EducatorSerializer(data=data)
+    if(serializer.is_valid()):
+        serializer.save()
+        return serializer.data
+    return serializer.errors
 
 @api_view(['GET', 'POST'])
 def login_authentication(request,FID):
@@ -20,9 +33,33 @@ def login_authentication(request,FID):
         return Response(serializer.data)
         
     if(request.method == 'POST'):
-        serializer = LoginInfoSerializer(data=request.data)
+        login_data = {  
+            'FID': FID,
+            'Type': request.data['Type']
+        }
+        serializer = LoginInfoSerializer(data= login_data)
         if(serializer.is_valid()):
             serializer.save()
+            if(serializer.data['Type'] == 0):
+                user_data = {
+                    'UID': FID, 
+                    'UserName': request.data['UserName'],
+                    'Age': request.data['Age'],
+                    'Gender': request.data['Gender']
+                }
+                usercr =  user_create(user_data)
+                print(usercr)
+                
+            else:
+                educator_data = {
+                    'EID': FID,
+                    'EducatorName': request.data['EducatorName'],
+                    'InstituteName': request.data['InstituteName']
+                }
+                educatecr = educator_create(educator_data)  
+                print(educatecr)
+
+
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
     
