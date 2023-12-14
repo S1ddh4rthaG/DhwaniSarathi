@@ -16,7 +16,6 @@
     "@react-navigation/native": "^6.1.9",
     "@react-navigation/stack": "^6.3.20",
     "deprecated-react-native-prop-types": "^5.0.0",
-    "dotenv": "^16.3.1",
     "expo": "~49.0.15",
     "expo-av": "~13.4.1",
     "expo-constants": "~14.4.2",
@@ -47,9 +46,7 @@
     "react-native-wheel-of-fortune": "^1.5.4"
   },
   "devDependencies": {
-    "@babel/core": "^7.20.0",
-    "metro-react-native-babel-preset": "^0.77.0",
-    "react-native-dotenv": "^3.4.9"
+    "@babel/core": "^7.20.0"
   },
   "private": true
 }
