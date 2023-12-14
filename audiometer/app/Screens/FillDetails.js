@@ -130,11 +130,12 @@ const styles = StyleSheet.create({
   Button: {
     backgroundColor: '#0096FF', // Greenish Yellow
     marginTop: 'auto', // Push the button to the bottom
-    borderRadius: 10,
+    borderRadius:20,
     paddingVertical: 15,
     width: '100%',
     borderColor: 'white',
-    borderWidth: 3,
+    borderWidth: 1,
+    elevation: 5
   },
   educatorContainer: {
     marginTop: 20,

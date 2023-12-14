@@ -28,6 +28,7 @@ import AssignmentList from "./Screens/Educator/AssignmentList.js";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import RightEar from "./Screens/RightEar.js";
 import ClassroomList from "./Screens/Educator/ClassroomList";
+import QuietPlaceDetection from "./newScreens/QuietPlaceDetection";
 const Stack = createStackNavigator();
 
 export default () => {
@@ -167,6 +168,28 @@ export default () => {
           component={BeforeTest3}
           options={{
             headerTitle: () => <Header name={t("Before Test 3")} />,
+            headerTitleAlign: "Signin", // Center the header title
+            headerRight: () => (
+              <View style={{ flexDirection: "row", alignItems: "center" }}>
+              </View>
+            ),
+            headerStyle: {
+              height: 70,
+              backgroundColor: "#0096FF",
+              borderBottomLeftRadius: 10,
+              borderBottomRightRadius: 10,
+              borderWidth: 2,
+              borderColor: 'white'
+            },
+          }}
+        />
+
+        <Stack.Screen
+          name="QuietPlaceDetection"
+          alignItems="center"
+          component={QuietPlaceDetection}
+          options={{
+            headerTitle: () => <Header name={t("Check your surrounding")} />,
             headerTitleAlign: "Signin", // Center the header title
             headerRight: () => (
               <View style={{ flexDirection: "row", alignItems: "center" }}>
