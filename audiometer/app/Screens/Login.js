@@ -17,8 +17,9 @@ import { baseurl } from "../Constants/ip.js";
 import { signInWithEmailAndPassword } from "firebase/auth";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { FIREBASE_AUTH } from "../../FirebaseConfig.js";
+import { router } from "expo-router";
 
-const Login = ({ navigation }) => {
+const Login = () => {
   const { t, i18n } = useTranslation();
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
@@ -49,11 +50,12 @@ const Login = ({ navigation }) => {
           );
           const userType = await AsyncStorage.getItem("userType");
           console.log(userType);
+          router.push("/Screens/Home");
         } else {
           console.error("Failed to fetch user data:", response1.status);
         }
       }
-      navigation.navigate("Signout");
+    
     } catch (error) {
       console.log(error);
     } finally {
@@ -96,7 +98,7 @@ const Login = ({ navigation }) => {
       <TouchableOpacity
         style={styles.Button}
         onPress={() => {
-          navigation.navigate("Signup");
+          router.push("/Screens/Signup");
         }}
       >
         <Text style={styles.buttonText}>{t("Sign up")}</Text>
