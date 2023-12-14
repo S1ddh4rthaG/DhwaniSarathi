@@ -68,39 +68,42 @@ function AppBar() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: 'black',
+    backgroundColor: '#B5B6BA',
     padding: 20,
     justifyContent: 'center',
-    alignItems: 'center',
+
+    borderColor: 'white',
+    borderWidth: 5,
+    borderRadius: 10
   },
   image: {
-    width: 200,
-    height: 200,
-    alignContent: 'center',
-    borderColor: '#FFD700',
-    borderCurve: 'circular',
-    borderRadius: 10,
-    borderWidth: 10,
+    width: 150,
+    height: 150,
+    alignSelf: 'center',
+    borderColor: '#0096FF',
+    borderWidth: 3
   },
   Button: {
-    backgroundColor: '#FFD700', // Greenish Yellow
+    backgroundColor: '#0096FF', // Greenish Yellow
     marginTop: 20,
     borderRadius: 20,
     paddingVertical: 15,
     width: "100%",
     borderColor: 'white',
-    borderWidth: 3
+    borderWidth: 1,
+    elevation: 5
+  
   },
   //new style created for the 2nd button as it has the padding below it as shown in the figma 
   Button1: {
-    backgroundColor: '#FFD700', // Greenish Yellow
+    backgroundColor: '#0096FF', // Greenish Yellow
     marginTop: 20,
     borderRadius: 20,
     paddingVertical: 15,
     width: "100%",
     borderColor: 'white',
-    borderWidth: 3
-    
+    borderWidth: 1,
+    elevation: 5
   },
   buttonText: {
     color: 'black',

@@ -38,9 +38,9 @@ const BeforeYouStart = ({navigation}) => {
         minimumValue={0}
         maximumValue={1000}
         onValueChange={handleLoudnessChange}
-        minimumTrackTintColor= "#FFD700"
+        minimumTrackTintColor= "#0096FF"
         maximumTrackTinkColor="white"
-        thumbTintColor="#FFD700"/>
+        thumbTintColor="#0096FF"/>
       <Text style={styles.sliderLabel1}>{t('Loud')}</Text>
 
       
@@ -110,7 +110,7 @@ const styles = StyleSheet.create({
     textAlign: "left",
   },
   Button: {
-    backgroundColor: '#FFD700', // Greenish Yellow
+    backgroundColor: '#0096FF', // Greenish Yellow
     marginTop: 20,
     borderRadius: 20,
     paddingVertical: 15,
@@ -127,7 +127,7 @@ const styles = StyleSheet.create({
     marginBottom: 10,
   },
   educatorButton: {
-    backgroundColor: '#FFD700', // Greenish Yellow
+    backgroundColor: '#0096FF', // Greenish Yellow
     paddingVertical: 10,
     paddingHorizontal: 20,
     borderRadius: 10,

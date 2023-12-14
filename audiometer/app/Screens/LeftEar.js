@@ -28,7 +28,7 @@ const LeftEar = () => {
       </TouchableOpacity>
 
       <TouchableOpacity style={styles.Button1}>
-        <Text style={styles.buttonText1}>{t('Press if you hear a beep')}</Text>
+        <Text style={styles.buttonText}>{t('Press if you hear a beep')}</Text>
       </TouchableOpacity>
     </View>
   );
@@ -37,114 +37,61 @@ const LeftEar = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: 'black',
+    backgroundColor: '#B5B6BA',
     padding: 20,
-    justifyContent: 'flex-start',
-    alignItems: "center"
-    
+    justifyContent: 'center',
+
+    borderColor: 'white',
+    borderWidth: 5,
+    borderRadius: 10
   },
-  sliderContainer: {
-    width: '80%',
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    marginBottom: 50,
-    
-  },
-  sliderLabel: {
-    fontSize: 15,
-    color: 'white',
-  },
-  sliderLabel1: {
-    fontSize: 15,
-    color: 'red',
-  },
-  slider: {
-    flex: 1,
-    width:"100%",
-    
+  title: {
+    fontSize: 24,
+    color: 'black',
+    marginBottom: 20,
+    textAlign: 'center',
+    fontWeight: 'bold',
+    marginTop: 20,
   },
   image: {
     width: 150,
     height: 150,
-    alignContent: 'center',
-    marginBottom: 40
-  },
-  title: {
-    fontSize: 24,
-    color: 'white',
-    marginBottom: 20, 
-    textAlign: "center",
-    fontWeight: 'bold'
-  },
-  title2: {
-    fontSize : 25, 
-    color: 'white',
-    marginBottom: 30,
-    textAlign: "left", 
-   
-  }, 
-  subtitle: {
-    fontSize: 18,
-    color: 'white',
-    marginBottom: 10,
-    textAlign: "left",
+    alignSelf: 'center',
+  
   },
   Button: {
-    backgroundColor: '#FFD700', // Greenish Yellow
+    backgroundColor: '#0096FF', // Greenish Yellow
     marginTop: 20,
     borderRadius: 20,
     paddingVertical: 15,
     width: "100%",
     borderColor: 'white',
-    borderWidth: 3
+    borderWidth: 1,
+    elevation: 5
+  
   },
+  //new style created for the 2nd button as it has the padding below it as shown in the figma 
   Button1: {
-    backgroundColor: '#FFD700', // Greenish Yellow
+    backgroundColor: '#0096FF', // Greenish Yellow
     marginTop: 20,
     borderRadius: 20,
     paddingVertical: 15,
     width: "100%",
     borderColor: 'white',
-    borderWidth: 3
-  },
-  buttonText1: {
-    color: 'black',
-    textAlign: 'center',
-    fontSize: 20,
-    fontWeight: 'bold'
-  },
-  educatorContainer: {
-    marginTop: 20,
-    alignItems: 'center',
-  },
-  educatorText: {
-    color: 'white',
-    marginBottom: 10,
-  },
-  educatorButton: {
-    backgroundColor: '#FFD700', // Greenish Yellow
-    paddingVertical: 10,
-    paddingHorizontal: 20,
-    borderRadius: 10,
+    borderWidth: 1,
+    elevation: 5
   },
   buttonText: {
     color: 'black',
     textAlign: 'center',
-    fontSize: 20,
-    //fontWeight: 'bold'
+    fontSize: 15,
+    fontWeight: 'bold',
   },
 
-  input: {
-    height: 40,
-    borderColor: 'white',
-    borderWidth: 1,
-    marginBottom: 20,
-    paddingHorizontal: 10,
+  gif: {
     width: '100%',
-    color: 'white',
-    fontStyle: 'italic'
-    
+    height: 200, // Adjust the height as needed
+    marginBottom: 20,
   },
 });
 

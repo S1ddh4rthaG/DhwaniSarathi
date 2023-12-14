@@ -17,6 +17,9 @@ import i18n from "./locales/i18n";
 import { useTranslation } from "react-i18next";
 import { I18nextProvider } from "react-i18next";
 import Signout from "./Screens/Signout";
+import BeforeTest1 from "./newScreens/BeforeTest1";
+import BeforeTest2 from './newScreens/BeforeTest2';
+import BeforeTest3 from './newScreens/BeforeTest3'; 
 import { FIREBASE_AUTH } from "../FirebaseConfig.js";
 import { onAuthStateChanged } from "firebase/auth";
 import AudiometryTest from "./AudiometryTest.js";
@@ -24,7 +27,6 @@ import EducatorHome from "./Screens/Educator/EducatorHome.js";
 import AssignmentList from "./Screens/Educator/AssignmentList.js";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import RightEar from "./Screens/RightEar.js";
-
 const Stack = createStackNavigator();
 
 export default () => {
@@ -73,10 +75,10 @@ export default () => {
     const { t } = useTranslation();
     return (
       //TODO: check if user is Educator or User
-      <Stack.Navigator initialRouteName='LeftEar' /*initialRouteName={user ? "Home" : "Login"}*/>
+      <Stack.Navigator initialRouteName='BeforeTest1' /*initialRouteName={user ? "Home" : "Login"}*/>
         <Stack.Screen
-          name="Home"
-          component={Home}
+          name="BeforeTest1"
+          component={AudiometryTest}
           options={{
             headerTitle: () => <Header name={t("Hertz hEARing Test")} />,
             headerTitleAlign: "Signin", // Center the header title
@@ -95,7 +97,11 @@ export default () => {
             ),
             headerStyle: {
               height: 70,
-              backgroundColor: "#FFD700",
+              backgroundColor: "#0096FF",
+              borderBottomLeftRadius: 10,
+              borderBottomRightRadius: 10,
+              borderWidth: 2,
+              borderColor: 'white'
             },
           }}
         />
@@ -109,21 +115,12 @@ export default () => {
             headerTitleAlign: "Signin", // Center the header title
             headerRight: () => (
               <View style={{ flexDirection: "row", alignItems: "center" }}>
-                {/* <TouchableOpacity style={{ marginRight: 15 }}>
-                  <MaterialCommunityIcons
-                    style={styles.button}
-                    name="account-circle"
-                    size={28}
-                    color="black"
-                  />
-                </TouchableOpacity> */}
-
-                {/* Additional icons or content for the right side */}
               </View>
             ),
             headerStyle: {
               height: 70,
-              backgroundColor: "#FFD700",
+              backgroundColor: "#0096FF",
+
             },
           }}
         />
@@ -150,7 +147,7 @@ export default () => {
             ),
             headerStyle: {
               height: 70,
-              backgroundColor: "#FFD700",
+              backgroundColor: "#0096FF",
             },
           }}
         />
@@ -177,7 +174,7 @@ export default () => {
             ),
             headerStyle: {
               height: 70,
-              backgroundColor: "#FFD700",
+              backgroundColor: "#0096FF",
             },
           }}
         />
@@ -204,7 +201,7 @@ export default () => {
             ),
             headerStyle: {
               height: 70,
-              backgroundColor: "#FFD700",
+              backgroundColor: "#0096FF",
             },
           }}
         />
@@ -231,7 +228,7 @@ export default () => {
             ),
             headerStyle: {
               height: 70,
-              backgroundColor: "#FFD700",
+              backgroundColor: "#0096FF",
             },
           }}
         />
@@ -258,7 +255,7 @@ export default () => {
             ),
             headerStyle: {
               height: 70,
-              backgroundColor: "#FFD700",
+              backgroundColor: "#0096FF",
             },
           }}
         />
@@ -285,7 +282,7 @@ export default () => {
             ),
             headerStyle: {
               height: 70,
-              backgroundColor: "#FFD700",
+              backgroundColor: "#0096FF",
             },
           }}
         />
@@ -312,7 +309,7 @@ export default () => {
             ),
             headerStyle: {
               height: 70,
-              backgroundColor: "#FFD700",
+              backgroundColor: "#0096FF",
             },
           }}
         />
