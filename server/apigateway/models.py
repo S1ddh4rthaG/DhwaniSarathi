@@ -13,7 +13,7 @@ class LoginInfo(models.Model):
     
 class User(models.Model):
     UID = models.CharField(primary_key=True, max_length=100, default=uuid.uuid4)
-    UserName = models.CharField(max_length=100, unique=True)
+    UserName = models.CharField(max_length=100)
     Age = models.IntegerField(default=0)
     Gender = models.CharField(max_length=10,default="male")
 

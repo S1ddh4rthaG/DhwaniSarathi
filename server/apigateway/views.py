@@ -33,6 +33,7 @@ def logininfo_list(request):
                 if user_serializer.is_valid():
                     user_serializer.save()
                 else:
+                    print(user_serializer.errors)
                     return Response(user_serializer.errors, status=status.HTTP_400_BAD_REQUEST)
             else:
                 # Create a new Educator
