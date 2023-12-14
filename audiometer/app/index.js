@@ -60,10 +60,10 @@ export default () => {
     return (
       //TODO: check if user is Educator or User
       
-      <Stack.Navigator /*initialRouteName={user ? "Signout" : "Signup"*/ initialRouteName="BeforeTest1">
+      <Stack.Navigator /*initialRouteName={user ? "Signout" : "Signup"}*/ initialRouteName="Home">
         <Stack.Screen
-          name="BeforeTest1"
-          component={AssignmentList}
+          name="Home"
+          component={Home}
           options={{
             headerTitle: () => <Header name={t("Hertz hEARing Test")} />,
             headerTitleAlign: "Signin", // Center the header title
@@ -114,6 +114,77 @@ export default () => {
         />
 
         <Stack.Screen
+          name="BeforeTest1"
+          alignItems="center"
+          component={BeforeTest1}
+          options={{
+            headerTitle: () => <Header name={t("Before Test 1")} />,
+            headerTitleAlign: "Signin", // Center the header title
+            headerRight: () => (
+              <View style={{ flexDirection: "row", alignItems: "center" }}>
+              </View>
+            ),
+            headerStyle: {
+              height: 70,
+              backgroundColor: "#0096FF",
+              borderBottomLeftRadius: 10,
+              borderBottomRightRadius: 10,
+              borderWidth: 2,
+              borderColor: 'white'
+            },
+          }}
+        />
+
+
+
+        <Stack.Screen
+          name="BeforeTest2"
+          alignItems="center"
+          component={BeforeTest2}
+          options={{
+            headerTitle: () => <Header name={t("Before Test 2")} />,
+            headerTitleAlign: "Signin", // Center the header title
+            headerRight: () => (
+              <View style={{ flexDirection: "row", alignItems: "center" }}>
+              </View>
+            ),
+            headerStyle: {
+              height: 70,
+              backgroundColor: "#0096FF",
+              borderBottomLeftRadius: 10,
+              borderBottomRightRadius: 10,
+              borderWidth: 2,
+              borderColor: 'white'
+            },
+          }}
+        />
+
+
+
+      <Stack.Screen
+          name="BeforeTest3"
+          alignItems="center"
+          component={BeforeTest3}
+          options={{
+            headerTitle: () => <Header name={t("Before Test 3")} />,
+            headerTitleAlign: "Signin", // Center the header title
+            headerRight: () => (
+              <View style={{ flexDirection: "row", alignItems: "center" }}>
+              </View>
+            ),
+            headerStyle: {
+              height: 70,
+              backgroundColor: "#0096FF",
+              borderBottomLeftRadius: 10,
+              borderBottomRightRadius: 10,
+              borderWidth: 2,
+              borderColor: 'white'
+            },
+          }}
+        />
+
+        
+        <Stack.Screen
           name="Login"
           component={Login}
           options={{
@@ -121,16 +192,7 @@ export default () => {
             headerTitleAlign: "Signin", // Center the header title
             headerRight: () => (
               <View style={{ flexDirection: "row", alignItems: "center" }}>
-                {/* <TouchableOpacity style={{ marginRight: 15 }}>
-                  <MaterialCommunityIcons
-                    style={styles.button}
-                    name="account-circle"
-                    size={28}
-                    color="black"
-                  />
-                </TouchableOpacity> */}
-
-                {/* Additional icons or content for the right side */}
+               
               </View>
             ),
             headerStyle: {
@@ -191,8 +253,6 @@ export default () => {
                     color="black"
                   />
                 </TouchableOpacity>
-
-                {/* Additional icons or content for the right side */}
               </View>
             ),
             headerStyle: {
@@ -222,8 +282,6 @@ export default () => {
                     color="black"
                   />
                 </TouchableOpacity>
-
-                {/* Additional icons or content for the right side */}
               </View>
             ),
             headerStyle: {
@@ -284,8 +342,6 @@ export default () => {
                     color="black"
                   />
                 </TouchableOpacity>
-
-                {/* Additional icons or content for the right side */}
               </View>
             ),
             headerStyle: {
@@ -342,8 +398,6 @@ export default () => {
                     color="black"
                   />
                 </TouchableOpacity>
-
-                {/* Additional icons or content for the right side */}
               </View>
             ),
             headerStyle: {

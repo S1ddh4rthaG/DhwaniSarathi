@@ -31,7 +31,7 @@ const FillDetails = ({navigation}) => {
 
     const handleStartTest = () => {
       //TODO: IF student store the details
-      navigation.navigate('BeforeYouStart');
+      navigation.navigate('BeforeTest1');
     }
     
   return (

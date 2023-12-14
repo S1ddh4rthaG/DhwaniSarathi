@@ -25,7 +25,7 @@ const BeforeTest1 = ({navigation}) => {
         resizeMode='cover'/>
       <Text style={styles.title2}>{t('Headphones')}</Text>
 
-      <TouchableOpacity style={styles.Button} onPress={()=>{navigation.navigate('RightEar')}}>
+      <TouchableOpacity style={styles.Button} onPress={()=>{navigation.navigate('BeforeTest2')}}>
         <Text style={styles.buttonText}>{t('Lets Start!')}</Text>
       </TouchableOpacity>
     </View>
@@ -83,6 +83,7 @@ const styles = StyleSheet.create({
       color: 'black',
       marginBottom: 20,
       textAlign: 'left',
+      fontWeight: 'bold'
     },
     subtitle: {
       fontSize: 15,
@@ -97,7 +98,7 @@ const styles = StyleSheet.create({
       paddingVertical: 15,
       width: '100%',
       borderColor: 'white',
-      borderWidth: 3,
+      borderWidth: 1,
     },
     educatorContainer: {
       marginTop: 20,

@@ -83,6 +83,7 @@ const styles = StyleSheet.create({
       color: 'black',
       marginBottom: 20,
       textAlign: 'left',
+      fontWeight: 'bold'
     },
     subtitle: {
       fontSize: 15,
@@ -97,7 +98,7 @@ const styles = StyleSheet.create({
       paddingVertical: 15,
       width: '100%',
       borderColor: 'white',
-      borderWidth: 3,
+      borderWidth: 1,
     },
     educatorContainer: {
       marginTop: 20,
