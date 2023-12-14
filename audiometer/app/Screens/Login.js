@@ -12,7 +12,7 @@ import {
 
 // import './locales/i18n';
 import { t, useTranslation } from "react-i18next";
-import {baseurl} from "../Constants/ip.js";
+import { baseurl } from "../Constants/ip.js";
 
 import { signInWithEmailAndPassword } from "firebase/auth";
 import AsyncStorage from "@react-native-async-storage/async-storage";
@@ -153,7 +153,7 @@ const styles = StyleSheet.create({
     borderColor: 'white',
     borderWidth: 1,
     elevation: 5
-  
+
   },
   //new style created for the 2nd button as it has the padding below it as shown in the figma 
   Button1: {
