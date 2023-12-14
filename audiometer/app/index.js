@@ -11,6 +11,7 @@ import FillDetails from "./Screens/FillDetails";
 import BeforeYouStart from "./Screens/BeforeYouStart";
 import LeftEar from "./Screens/LeftEar";
 import Results from "./Screens/Results";
+import JewelleryDetection from "./Screens/JewelleryDetection";
 import Login from "./Screens/Login";
 import Signup from "./Screens/Signup";
 import i18n from "./locales/i18n";
@@ -190,9 +191,8 @@ export default () => {
             headerTitle: () => <Header name={t("Login")} />,
             headerTitleAlign: "Signin", // Center the header title
             headerRight: () => (
-              <View
-                style={{ flexDirection: "row", alignItems: "center" }}
-              ></View>
+              <View style={{ flexDirection: "row", alignItems: "center" }}>
+              </View>
             ),
             headerStyle: {
               height: 70,
