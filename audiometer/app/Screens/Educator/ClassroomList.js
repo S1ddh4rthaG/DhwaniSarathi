@@ -1,100 +1,57 @@
-import React, { useState } from 'react';
-import { View, Text, TextInput, FlatList, Image, TouchableOpacity, StyleSheet, ImageBackground } from 'react-native';
+import React, { useState, useEffect } from "react";
+import { View, Text, TextInput, FlatList, Image, TouchableOpacity, StyleSheet, ActivityIndicator } from 'react-native';
+import { baseurl } from "../../Constants/ip.js";
 
 const ClassroomList = () => {
     const [searchQuery, setSearchQuery] = useState('');
-    const [Classrooms, setClassrooms] = useState([
-        {
-            id: 1,
-            title: 'Classroom 1',
+    const [classrooms, setClassrooms] = useState([]);
+    const [loading, setLoading] = useState(true);
 
-            attendees: [
-                { id: 1, remoteImage: 'https://bootdey.com/img/Content/avatar/avatar1.png' },
-                { id: 2, remoteImage: 'https://bootdey.com/img/Content/avatar/avatar2.png' },
-                { id: 3, remoteImage: 'https://bootdey.com/img/Content/avatar/avatar8.png' },
-                { id: 4, remoteImage: 'https://bootdey.com/img/Content/avatar/avatar1.png' },
-                { id: 5, remoteImage: 'https://bootdey.com/img/Content/avatar/avatar3.png' },
-                { id: 6, remoteImage: 'https://bootdey.com/img/Content/avatar/avatar5.png' },
-            ],
-            code: 'ID120',
-            backgroundColor: '#ffdcb2',
-            titleColor: '#ff8c00',
-        },
-        {
-            id: 2,
-            title: 'Classroom 2',
+    useEffect(() => {
+        const fetchData = async () => {
+            const EID = 124; // Get EID from AsyncStorage or any source
 
-            attendees: [
-                { id: 7, remoteImage: 'https://bootdey.com/img/Content/avatar/avatar2.png' },
-                { id: 8, remoteImage: 'https://bootdey.com/img/Content/avatar/avatar4.png' },
-                { id: 9, remoteImage: 'https://bootdey.com/img/Content/avatar/avatar6.png' },
-            ],
-            code: 'ID121',
-            backgroundColor: '#bfdfdf',
-            titleColor: '#008080',
-        },
-        {
-            id: 3,
-            title: 'Classroom 2',
+            const url = `${baseurl}/educators/${EID}/classrooms/`;
 
-            attendees: [
-                { id: 10, remoteImage: 'https://bootdey.com/img/Content/avatar/avatar2.png' },
-                { id: 11, remoteImage: 'https://bootdey.com/img/Content/avatar/avatar4.png' },
-                { id: 12, remoteImage: 'https://bootdey.com/img/Content/avatar/avatar1.png' },
-                { id: 13, remoteImage: 'https://bootdey.com/img/Content/avatar/avatar3.png' },
-                { id: 14, remoteImage: 'https://bootdey.com/img/Content/avatar/avatar5.png' },
-            ],
-            code: 'ID122',
-            backgroundColor: '#e2caf8',
-            titleColor: '#8a2be2',
-        },
-        {
-            id: 4,
-            title: 'Classroom 2',
+            try {
+                const response = await fetch(url);
+                if (response.ok) {
+                    const data = await response.json();
+                    setClassrooms(data);
+                    setLoading(false);
+                } else {
+                    console.error("Failed to fetch Classrooms:", response.status);
+                }
+            } catch (error) {
+                console.error("Error fetching Classrooms:", error);
+            }
+        };
 
-            attendees: [
-                { id: 15, remoteImage: 'https://bootdey.com/img/Content/avatar/avatar2.png' },
-                { id: 16, remoteImage: 'https://bootdey.com/img/Content/avatar/avatar4.png' },
-                { id: 17, remoteImage: 'https://bootdey.com/img/Content/avatar/avatar6.png' },
-            ],
-            code: 'ID123',
-            backgroundColor: '#d8e4fa',
-            titleColor: '#6495ed',
-        },
-        // Add more Classrooms here
-    ]);
+        fetchData();
+    }, []);
 
     const renderClassroomCard = ({ item }) => (
-        <View style={[styles.card, { backgroundColor: item.backgroundColor }]}>
-            <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
-                <Text style={[styles.cardTitle, { color: item.titleColor }]}>{item.title}</Text>
-                <Text style={[styles.cardCode, { color: item.titleColor }]}>{item.code}</Text>
-            </View>
-
-            <View style={styles.cardContent}>
-                <Text style={{ padding: 3 }}>Students : </Text>
-                <View style={styles.attendeesContainer}>
-                    {item.attendees.map((attendee) => (
-                        <Image key={attendee.id} source={{ uri: attendee.remoteImage }} style={styles.attendeeImage} />
-                    ))}
-                </View>
-                <View style={styles.buttonsContainer}>
-                    <TouchableOpacity style={[styles.actionButton, { borderColor: item.titleColor, }]}>
-                        <Text style={{ color: item.titleColor }}>View Assignments</Text>
-                    </TouchableOpacity>
-
-                    <TouchableOpacity style={[styles.actionButton, { borderColor: item.titleColor, }]}>
-                        <Text style={{ color: item.titleColor }}>Add Assignment</Text>
-                    </TouchableOpacity>
-                </View>
-            </View>
+        <View style={[styles.card, { backgroundColor: "#ffdcb2" }]}>
+            <Text style={styles.cardTitle}>{item.ClassroomName}</Text>
+            {/* Add more relevant data based on your response */}
+            <Text style={styles.cardCode}>Classroom ID: {item.CID}</Text>
+            <Text style={styles.cardCode}>Educator ID: {item.EID}</Text>
+            {/* Add more data as needed */}
         </View>
     );
 
     const searchFilter = (item) => {
         const query = searchQuery.toLowerCase();
-        return item.title.toLowerCase().includes(query);
+        return item.ClassroomName.toLowerCase().includes(query);
     };
+
+    if (loading) {
+        return (
+            <View style={styles.container}>
+                <ActivityIndicator size="large" color="#0096FF" />
+            </View>
+        );
+    }
 
     return (
         <View style={styles.container}>
@@ -107,9 +64,9 @@ const ClassroomList = () => {
             />
             <FlatList
                 contentContainerStyle={styles.listContainer}
-                data={Classrooms.filter(searchFilter)}
+                data={classrooms.filter(searchFilter)}
                 renderItem={renderClassroomCard}
-                keyExtractor={(item) => item.id.toString()}
+                keyExtractor={(item) => item.CID}
             />
         </View>
     );
@@ -208,4 +165,3 @@ const styles = StyleSheet.create({
 });
 
 export default ClassroomList;
-
