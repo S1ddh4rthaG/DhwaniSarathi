@@ -11,6 +11,7 @@ import FillDetails from "./Screens/FillDetails";
 import BeforeYouStart from "./Screens/BeforeYouStart";
 import LeftEar from "./Screens/LeftEar";
 import Results from "./Screens/Results";
+import JewelleryDetection from "./Screens/JewelleryDetection";
 import Login from "./Screens/Login";
 import Signup from "./Screens/Signup";
 import i18n from "./locales/i18n";
@@ -19,7 +20,7 @@ import { I18nextProvider } from "react-i18next";
 import Signout from "./Screens/Signout";
 import BeforeTest1 from "./newScreens/BeforeTest1";
 import BeforeTest2 from './newScreens/BeforeTest2';
-import BeforeTest3 from './newScreens/BeforeTest3'; 
+import BeforeTest3 from './newScreens/BeforeTest3';
 import { FIREBASE_AUTH } from "../FirebaseConfig.js";
 import { onAuthStateChanged } from "firebase/auth";
 import AudiometryTest from "./AudiometryTest.js";
@@ -59,11 +60,11 @@ export default () => {
     const { t } = useTranslation();
     return (
       //TODO: check if user is Educator or User
-      
+
       <Stack.Navigator /*initialRouteName={user ? "Signout" : "Signup"}*/ initialRouteName="Home">
         <Stack.Screen
           name="Home"
-          component={Home}
+          component={Results}
           options={{
             headerTitle: () => <Header name={t("Hertz hEARing Test")} />,
             headerTitleAlign: "Signin", // Center the header title
@@ -161,7 +162,7 @@ export default () => {
 
 
 
-      <Stack.Screen
+        <Stack.Screen
           name="BeforeTest3"
           alignItems="center"
           component={BeforeTest3}
@@ -183,7 +184,7 @@ export default () => {
           }}
         />
 
-        
+
         <Stack.Screen
           name="Login"
           component={Login}
@@ -192,7 +193,7 @@ export default () => {
             headerTitleAlign: "Signin", // Center the header title
             headerRight: () => (
               <View style={{ flexDirection: "row", alignItems: "center" }}>
-               
+
               </View>
             ),
             headerStyle: {
