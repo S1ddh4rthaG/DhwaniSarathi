@@ -101,6 +101,7 @@ const ClassroomList = () => {
             <TextInput
                 style={styles.searchInput}
                 placeholder="Search"
+                placeholderTextColor="black"
                 value={searchQuery}
                 onChangeText={setSearchQuery}
             />
@@ -116,10 +117,14 @@ const ClassroomList = () => {
 
 const styles = StyleSheet.create({
     container: {
-
-
-
-    },
+        flex: 1,
+        backgroundColor: '#B5B6BA',
+        justifyContent: 'center',
+    
+        borderColor: 'white',
+        borderWidth: 5,
+        borderRadius: 10
+      },
     listContainer: {
         paddingHorizontal: 10
     },
@@ -135,7 +140,7 @@ const styles = StyleSheet.create({
         height: 40,
         borderWidth: 1,
         borderRadius: 5,
-        borderColor: 'grey',
+        borderColor: 'white',
         marginBottom: 10,
         paddingHorizontal: 10,
         margin: 10,

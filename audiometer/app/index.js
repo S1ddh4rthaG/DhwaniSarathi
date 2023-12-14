@@ -2,7 +2,7 @@ import React from "react";
 import { useState, useEffect } from "react";
 import { StyleSheet, View, TouchableOpacity } from "react-native";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
-import { NavigationContainer } from "@react-navigation/native";
+import { NavigationContainer, StackActions } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
 import Header from "./Components/Header";
 import Home from "./Screens/Home";
@@ -27,6 +27,7 @@ import EducatorHome from "./Screens/Educator/EducatorHome.js";
 import AssignmentList from "./Screens/Educator/AssignmentList.js";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import RightEar from "./Screens/RightEar.js";
+import ClassroomList from "./Screens/Educator/ClassroomList";
 const Stack = createStackNavigator();
 
 export default () => {
@@ -58,10 +59,11 @@ export default () => {
     const { t } = useTranslation();
     return (
       //TODO: check if user is Educator or User
-      <Stack.Navigator initialRouteName={user ? "Signout" : "Signup"}>
+      
+      <Stack.Navigator /*initialRouteName={user ? "Signout" : "Signup"*/ initialRouteName="BeforeTest1">
         <Stack.Screen
           name="BeforeTest1"
-          component={AudiometryTest}
+          component={AssignmentList}
           options={{
             headerTitle: () => <Header name={t("Hertz hEARing Test")} />,
             headerTitleAlign: "Signin", // Center the header title
@@ -103,7 +105,10 @@ export default () => {
             headerStyle: {
               height: 70,
               backgroundColor: "#0096FF",
-
+              borderBottomLeftRadius: 10,
+              borderBottomRightRadius: 10,
+              borderWidth: 2,
+              borderColor: 'white'
             },
           }}
         />
@@ -131,6 +136,10 @@ export default () => {
             headerStyle: {
               height: 70,
               backgroundColor: "#0096FF",
+              borderBottomLeftRadius: 10,
+              borderBottomRightRadius: 10,
+              borderWidth: 2,
+              borderColor: 'white'
             },
           }}
         />
@@ -158,6 +167,10 @@ export default () => {
             headerStyle: {
               height: 70,
               backgroundColor: "#0096FF",
+              borderBottomLeftRadius: 10,
+              borderBottomRightRadius: 10,
+              borderWidth: 2,
+              borderColor: 'white'
             },
           }}
         />
@@ -185,6 +198,10 @@ export default () => {
             headerStyle: {
               height: 70,
               backgroundColor: "#0096FF",
+              borderBottomLeftRadius: 10,
+              borderBottomRightRadius: 10,
+              borderWidth: 2,
+              borderColor: 'white'
             },
           }}
         />
@@ -212,6 +229,10 @@ export default () => {
             headerStyle: {
               height: 70,
               backgroundColor: "#0096FF",
+              borderBottomLeftRadius: 10,
+              borderBottomRightRadius: 10,
+              borderWidth: 2,
+              borderColor: 'white'
             },
           }}
         />
@@ -239,6 +260,10 @@ export default () => {
             headerStyle: {
               height: 70,
               backgroundColor: "#0096FF",
+              borderBottomLeftRadius: 10,
+              borderBottomRightRadius: 10,
+              borderWidth: 2,
+              borderColor: 'white'
             },
           }}
         />
@@ -266,6 +291,10 @@ export default () => {
             headerStyle: {
               height: 70,
               backgroundColor: "#0096FF",
+              borderBottomLeftRadius: 10,
+              borderBottomRightRadius: 10,
+              borderWidth: 2,
+              borderColor: 'white'
             },
           }}
         />
@@ -289,7 +318,11 @@ export default () => {
             ),
             headerStyle: {
               height: 70,
-              backgroundColor: "#FFD700",
+              backgroundColor: "#0096FF",
+              borderBottomLeftRadius: 10,
+              borderBottomRightRadius: 10,
+              borderWidth: 2,
+              borderColor: 'white'
             },
           }}
         />
@@ -316,6 +349,10 @@ export default () => {
             headerStyle: {
               height: 70,
               backgroundColor: "#0096FF",
+              borderBottomLeftRadius: 10,
+              borderBottomRightRadius: 10,
+              borderWidth: 2,
+              borderColor: 'white'
             },
           }}
         />
