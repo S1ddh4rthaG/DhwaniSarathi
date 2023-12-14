@@ -41,7 +41,7 @@ class Assignment(models.Model):
     AID = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     CID = models.ForeignKey('Classroom', on_delete=models.CASCADE)
     AssignmentName = models.CharField(max_length=100 , default="Sample Assignment")
-    Deadline = models.DateTimeField(default= (timezone.now()+timezone.timedelta(days=7)).strftime('%Y-%m-%d %H:%M:%S%z'))
+    Deadline = models.DateTimeField()
 
     def __str__(self):
         return f"Assignment {self.AID} in Classroom {self.CID}"
