@@ -35,18 +35,20 @@ const Login = ({ navigation }) => {
         password
       );
       if (response) {
-        let url = `${baseurl}/login/${response.user.uid}/`;
+        let url = `${baseurl}/logininfos/${response.user.uid}/`;
         const response1 = await fetch(url);
 
         if (response1.ok) {
           const data = await response1.json();
 
           responseObject = data;
-
+          console.log(responseObject);
           await AsyncStorage.setItem(
             "userType",
             JSON.stringify(responseObject.Type)
           );
+          const userType = await AsyncStorage.getItem("userType");
+          console.log(userType);
         } else {
           console.error("Failed to fetch user data:", response1.status);
         }
@@ -62,7 +64,11 @@ const Login = ({ navigation }) => {
   return (
     <View style={styles.container}>
       <Text style={styles.title}>{t("Login")}</Text>
-      <Image style={styles.image} source={require('../assets/login.png')} resizeMode='cover' />
+      <Image
+        style={styles.image}
+        source={require("../assets/login.png")}
+        resizeMode="cover"
+      />
       <TextInput
         placeholder={t("Email")}
         value={username}
@@ -99,92 +105,90 @@ const Login = ({ navigation }) => {
   );
 };
 
-
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#B5B6BA',
+    backgroundColor: "#B5B6BA",
     padding: 20,
-    justifyContent: 'flex-start',
+    justifyContent: "flex-start",
 
-    borderColor: 'white',
+    borderColor: "white",
     borderWidth: 5,
-    borderRadius: 10
+    borderRadius: 10,
   },
   educatorText: {
-    color: 'black',
+    color: "black",
     alignSelf: "center",
     marginTop: 20,
     fontWeight: "bold",
-    marginBottom: 5
+    marginBottom: 5,
   },
   image: {
     width: 50,
     height: 50,
-    alignSelf: 'center',
-    marginBottom: 20
+    alignSelf: "center",
+    marginBottom: 20,
   },
   title: {
     fontSize: 24,
-    color: 'black',
+    color: "black",
     marginBottom: 20,
-    textAlign: 'center',
-    fontWeight: 'bold',
+    textAlign: "center",
+    fontWeight: "bold",
     marginTop: 20,
   },
   title2: {
     fontSize: 18,
-    color: 'black',
+    color: "black",
     marginBottom: 20,
-    textAlign: 'left',
-    fontWeight: 'bold'
+    textAlign: "left",
+    fontWeight: "bold",
   },
   subtitle: {
     fontSize: 15,
-    color: 'white',
+    color: "white",
     marginBottom: 10,
-    textAlign: 'left',
+    textAlign: "left",
   },
   Button: {
-    backgroundColor: '#0096FF', // Greenish Yellow
+    backgroundColor: "#0096FF", // Greenish Yellow
     borderRadius: 20,
     paddingVertical: 15,
     width: "100%",
-    borderColor: 'white',
+    borderColor: "white",
     borderWidth: 1,
-    elevation: 5
-
+    elevation: 5,
   },
-  //new style created for the 2nd button as it has the padding below it as shown in the figma 
+  //new style created for the 2nd button as it has the padding below it as shown in the figma
   Button1: {
-    backgroundColor: '#0096FF', // Greenish Yellow
+    backgroundColor: "#0096FF", // Greenish Yellow
     marginTop: 20,
     borderRadius: 20,
     paddingVertical: 15,
     width: "100%",
-    borderColor: 'white',
+    borderColor: "white",
     borderWidth: 1,
-    elevation: 5
+    elevation: 5,
   },
   input: {
     height: 40,
-    borderColor: 'white',
+    borderColor: "white",
     borderWidth: 1,
     marginBottom: 20,
     paddingHorizontal: 10,
-    width: '100%',
-    color: 'white',
-    fontStyle: 'normal',
+    width: "100%",
+    color: "white",
+    fontStyle: "normal",
   },
   buttonText: {
-    color: 'black',
-    textAlign: 'center',
+    color: "black",
+    textAlign: "center",
     fontSize: 15,
-    fontWeight: 'bold',
+    fontWeight: "bold",
   },
 
   gif: {
-    width: '100%',
+    width: "100%",
     height: 200, // Adjust the height as needed
     marginBottom: 20,
   },
