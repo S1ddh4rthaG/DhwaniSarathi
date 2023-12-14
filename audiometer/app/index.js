@@ -37,21 +37,6 @@ export default () => {
       if (user) {
         try {
           await AsyncStorage.setItem("userId", user.uid);
-
-          const response = await fetch(`http://192.168.1.5/login/${user.uid}/`);
-
-          if (response.ok) {
-            const data = await response.json();
-
-            responseObject = data;
-
-            await AsyncStorage.setItem(
-              "userType",
-              JSON.stringify(responseObject.Type)
-            );
-          } else {
-            console.error("Failed to fetch user data:", response.status);
-          }
         } catch (error) {
           console.error(
             "Error fetching user data or storing user type:",
@@ -59,7 +44,6 @@ export default () => {
           );
         }
       }
-
       // Retrieve user ID and user type from AsyncStorage
       const userId = await AsyncStorage.getItem("userId");
       const userType = await AsyncStorage.getItem("userType");
@@ -71,11 +55,10 @@ export default () => {
   }, []);
 
   function Mystack() {
-
     const { t } = useTranslation();
     return (
       //TODO: check if user is Educator or User
-      <Stack.Navigator initialRouteName='BeforeTest1' /*initialRouteName={user ? "Home" : "Login"}*/>
+      <Stack.Navigator initialRouteName={user ? "Signout" : "Signup"}>
         <Stack.Screen
           name="BeforeTest1"
           component={AudiometryTest}
@@ -286,7 +269,30 @@ export default () => {
             },
           }}
         />
-
+        <Stack.Screen
+          name="Signout"
+          component={Signout}
+          options={{
+            headerTitle: () => <Header name={t("Signout")} />,
+            headerTitleAlign: "left", // Center the header title
+            headerRight: () => (
+              <View style={{ flexDirection: "row", alignItems: "center" }}>
+                <TouchableOpacity style={{ marginRight: 15 }}>
+                  <MaterialCommunityIcons
+                    style={styles.button}
+                    name="account-circle"
+                    size={28}
+                    color="black"
+                  />
+                </TouchableOpacity>
+              </View>
+            ),
+            headerStyle: {
+              height: 70,
+              backgroundColor: "#FFD700",
+            },
+          }}
+        />
         <Stack.Screen
           name="Results"
           component={Results}

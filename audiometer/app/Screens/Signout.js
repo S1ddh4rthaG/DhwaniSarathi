@@ -1,23 +1,23 @@
 // Login.js
-import React, { useState } from "react";
-import {
-  View,
-  TouchableOpacity,
-  Text,
-  TextInput,
-  Button,
-  StyleSheet,
-} from "react-native";
-
+import React from "react";
+import { View, TouchableOpacity, Text, StyleSheet } from "react-native";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 import { FIREBASE_AUTH } from "../../FirebaseConfig.js";
 
 const Signout = ({ navigation }) => {
+  const handleSignOut = async () => {
+    try {
+      FIREBASE_AUTH.signOut();
+      await AsyncStorage.removeItem("userId");
+      await AsyncStorage.removeItem("userType");
+      navigation.navigate("Login");
+    } catch (error) {
+      console.error("Sign-out error:", error);
+    }
+  };
   return (
     <View style={styles.container}>
-      <TouchableOpacity
-        style={styles.Button}
-        onPress={() => FIREBASE_AUTH.signOut()}
-      >
+      <TouchableOpacity style={styles.Button} onPress={() => handleSignOut()}>
         <Text style={styles.buttonText}>Sign Out</Text>
       </TouchableOpacity>
     </View>
@@ -27,7 +27,7 @@ const Signout = ({ navigation }) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: "flex-start",
+    justifyContent: "center",
     alignItems: "center",
     backgroundColor: "black",
   },
