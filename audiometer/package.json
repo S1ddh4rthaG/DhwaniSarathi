@@ -36,7 +36,7 @@
     "react-native-localize": "^3.0.4",
     "react-native-paper": "^5.11.4",
     "react-native-permissions": "^4.0.0",
-    "react-native-reanimated": "^3.6.1",
+    "react-native-reanimated": "~3.3.0",
     "react-native-safe-area-context": "4.6.3",
     "react-native-screens": "~3.22.0",
     "react-native-sound-level": "^1.2.0",
