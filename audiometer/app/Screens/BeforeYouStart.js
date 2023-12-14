@@ -38,9 +38,9 @@ const BeforeYouStart = ({navigation}) => {
         minimumValue={0}
         maximumValue={1000}
         onValueChange={handleLoudnessChange}
-        minimumTrackTintColor= "#D4AF37"
+        minimumTrackTintColor= "#0096FF"
         maximumTrackTinkColor="white"
-        thumbTintColor="#D4AF37"/>
+        thumbTintColor="#0096FF"/>
       <Text style={styles.sliderLabel1}>{t('Loud')}</Text>
 
       
@@ -83,24 +83,25 @@ const styles = StyleSheet.create({
     
   },
   image: {
-    width: 70,
-    height: 70,
+    width: 100,
+    height: 100,
     alignContent: 'center',
-    marginBottom: 10
+    alignSelf: 'center',
+    borderWidth: 1,
   },
   title: {
-    fontSize: 30,
-    fontWeight: 'bold',
+    fontSize: 24,
     color: 'white',
-    marginBottom: 40, 
-    textAlign: "center"
+    marginBottom: 20, 
+    textAlign: "center",
+    fontWeight: 'bold'
   },
   title2: {
-    fontSize : 20, 
+    fontSize : 18, 
+    fontWeight: 'bold',
     color: 'white',
-    marginBottom: 30,
+    marginBottom: 10,
     textAlign: "left", 
-   
   }, 
   subtitle: {
     fontSize: 15,
@@ -109,12 +110,13 @@ const styles = StyleSheet.create({
     textAlign: "left",
   },
   Button: {
-    backgroundColor: 'blue', // Greenish Yellow
+    backgroundColor: '#0096FF', // Greenish Yellow
     marginTop: 20,
-    borderRadius: 10,
-    paddingVertical: 20,
-    paddingHorizontal: 80,
-    width: '100%'
+    borderRadius: 20,
+    paddingVertical: 15,
+    width: "100%",
+    borderColor: 'white',
+    borderWidth: 3
   },
   educatorContainer: {
     marginTop: 20,
@@ -125,16 +127,16 @@ const styles = StyleSheet.create({
     marginBottom: 10,
   },
   educatorButton: {
-    backgroundColor: '#D4AF37', // Greenish Yellow
+    backgroundColor: '#0096FF', // Greenish Yellow
     paddingVertical: 10,
     paddingHorizontal: 20,
     borderRadius: 10,
   },
   buttonText: {
-    color: 'white',
+    color: 'black',
     textAlign: 'center',
-    fontSize: 20,
-    // fontWeight: 'bold'
+    fontSize: 18,
+    fontWeight: 'bold'
   },
 
   input: {

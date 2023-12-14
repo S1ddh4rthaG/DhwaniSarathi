@@ -3,7 +3,7 @@ import { View, TextInput, Text, TouchableOpacity, StyleSheet } from 'react-nativ
 
 // import './locales/i18n'; 
 import {useTranslation} from 'react-i18next'; 
-  
+import {Image} from 'react-native'
 const FillDetails = ({navigation}) => {
     const [name, setName] = useState('');
     const [age, setAge]= useState(''); 
@@ -37,49 +37,29 @@ const FillDetails = ({navigation}) => {
   return (
     <View style={styles.container}>
             <Text style={styles.title}>{t('Fill Your Details')}</Text>
-            {/* <Text style={styles.subtitle}>{t('Name')}</Text>
-            <TextInput
-                style={styles.input}
-                placeholder={t('Enter your name')}
-                onChangeText={handleNameChange}
-                value={name}
-                textAlign="left"  // Set text alignment to left
-                color="white"
-                placeholderTextColor="grey"
-            />
-
-            <Text style={styles.subtitle}>{t('Age')}</Text>
-            <TextInput
-                style={styles.input}
-                placeholder={t('Enter your age')}
-                onChangeText={handleAgeChange}
-                value={age}
-                textAlign="left"  // Set text alignment to left
-                color="white"
-                placeholderTextColor="grey"
-            /> */}
 
             <Text style={styles.title2}>{t('For Students')}</Text>
-            <Text style={styles.subtitle}>{t('Student Roll Number')}</Text>
+            <Image style={styles.image} source={require('../assets/student.png')} resizeMode='cover' />
+            <Text style={styles.title2}>{t('Student Roll Number')}</Text>
             <TextInput
                 style={styles.input}
                 placeholder={t('Enter your roll number')}
                 onChangeText={handleRollNumberChange}
                 value={rollNumber}
                 textAlign="left"  // Set text alignment to left
-                color="white"
-                placeholderTextColor="grey"
+                color="black"
+                placeholderTextColor='black'
             />
 
-            <Text style={styles.subtitle}>{t('Classroom Code')}</Text>
+            <Text style={styles.title2}>{t('Classroom Code')}</Text>
             <TextInput
                 style={styles.input}
                 placeholder={t('Code provided by your teacher/educator')}
                 onChangeText={handleClassroomCodeChange}
                 value={classroomCode}
                 textAlign="left"  // Set text alignment to left
-                color="white"
-                placeholderTextColor="grey"
+                color="black"
+                placeholderTextColor="black"
             />
 
             <TouchableOpacity style={styles.Button} onPress={handleStartTest}>
@@ -92,38 +72,69 @@ const FillDetails = ({navigation}) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: 'black',
+    backgroundColor: '#B5B6BA',
     padding: 20,
-    justifyContent: 'flex-start',
-    
+    justifyContent: 'center',
+    borderColor: 'white',
+    borderWidth: 5,
+    borderRadius: 10
+  },
+  sliderContainer: {
+    width: '80%',
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    marginBottom: 50,
+  },
+  sliderLabel: {
+    fontSize: 15,
+    color: 'white',
+  },
+  sliderLabel1: {
+    fontSize: 15,
+    color: 'red',
+  },
+  slider: {
+    flex: 1,
+    width: '100%',
+  },
+  image: {
+    width: 100,
+    height: 100,
+    alignContent: 'center',
+    alignSelf: 'center',
+    marginTop: 20,
+    marginBottom: 20
   },
   title: {
-    fontSize: 30,
-    color: 'white',
-    marginBottom: 40, 
-    textAlign: "center"
+    fontSize: 24,
+    color: 'black',
+    marginBottom: 20,
+    textAlign: 'center',
+    fontWeight: 'bold',
+    marginTop: 20,
   },
   title2: {
-    fontSize : 20, 
-    fontWeight: 'bold',
-    color: 'white',
-    marginBottom: 20,
-    textAlign: "left", 
-    marginTop: 30,
-  }, 
-  subtitle: {
     fontSize: 18,
+    color: 'black',
+    marginBottom: 20,
+    textAlign: 'left',
+    fontWeight: 'bold'
+  },
+  subtitle: {
+    fontSize: 15,
     color: 'white',
     marginBottom: 10,
-    textAlign: "left",
+    textAlign: 'left',
   },
   Button: {
-    backgroundColor: 'blue', // Greenish Yellow
-    marginTop: 20,
+    backgroundColor: '#0096FF', // Greenish Yellow
+    marginTop: 'auto', // Push the button to the bottom
     borderRadius: 10,
-    paddingVertical: 20,
-    paddingHorizontal: 80,
-    width: '100%'
+    paddingVertical: 15,
+    width: '100%',
+    borderColor: 'white',
+    borderWidth: 3,
   },
   educatorContainer: {
     marginTop: 20,
@@ -134,30 +145,27 @@ const styles = StyleSheet.create({
     marginBottom: 10,
   },
   educatorButton: {
-    backgroundColor: '#D4AF37', // Greenish Yellow
+    backgroundColor: '#0096FF', // Greenish Yellow
     paddingVertical: 10,
     paddingHorizontal: 20,
     borderRadius: 10,
   },
   buttonText: {
-    color: 'white',
+    color: 'black',
     textAlign: 'center',
-    fontSize: 15,
-    
+    fontSize: 18,
+    fontWeight: 'bold',
   },
 
   input: {
     height: 40,
     borderColor: 'white',
     borderWidth: 1,
-    borderRadius: 10,
     marginBottom: 20,
     paddingHorizontal: 10,
     width: '100%',
     color: 'white',
-    fontStyle: 'italic'
-    
+    fontStyle: 'normal',
   },
 });
-
 export default FillDetails;

@@ -27,7 +27,7 @@ const RightEar = () => {
       </TouchableOpacity>
 
       <TouchableOpacity style={styles.Button1}>
-        <Text style={styles.buttonText1}>{t('Press if you hear a beep')}</Text>
+        <Text style={styles.buttonText}>{t('Press if you hear a beep')}</Text>
       </TouchableOpacity>
     </View>
   );
@@ -36,114 +36,61 @@ const RightEar = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: 'black',
+    backgroundColor: '#B5B6BA',
     padding: 20,
-    justifyContent: 'flex-start',
-    alignItems: "center"
-    
-  },
-  sliderContainer: {
-    width: '80%',
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    marginBottom: 50,
-    
-  },
-  sliderLabel: {
-    fontSize: 15,
-    color: 'white',
-  },
-  sliderLabel1: {
-    fontSize: 15,
-    color: 'red',
-  },
-  slider: {
-    flex: 1,
-    width:"100%",
-    
-  },
-  image: {
-    width: 100,
-    height: 100,
-    alignContent: 'center',
-    marginBottom: 100
+    justifyContent: 'center',
+
+    borderColor: 'white',
+    borderWidth: 5,
+    borderRadius: 10
   },
   title: {
-    fontSize: 30,
-    fontWeight: 'bold',
-    color: 'white',
-    marginBottom: 60, 
-    textAlign: "center"
-  },
-  title2: {
-    fontSize : 25, 
-    color: 'white',
-    marginBottom: 30,
-    textAlign: "left", 
-   
-  }, 
-  subtitle: {
-    fontSize: 18,
-    color: 'white',
-    marginBottom: 10,
-    textAlign: "left",
-  },
-  Button: {
-    backgroundColor: 'blue', // Greenish Yellow
-    marginTop: 20,
-    borderRadius: 10,
-    paddingVertical: 20,
-
-    width: '100%'
-  },
-
-  Button1: {
-    backgroundColor: '#D4AF37', // Greenish Yellow
-    marginTop: 50,
-    borderRadius: 10,
-    paddingVertical: 20,
-
-    width: '100%'
-  },
-  buttonText1: {
+    fontSize: 24,
     color: 'black',
-    textAlign: 'center',
-    fontSize: 20,
-    fontWeight: 'bold'
-  },
-  educatorContainer: {
-    marginTop: 20,
-    alignItems: 'center',
-  },
-  educatorText: {
-    color: 'white',
-    marginBottom: 10,
-  },
-  educatorButton: {
-    backgroundColor: '#D4AF37', // Greenish Yellow
-    paddingVertical: 10,
-    paddingHorizontal: 20,
-    borderRadius: 10,
-  },
-  buttonText: {
-    color: 'white',
-    textAlign: 'center',
-    fontSize: 20,
-    //fontWeight: 'bold'
-  },
-
-  input: {
-    height: 40,
-    borderColor: 'white',
-    borderWidth: 1,
     marginBottom: 20,
-    paddingHorizontal: 10,
-    width: '100%',
-    color: 'white',
-    fontStyle: 'italic'
+    textAlign: 'center',
+    fontWeight: 'bold',
+    marginTop: 20,
+  },
+  image: {
+    width: 150,
+    height: 150,
+    alignSelf: 'center',
     
   },
-});
+  Button: {
+    backgroundColor: '#0096FF', // Greenish Yellow
+    marginTop: 20,
+    borderRadius: 20,
+    paddingVertical: 15,
+    width: "100%",
+    borderColor: 'white',
+    borderWidth: 1,
+    elevation: 5
+  
+  },
+  //new style created for the 2nd button as it has the padding below it as shown in the figma 
+  Button1: {
+    backgroundColor: '#0096FF', // Greenish Yellow
+    marginTop: 20,
+    borderRadius: 20,
+    paddingVertical: 15,
+    width: "100%",
+    borderColor: 'white',
+    borderWidth: 1,
+    elevation: 5
+  },
+  buttonText: {
+    color: 'black',
+    textAlign: 'center',
+    fontSize: 15,
+    fontWeight: 'bold',
+  },
 
+  gif: {
+    width: '100%',
+    height: 200, // Adjust the height as needed
+    marginBottom: 20,
+  },
+});
 export default RightEar;

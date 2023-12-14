@@ -8,25 +8,72 @@ from rest_framework import status
 import datetime
 
 
+#views for LoginInfo
+# url/logininfos
 @api_view(['GET', 'POST'])
-def login_authentication(request,FID):
+def logininfo_list(request):
     """
-    Authenticate a user.
+    List all logininfos, or create a new logininfo.
     """
-    
     if(request.method == 'GET'):
-        logininfo = LoginInfo.objects.get(FID=FID)
-        serializer = LoginInfoSerializer(logininfo)
+        logininfos = LoginInfo.objects.all()
+        serializer = LoginInfoSerializer(logininfos, many=True)
         return Response(serializer.data)
-        
-    if(request.method == 'POST'):
+    
+    elif(request.method == 'POST'):
         serializer = LoginInfoSerializer(data=request.data)
+        print(request.data)
         if(serializer.is_valid()):
             serializer.save()
+            #based on the type of user, create a new user or educator
+            if serializer.data['Type'] == 0:
+                # Create a new User
+                request.data['UID'] = serializer.data['FID']
+                user_serializer = UserSerializer(data=request.data)
+                if user_serializer.is_valid():
+                    user_serializer.save()
+                else:
+                    return Response(user_serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+            else:
+                # Create a new Educator
+                request.data['EID'] = serializer.data['FID']
+                educator_serializer = EducatorSerializer(data=request.data)
+                if educator_serializer.is_valid():
+                    educator_serializer.save()
+                else:
+                    return Response(educator_serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+                    
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
     
- # views for User
+
+# url/logininfos/FID   
+@api_view(['GET', 'PUT', 'DELETE'])
+def logininfo_detail(request, FID):
+    """
+    Retrieve, update or delete a logininfo.
+    """
+    try:
+        logininfo = LoginInfo.objects.get(FID=FID)
+    except LoginInfo.DoesNotExist:
+        return Response(status=status.HTTP_404_NOT_FOUND)
+    
+    if(request.method == 'GET'):
+        serializer = LoginInfoSerializer(logininfo)
+        return Response(serializer.data)
+    
+    elif(request.method == 'PUT'):
+        serializer = LoginInfoSerializer(logininfo, data=request.data)
+        if(serializer.is_valid()):
+            serializer.save()
+            return Response(serializer.data)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+    
+    elif(request.method == 'DELETE'):
+        logininfo.delete()
+        return Response(status=status.HTTP_204_NO_CONTENT)
+    
+# views for User
 # url/users       
 @api_view(['GET', 'POST'])
 def user_list(request):
@@ -206,6 +253,9 @@ def assignment_list(request):
         return Response(serializer.data)
     
     elif(request.method == 'POST'):
+        #check if Deadline exists
+        if 'Deadline' not in request.data:
+            request.data['Deadline'] = (timezone.now()+timezone.timedelta(days=7)).strftime('%Y-%m-%d %H:%M:%S%z')
         serializer = AssignmentSerializer(data=request.data)
         if(serializer.is_valid()):
             serializer.save()

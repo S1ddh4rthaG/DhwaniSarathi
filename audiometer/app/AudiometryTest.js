@@ -195,7 +195,7 @@ const styles = StyleSheet.create({
   },
 
   Button1: {
-    backgroundColor: '#D4AF37', // Greenish Yellow
+    backgroundColor: '#0096FF', // Greenish Yellow
     marginTop: 50,
     borderRadius: 10,
     paddingVertical: 20,
@@ -217,7 +217,7 @@ const styles = StyleSheet.create({
     marginBottom: 10,
   },
   educatorButton: {
-    backgroundColor: '#D4AF37', // Greenish Yellow
+    backgroundColor: '#0096FF', // Greenish Yellow
     paddingVertical: 10,
     paddingHorizontal: 20,
     borderRadius: 10,

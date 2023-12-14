@@ -4,20 +4,18 @@ import {
   View,
   TouchableOpacity,
   Text,
+  Image,
   TextInput,
   Button,
   StyleSheet,
 } from "react-native";
-import AsyncStorage from "@react-native-async-storage/async-storage";
+
 // import './locales/i18n';
 import { t, useTranslation } from "react-i18next";
 
-import {
-  signInWithEmailAndPassword,
-} from "firebase/auth";
-
+import { signInWithEmailAndPassword } from "firebase/auth";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 import { FIREBASE_AUTH } from "../../FirebaseConfig.js";
-
 
 const Login = ({ navigation }) => {
   const { t, i18n } = useTranslation();
@@ -35,20 +33,23 @@ const Login = ({ navigation }) => {
         username,
         password
       );
-      console.log(response);
       if (response) {
-        try {
-          await AsyncStorage.setItem("userId", response.user.uid);
-          
-        } catch (error) {
-          console.error("Error storing userId:", error);
+        const response1 = await fetch(`http://192.168.1.5/login/${response.user.uid}/`);
+
+        if (response1.ok) {
+          const data = await response1.json();
+
+          responseObject = data;
+
+          await AsyncStorage.setItem(
+            "userType",
+            JSON.stringify(responseObject.Type)
+          );
+        } else {
+          console.error("Failed to fetch user data:", response1.status);
         }
-      } else {
-        alert("Invalid Credentials");
       }
-      const userId = await AsyncStorage.getItem('userId');
-      console.log(userId);
-      navigation.navigate("Home");
+      navigation.navigate("Signout");
     } catch (error) {
       console.log(error);
     } finally {
@@ -58,14 +59,15 @@ const Login = ({ navigation }) => {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.title2}>{t("Login")}</Text>
+      <Text style={styles.title}>{t("Login")}</Text>
+      <Image style={styles.image} source={require('../assets/login.png')} resizeMode='cover' />
       <TextInput
         placeholder={t("Email")}
         value={username}
         onChangeText={(text) => setUsername(text)}
         style={styles.input}
-        placeholderTextColor="grey"
-        textAlign="center"
+        placeholderTextColor="black"
+        textAlign="left"
       />
       <TextInput
         placeholder={t("Password")}
@@ -73,8 +75,8 @@ const Login = ({ navigation }) => {
         onChangeText={(text) => setPassword(text)}
         secureTextEntry
         style={styles.input}
-        placeholderTextColor="grey"
-        textAlign="center"
+        placeholderTextColor="black"
+        textAlign="left"
       />
       <TouchableOpacity style={styles.Button} onPress={signIn}>
         <Text style={styles.buttonText}>{t("Login")}</Text>
@@ -95,64 +97,94 @@ const Login = ({ navigation }) => {
   );
 };
 
+
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: "flex-start",
-    alignItems: "center",
-    backgroundColor: "black",
-  },
+    backgroundColor: '#B5B6BA',
+    padding: 20,
+    justifyContent: 'flex-start',
 
-  subtitle: {
-    fontSize: 18,
-    color: "white",
-    marginBottom: 10,
-    textAlign: "left",
+    borderColor: 'white',
+    borderWidth: 5,
+    borderRadius: 10
   },
-
-  title: {
-    fontSize: 30,
-    color: "white",
-    marginBottom: 40,
-    textAlign: "center",
-  },
-
-  title2: {
-    fontSize: 20,
+  educatorText: {
+    color: 'black',
+    alignSelf: "center",
+    marginTop: 20,
     fontWeight: "bold",
-    color: "white",
-    marginBottom: 20,
-    textAlign: "left",
-    marginTop: 80,
+    marginBottom: 5
   },
-
-  input: {
-    height: 40,
-    borderColor: "white",
-    borderWidth: 1,
-    borderRadius: 10,
+  image: {
+    width: 50,
+    height: 50,
+    alignSelf: 'center',
+    marginBottom: 20
+  },
+  title: {
+    fontSize: 24,
+    color: 'black',
     marginBottom: 20,
-    paddingHorizontal: 0,
-    width: "90%",
-    color: "white",
-    alignContent: "center",
+    textAlign: 'center',
+    fontWeight: 'bold',
+    marginTop: 20,
+  },
+  title2: {
+    fontSize: 18,
+    color: 'black',
+    marginBottom: 20,
+    textAlign: 'left',
+    fontWeight: 'bold'
+  },
+  subtitle: {
+    fontSize: 15,
+    color: 'white',
+    marginBottom: 10,
+    textAlign: 'left',
   },
   Button: {
-    backgroundColor: "#D4AF37", // Greenish Yellow
-    paddingVertical: 10,
-    paddingHorizontal: 60,
+    backgroundColor: '#0096FF', // Greenish Yellow
+    borderRadius: 20,
+    paddingVertical: 15,
+    width: "100%",
+    borderColor: 'white',
+    borderWidth: 1,
+    elevation: 5
+  
+  },
+  //new style created for the 2nd button as it has the padding below it as shown in the figma 
+  Button1: {
+    backgroundColor: '#0096FF', // Greenish Yellow
+    marginTop: 20,
+    borderRadius: 20,
+    paddingVertical: 15,
+    width: "100%",
+    borderColor: 'white',
+    borderWidth: 1,
+    elevation: 5
+  },
+  input: {
+    height: 40,
+    borderColor: 'white',
+    borderWidth: 1,
     marginBottom: 20,
-    borderRadius: 10,
+    paddingHorizontal: 10,
+    width: '100%',
+    color: 'white',
+    fontStyle: 'normal',
   },
-
-  educatorText: {
-    color: "white",
-    marginBottom: 10,
-  },
-
   buttonText: {
-    color: "black",
-    textAlign: "center",
+    color: 'black',
+    textAlign: 'center',
+    fontSize: 15,
+    fontWeight: 'bold',
+  },
+
+  gif: {
+    width: '100%',
+    height: 200, // Adjust the height as needed
+    marginBottom: 20,
   },
 });
 

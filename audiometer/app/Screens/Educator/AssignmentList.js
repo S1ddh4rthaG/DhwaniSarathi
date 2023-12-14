@@ -90,7 +90,7 @@ const AssignmentList = () => {
     ]);
 
     const renderAppointmentCard = ({ item }) => (
-        <View style={[styles.card, { backgroundColor: 'white', borderTopWidth: 4, borderTopColor: '#D4AF37' }]}>
+        <View style={[styles.card, { backgroundColor: 'white', borderTopWidth: 4, borderTopColor: '#0096FF' }]}>
             <Text style={[styles.cardTitle, { color: 'black' }]}>{item.title}</Text>
             <View style={styles.cardDates}>
                 <Text style={styles.cardDate}>Progress {item.progress}</Text>
@@ -126,6 +126,7 @@ const AssignmentList = () => {
                 placeholder="Search..."
                 value={searchQuery}
                 onChangeText={setSearchQuery}
+                placeholderTextColor='grey'
             />
             <FlatList
                 contentContainerStyle={styles.listContainer}
@@ -143,7 +144,10 @@ const styles = StyleSheet.create({
         flex: 1,
         padding: 10,
         paddingTop: 60,
-        backgroundColor: 'black'
+        backgroundColor: 'black',
+        borderWidth: 2,
+        borderColor: 'white',
+        borderRadius: 10
     },
     listContainer: {
         paddingHorizontal: 5,
@@ -153,13 +157,13 @@ const styles = StyleSheet.create({
         fontSize: 20,
         fontWeight: 'bold',
         marginBottom: 10,
-        color: '#D4AF37',
+        color: 'white',
     },
     searchInput: {
         height: 40,
         borderWidth: 1,
         borderRadius: 5,
-        borderColor: '#D4AF37',
+        borderColor: '#0096FF',
         marginBottom: 10,
         paddingHorizontal: 10,
         color: "white",

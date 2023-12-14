@@ -7,6 +7,7 @@ import {
   Button,
   StyleSheet,
   TouchableOpacity,
+  Image
 } from "react-native";
 import { Picker } from "@react-native-picker/picker";
 import { createUserWithEmailAndPassword } from "firebase/auth";
@@ -20,7 +21,10 @@ const Signup = ({ navigation }) => {
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [userType, setUserType] = useState("User");
-  const [age, setAge] = useState("");
+  const [age, setAge] = useState(50);
+  const [gender, setGender] = useState("Male");
+  const [educatorName, setEducatorName] = useState("dummy");
+  const [instituteName, setInstituteName] = useState("dummy");
   const auth = FIREBASE_AUTH;
 
   const handleSignup = async () => {
@@ -30,27 +34,29 @@ const Signup = ({ navigation }) => {
         email,
         password
       );
-
-      //TODO: Fix this logic
       if (response) {
-        navigation.navigate("Home");
-        // const dbcreate = await fetch(
-        //   `http://192.168.1.5/login/${response.user.uid}/`,
-        //   {
-        //     method: "POST",
-        //     headers: {
-        //       "Content-Type": "application/json",
-        //     },
-        //     body: JSON.stringify({
-        //       FID: response.user.uid,
-        //       Type: userType === "User" ? 0 : 1,
-        //     }),
-        //   }
-        // );
-        // console.log(dbcreate);
+        const createUserDB = await fetch(
+          `http://192.168.1.5/login/${response.user.uid}/`,
+          {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+              FID: response.user.uid,
+              Type: userType === "User" ? 0 : 1,
+              UserName: name,
+              Age: age,
+              Gender: gender,
+              EducatorName: educatorName,
+              InstituteName: instituteName,
+            }),
+          }
+        );
+        console.log(createUserDB);
       }
-
       console.log(response);
+      navigation.navigate("Login");
     } catch (error) {
       console.log(error);
     }
@@ -58,72 +64,93 @@ const Signup = ({ navigation }) => {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.subtitle}>{t("Name")}</Text>
+      <Image style={styles.image} source={require('../assets/signup.png')} resizeMode='cover' />
+      <Text style={styles.title2}>{t("Name")}</Text>
       <TextInput
         style={styles.input}
         placeholder={t("Enter your name")}
         onChangeText={(text) => setName(text)}
         value={name}
         textAlign="left"
-        color="white"
-        placeholderTextColor="grey"
+        color="black"
+        placeholderTextColor="black"
       />
 
-      <Text style={styles.subtitle}>{t("Email")}</Text>
+      <Text style={styles.title2}>{t("Email")}</Text>
       <TextInput
         style={styles.input}
         placeholder={t("Enter your email id")}
         onChangeText={(text) => setEmail(text)}
         value={email}
         textAlign="left"
-        color="white"
-        placeholderTextColor="grey"
+        color="black"
+        placeholderTextColor="black"
       />
 
-      <Text style={styles.subtitle}>{t("Age")}</Text>
+      <Text style={styles.title2}>{t("Age")}</Text>
       <TextInput
         style={styles.input}
         placeholder={t("Enter your Age")}
         onChangeText={(text) => setAge(text)}
         value={age}
         textAlign="left"
-        color="white"
-        placeholderTextColor="grey"
+        color="black"
+        placeholderTextColor="black"
       />
 
-      <Text style={styles.subtitle}>{t("Password")}</Text>
+      <Text style={styles.title2}>{t("Password")}</Text>
       <TextInput
         style={styles.input}
         placeholder={t("Enter your password")}
         onChangeText={(text) => setPassword(text)}
         value={password}
         textAlign="left"
-        color="white"
-        placeholderTextColor="grey"
+        color="black"
+        placeholderTextColor="black"
       />
 
-      <Text style={styles.subtitle}>{t("Confirm Password")}</Text>
+      <Text style={styles.title2}>{t("Confirm Password")}</Text>
       <TextInput
         style={styles.input}
         placeholder={t("Confirm Password")}
         onChangeText={(text) => setConfirmPassword(text)}
         value={confirmPassword}
         textAlign="left"
-        color="white"
-        placeholderTextColor="grey"
+        color="black"
+        placeholderTextColor="black"
       />
 
-      <Text style={styles.subtitle}>{t("User Type")}</Text>
+      <Text style={styles.title2}>{t("User Type")}</Text>
       <Picker
         selectedValue={userType}
         style={styles.picker}
         itemStyle={styles.pickerItem}
-        onValueChange={(itemValue) => setUserType(itemValue)}
+        onValueChange={(itemValue) => setGender(itemValue)}
       >
-        <Picker.Item style={styles.pickerItem} label={t("User")} value="User" />
-        <Picker.Item label={t("Educator")} value="Educator" />
+        <Picker.Item style={styles.pickerItem} label={t("Male")} value="Male" />
+        <Picker.Item label={t("Female")} value="Female" />
       </Picker>
-
+{/* 
+      <Text style={styles.subtitle}>{t("Educator Name")}</Text>
+      <TextInput
+        style={styles.input}
+        placeholder={t("Enter your name")}
+        onChangeText={(text) => setEducatorName(text)}
+        value={name}
+        textAlign="left"
+        color="white"
+        placeholderTextColor="grey"
+      />
+      <Text style={styles.subtitle}>{t("Institute Name")}</Text>
+      <TextInput
+        style={styles.input}
+        placeholder={t("Enter Institute name")}
+        onChangeText={(text) => setInstituteName(text)}
+        value={name}
+        textAlign="left"
+        color="white"
+        placeholderTextColor="grey"
+      /> */}
       <TouchableOpacity style={styles.Button} onPress={handleSignup}>
         <Text style={styles.buttonText}>{t("Sign Up")}</Text>
       </TouchableOpacity>
@@ -131,55 +158,107 @@ const Signup = ({ navigation }) => {
   );
 };
 
+
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "black",
+    backgroundColor: '#B5B6BA',
     padding: 20,
-    justifyContent: "flex-start",
+    justifyContent: 'flex-start',
+    borderColor: 'white',
+    borderWidth: 5,
+    borderRadius: 10
+  },
+  sliderContainer: {
+    width: '80%',
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    marginBottom: 50,
+  },
+  sliderLabel: {
+    fontSize: 15,
+    color: 'white',
+  },
+  sliderLabel1: {
+    fontSize: 15,
+    color: 'red',
+  },
+  slider: {
+    flex: 1,
+    width: '100%',
+  },
+  image: {
+    width: 50,
+    height: 50,
+    alignContent: 'center',
+    alignSelf: 'center',
+  },
+  title: {
+    fontSize: 24,
+    color: 'black',
+    marginBottom: 20,
+    textAlign: 'center',
+    fontWeight: 'bold',
+    marginTop: 20,
+  },
+  title2: {
+    fontSize: 18,
+    color: 'black',
+    marginBottom: 5,
+    textAlign: 'left',
+    fontWeight: 'bold'
+  },
+  pickerItem:{
+    color: 'black', 
+    backgroundColor: 'white'
+    
   },
   subtitle: {
-    fontSize: 18,
-    color: "white",
+    fontSize: 15,
+    color: 'white',
     marginBottom: 10,
-    textAlign: "left",
-  },
-  picker: {
-    height: 50,
-    width: "100%",
-    backgroundColor: "white",
-    color: "black",
-    alignSelf: "center",
-    alignItems: "center",
-    borderRadius: 5,
-  },
-  pickerItem: {
-    color: "black",
-  },
-  input: {
-    height: 40,
-    borderColor: "white",
-    borderWidth: 1,
-    borderRadius: 5,
-    marginBottom: 20,
-    paddingHorizontal: 10,
-    width: "100%",
-    color: "white",
-    fontStyle: "italic",
+    textAlign: 'left',
   },
   Button: {
-    backgroundColor: "#D4AF37",
-    marginTop: 20,
+    backgroundColor: '#0096FF', // Greenish Yellow
+    marginTop: 'auto', // Push the button to the bottom
     borderRadius: 10,
-    paddingVertical: 5,
-    width: "50%",
-    alignSelf: "center",
+    paddingVertical: 15,
+    width: '100%',
+    borderColor: 'white',
+    borderWidth: 1,
+  },
+  educatorContainer: {
+    marginTop: 20,
+    alignItems: 'center',
+  },
+  educatorText: {
+    color: 'white',
+    marginBottom: 10,
+  },
+  educatorButton: {
+    backgroundColor: '#0096FF', // Greenish Yellow
+    paddingVertical: 10,
+    paddingHorizontal: 20,
+    borderRadius: 10,
   },
   buttonText: {
-    color: "black",
-    textAlign: "center",
-    fontSize: 20,
-    fontWeight: "bold",
+    color: 'black',
+    textAlign: 'center',
+    fontSize: 18,
+    fontWeight: 'bold',
+  },
+
+  input: {
+    height: 40,
+    borderColor: 'white',
+    borderWidth: 1,
+    marginBottom: 10,
+    paddingHorizontal: 10,
+    width: '100%',
+    color: 'white',
+    fontStyle: 'normal',
   },
 });
 
