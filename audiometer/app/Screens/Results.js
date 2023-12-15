@@ -2,6 +2,7 @@ import React from 'react';
 import { View, Text, StyleSheet, Image } from 'react-native';
 // import './locales/i18n'; 
 import {useTranslation} from 'react-i18next'; 
+
 const Results = () => {
     const leftEar_result = "Bad";
     const rightEar_result = "Good";
@@ -13,7 +14,7 @@ const Results = () => {
     //     .catch(err => console.log(err)); 
     // }
     return (
-        <View style={{ backgroundColor: 'black', justifyContent: 'center', flex: 1, }}>
+        <View style={{ justifyContent: 'center', flex: 1, }}>
             <Text style={styles.title}>{t('Test Results')}</Text>
             <View style={styles.container}>
 
@@ -59,7 +60,6 @@ const styles = StyleSheet.create({
 
         alignItems: 'stretch',
         padding: 10,
-        backgroundColor: 'black',
     },
     title: {
         fontSize: 45,
@@ -82,8 +82,6 @@ const styles = StyleSheet.create({
     },
     image: {
         width: '50%',
-
-        resizeMode: 'cover',
     },
     resultText: {
         fontSize: 30,

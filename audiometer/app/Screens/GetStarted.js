@@ -1,78 +1,103 @@
-import React , {useState} from 'react';
-import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
+import React, { useState } from 'react';
+import { View, Image } from 'react-native';
+import { Button, Text, Card } from 'react-native-paper';
 // import './locales/i18n'; 
-import {useTranslation} from 'react-i18next'; 
-const GetStarted = () => {
+import { useTranslation } from 'react-i18next';
+import { DefaultTheme, Provider as PaperProvider } from 'react-native-paper';
+const theme = {
+  ...DefaultTheme,
+  roundness: 2,
+  colors: {
+    ...DefaultTheme.colors,
+    primary: '#EB455F',
+    accent: '#f1c40f',
+  },
+};
 
+const GetStarted = () => {
   // const [currentLanguage, setLanguage] = useState('en'); 
   // const changeLanguage= value=>{
   //   i18n.changeLanguage(value)
   //   .then(()=>setLanguage(value))
   //   .catch(err => console.log(err)); 
   // }
-  const {t,i18n} =useTranslation(); 
+  const { t, i18n } = useTranslation();
+
   return (
-    <View style={styles.container}>
-      <Text style={styles.title}>{t('Hertz hEARing Test')}</Text>
-      <Text style={styles.subtitle}>{t('Digital audiometer')}</Text>
+    <PaperProvider theme={theme}>
+      <View style={styles.container}>
+        <Image source={require('../assets/images/logo.png')} style={{ width: 300, height: 300, alignSelf: 'center' }} />
+        <Text style={styles.title}>{t('Hertz hEARing Test')}</Text>
+        <Text style={styles.subtitle}>{t('App based audiometer')}</Text>
 
-      <TouchableOpacity style={styles.getStartedButton}>
-        <Text style={styles.buttonText}>{t('Get Started')}</Text>
-      </TouchableOpacity>
+        <Button style={styles.getStartedButton} mode="contained" onPress={() => console.log('Pressed')}>
+        <Text style={styles.getStartedText} variant="bodyMedium">{t('Get Started')}</Text>
+        </Button>
 
-      <View style={styles.educatorContainer}>
-        <Text style={styles.educatorText}>{t('Are you an educator?')}</Text>
-        <TouchableOpacity style={styles.educatorButton}>
-          <Text style={styles.buttonText}>{t('Sign up')}</Text>
-        </TouchableOpacity>
+        <Card style={styles.educatorContainer}>
+          <Text style={styles.educatorText} variant="bodyMedium">{t('Are you an educator?')}</Text>
+          <Text style={styles.educatorDesc} variant="bodySmall">{t('Educators can conduct batch tests, get analytics and many more')}</Text>
+          <Button style={styles.educatorButton} mode="outlined" onPress={() => console.log('Pressed')}>
+            {t('Sign up here !')}
+          </Button>
+        </Card>
       </View>
-    </View>
+    </PaperProvider>
   );
 };
 
-const styles = StyleSheet.create({
+const styles = {
   container: {
     flex: 1,
-    backgroundColor: 'black',
-    padding: 20,
     justifyContent: 'center',
-    alignItems: 'center',
+    padding: 32,
+    backgroundColor: '#fff',
   },
+
   title: {
-    fontSize: 30,
+    fontSize: 32,
+    alignSelf: 'center',
     fontWeight: 'bold',
-    color: 'white',
+    marginBottom: 0,
+    color: '#2B3467',
   },
+
   subtitle: {
-    fontSize: 18,
-    color: 'white',
-    marginBottom: 140,
+    fontSize: 20,
+    alignSelf: 'center',
+    marginBottom: 20,
+    color: '#2B3467',
   },
+
   getStartedButton: {
-    backgroundColor: '#0096FF', // Greenish Yellow
-    marginTop: 20,
-    borderRadius: 25,
-    paddingVertical: 10,
-    paddingHorizontal: 80,
+    marginTop: 10,
+    marginBottom: 40,
+    backgroundColor: '#EB455F',
+  },
+  getStartedText: {
+    fontSize: 16,
+    color: '#fff',
   },
   educatorContainer: {
-    marginTop: 20,
+    flexDirection: 'row',
+    justifyContent: 'center',
     alignItems: 'center',
+    marginTop: 60,
+    padding: 15,
   },
   educatorText: {
-    color: 'white',
+    fontSize: 20,
+    color: '#2B3467',
+    marginBottom: 8,
+  },
+  educatorDesc: {
+    fontSize: 12,
+    color: '#2B3467',
     marginBottom: 10,
   },
   educatorButton: {
-    backgroundColor: '#0096FF', // Greenish Yellow
-    paddingVertical: 10,
-    paddingHorizontal: 20,
-    borderRadius: 10,
+    borderColor: '#EB455F',
   },
-  buttonText: {
-    color: 'black',
-    textAlign: 'center',
-  },
-});
+};
 
 export default GetStarted;

@@ -22,7 +22,7 @@ import BeforeTest2 from './newScreens/BeforeTest2';
 import BeforeTest3 from './newScreens/BeforeTest3';
 import { FIREBASE_AUTH } from "../FirebaseConfig.js";
 import { onAuthStateChanged } from "firebase/auth";
-import AudiometryTest from "./AudiometryTest.js";
+import AudiometryTest from "./Screens/AudiometryTest.js";
 import EducatorHome from "./Screens/Educator/EducatorHome.js";
 import AssignmentList from "./Screens/Educator/AssignmentList.js";
 import AsyncStorage from "@react-native-async-storage/async-storage";
@@ -67,7 +67,7 @@ export default () => {
 
       <Stack.Navigator /*initialRouteName={user ? "Signout" : "Signup"}*/ initialRouteName="Home">
         <Stack.Screen
-          name="Home"
+          name="Home0"
           component={Home}
           options={{
             headerTitle: () => <Header name={t("")} />,
@@ -106,11 +106,8 @@ export default () => {
             ),
             headerStyle: {
               height: 70,
-              backgroundColor: "#0096FF",
-              borderBottomLeftRadius: 10,
-              borderBottomRightRadius: 10,
-              borderWidth: 2,
-              borderColor: 'white'
+              backgroundColor: "white",
+              shadowColor: "white",
             },
           }}
         />
@@ -120,7 +117,7 @@ export default () => {
           alignItems="center"
           component={BeforeTest1}
           options={{
-            headerTitle: () => <Header name={t("Before Test 1")} />,
+            headerTitle: () => <Header name={t("")} />,
             headerTitleAlign: "Signin", // Center the header title
             headerRight: () => (
               <View style={{ flexDirection: "row", alignItems: "center" }}>
@@ -128,11 +125,8 @@ export default () => {
             ),
             headerStyle: {
               height: 70,
-              backgroundColor: "#0096FF",
-              borderBottomLeftRadius: 10,
-              borderBottomRightRadius: 10,
-              borderWidth: 2,
-              borderColor: 'white'
+              backgroundColor: "white",
+              shadowColor: "white",
             },
           }}
         />
@@ -144,7 +138,7 @@ export default () => {
           alignItems="center"
           component={BeforeTest2}
           options={{
-            headerTitle: () => <Header name={t("Before Test 2")} />,
+            headerTitle: () => <Header name={t("")} />,
             headerTitleAlign: "Signin", // Center the header title
             headerRight: () => (
               <View style={{ flexDirection: "row", alignItems: "center" }}>
@@ -152,11 +146,8 @@ export default () => {
             ),
             headerStyle: {
               height: 70,
-              backgroundColor: "#0096FF",
-              borderBottomLeftRadius: 10,
-              borderBottomRightRadius: 10,
-              borderWidth: 2,
-              borderColor: 'white'
+              backgroundColor: "white",
+              shadowColor: "white",
             },
           }}
         />
@@ -168,7 +159,7 @@ export default () => {
           alignItems="center"
           component={BeforeTest3}
           options={{
-            headerTitle: () => <Header name={t("Before Test 3")} />,
+            headerTitle: () => <Header name={t("")} />,
             headerTitleAlign: "Signin", // Center the header title
             headerRight: () => (
               <View style={{ flexDirection: "row", alignItems: "center" }}>
@@ -176,11 +167,27 @@ export default () => {
             ),
             headerStyle: {
               height: 70,
-              backgroundColor: "#0096FF",
-              borderBottomLeftRadius: 10,
-              borderBottomRightRadius: 10,
-              borderWidth: 2,
-              borderColor: 'white'
+              backgroundColor: "white",
+              shadowColor: "white",
+            },
+          }}
+        />
+
+        <Stack.Screen
+          name="AudiometryTest"
+          alignItems="center"
+          component={AudiometryTest}
+          options={{
+            headerTitle: () => <Header name={t("")} />,
+            headerTitleAlign: "Signin", // Center the header title
+            headerRight: () => (
+              <View style={{ flexDirection: "row", alignItems: "center" }}>
+              </View>
+            ),
+            headerStyle: {
+              height: 70,
+              backgroundColor: "white",
+              shadowColor: "white",
             },
           }}
         />
@@ -190,7 +197,7 @@ export default () => {
           name="Login"
           component={Login}
           options={{
-            headerTitle: () => <Header name={t("Login")} />,
+            headerTitle: () => <Header name={t("")} />,
             headerTitleAlign: "Signin", // Center the header title
             headerRight: () => (
               <View style={{ flexDirection: "row", alignItems: "center" }}>
@@ -199,21 +206,17 @@ export default () => {
             ),
             headerStyle: {
               height: 70,
-              backgroundColor: "#0096FF",
-              borderBottomLeftRadius: 10,
-              borderBottomRightRadius: 10,
-              borderWidth: 2,
-              borderColor: 'white'
+              backgroundColor: "white",
+              shadowColor: "white",
             },
           }}
         />
 
         <Stack.Screen
-          name="GetStarted"
-          component={Home}
+          name="GetStarted" // Originally GetStarted
+          component={GetStarted}
           options={{
-            headerTitle: () => <Header name={t("Hertz hEARing Test")} />,
-            headerTitleAlign: "center", // Center the header title
+            headerTitle: () => <Header name={t("")} />,
             headerRight: () => (
               <View style={{ flexDirection: "row", alignItems: "center" }}>
                 <TouchableOpacity style={{ marginRight: 15 }}>
@@ -228,6 +231,11 @@ export default () => {
                 {/* Additional icons or content for the right side */}
               </View>
             ),
+            headerStyle: {
+              height: 70,
+              backgroundColor: "white",
+              shadowColor: "white",
+            },
           }}
         />
 
@@ -235,7 +243,7 @@ export default () => {
           name="FillDetails"
           component={FillDetails}
           options={{
-            headerTitle: () => <Header name={t("Hertz hEARing Test")} />,
+            headerTitle: () => <Header name={t("")} />,
             headerTitleAlign: "left", // Center the header title
             headerRight: () => (
               <View style={{ flexDirection: "row", alignItems: "center" }}>
@@ -251,11 +259,8 @@ export default () => {
             ),
             headerStyle: {
               height: 70,
-              backgroundColor: "#0096FF",
-              borderBottomLeftRadius: 10,
-              borderBottomRightRadius: 10,
-              borderWidth: 2,
-              borderColor: 'white'
+              backgroundColor: "white",
+              shadowColor: "white",
             },
           }}
         />
@@ -280,11 +285,8 @@ export default () => {
             ),
             headerStyle: {
               height: 70,
-              backgroundColor: "#0096FF",
-              borderBottomLeftRadius: 10,
-              borderBottomRightRadius: 10,
-              borderWidth: 2,
-              borderColor: 'white'
+              backgroundColor: "white",
+              shadowColor: "white",
             },
           }}
         />
@@ -352,7 +354,7 @@ export default () => {
           name="Signout"
           component={Signout}
           options={{
-            headerTitle: () => <Header name={t("Signout")} />,
+            headerTitle: () => <Header name={t("")} />,
             headerTitleAlign: "left", // Center the header title
             headerRight: () => (
               <View style={{ flexDirection: "row", alignItems: "center" }}>
@@ -368,19 +370,16 @@ export default () => {
             ),
             headerStyle: {
               height: 70,
-              backgroundColor: "#0096FF",
-              borderBottomLeftRadius: 10,
-              borderBottomRightRadius: 10,
-              borderWidth: 2,
-              borderColor: 'white'
+              backgroundColor: "white",
+              shadowColor: "white",
             },
           }}
         />
         <Stack.Screen
-          name="Results"
+          name="Home"
           component={Results}
           options={{
-            headerTitle: () => <Header name={t("Hertz hEARing Test")} />,
+            headerTitle: () => <Header name={t("")} />,
             headerTitleAlign: "left", // Center the header title
             headerRight: () => (
               <View style={{ flexDirection: "row", alignItems: "center" }}>
@@ -396,11 +395,8 @@ export default () => {
             ),
             headerStyle: {
               height: 70,
-              backgroundColor: "#0096FF",
-              borderBottomLeftRadius: 10,
-              borderBottomRightRadius: 10,
-              borderWidth: 2,
-              borderColor: 'white'
+              backgroundColor: "white",
+              shadowColor: "white",
             },
           }}
         />

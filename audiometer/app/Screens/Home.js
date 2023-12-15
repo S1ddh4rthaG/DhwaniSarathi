@@ -32,7 +32,7 @@ const Home = () => {
     <PaperProvider theme={theme}>
       <View style={{ flex: 1, justifyContent: 'top', padding: 32 }}>
         <Image source={require('../assets/images/logo.png')} style={{ width: 300, height: 300, alignSelf: 'center' }} />
-        <Text style={{ fontSize: 32, alignSelf: 'center', fontWeight: 'bold', marginBottom: 40 }}>{t('Hertz hEARing Test')}</Text>
+        <Text style={{ fontSize: 32, alignSelf: 'center', fontWeight: 'bold', marginBottom: 40, color: "#2B3467" }}>{t('Hertz hEARing Test')}</Text>
         <Button mode="contained" onPress={() => navigation.navigate('FillDetails')} style={{ margin: 10 }}>
           {t('Start Full Test')}
         </Button>
