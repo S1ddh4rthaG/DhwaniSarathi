@@ -1,61 +1,22 @@
 import React from "react";
 import { useState, useEffect } from "react";
-import { StyleSheet, View, TouchableOpacity } from "react-native";
-import { MaterialCommunityIcons } from "@expo/vector-icons";
-// import { NavigationContainer, StackActions } from "@react-navigation/native";
-// import { createStackNavigator } from "@react-navigation/stack";
-import Header from "./Components/Header";
-import Home from "./Screens/Home";
-import GetStarted from "./Screens/GetStarted.js";
-import FillDetails from "./Screens/FillDetails";
-import BeforeYouStart from "./Screens/BeforeYouStart";
-import LeftEar from "./Screens/LeftEar";
-import Results from "./Screens/Results";
-import JewelleryDetection from "./Screens/JewelleryDetection";
-import Login from "./Screens/Login";
-import Signup from "./Screens/Signup";
-import i18n from "./locales/i18n";
-import { useTranslation } from "react-i18next";
-import { I18nextProvider } from "react-i18next";
-import Signout from "./Screens/Signout";
-import BeforeTest1 from "./newScreens/BeforeTest1";
-import BeforeTest2 from "./newScreens/BeforeTest2";
-import BeforeTest3 from "./newScreens/BeforeTest3";
 import { FIREBASE_AUTH } from "../FirebaseConfig.js";
 import { onAuthStateChanged } from "firebase/auth";
-import AudiometryTest from "./AudiometryTest.js";
-import EducatorHome from "./Screens/Educator/EducatorHome.js";
-import AssignmentList from "./Screens/Educator/AssignmentList.js";
-import AsyncStorage from "@react-native-async-storage/async-storage";
-import RightEar from "./Screens/RightEar.js";
-import ClassroomList from "./Screens/Educator/ClassroomList";
-import QuietPlaceDetection from "./newScreens/QuietPlaceDetection";
 import { Link, Redirect } from "expo-router";
 export default () => {
   const [user, setUser] = useState(null);
+
   useEffect(() => {
     onAuthStateChanged(FIREBASE_AUTH, async (user) => {
-      if (user) {
-        try {
-          await AsyncStorage.setItem("userId", user.uid);
-        } catch (error) {
-          console.error(
-            "Error fetching user data or storing user type:",
-            error
-          );
-        }
-      }
-      // Retrieve user ID and user type from AsyncStorage
-      const userId = await AsyncStorage.getItem("userId");
-      const userType = await AsyncStorage.getItem("userType");
-      console.log(userId);
-      console.log(userType);
-
       setUser(user);
     });
   }, []);
 
-  return <Redirect href ="/Screens/Home" />;
+  if (user) {
+    return <Redirect href="/Screens/Home" />;
+  }
+
+  return <Redirect href ="/Screens/Login" />;
 };
 
 // const styles = StyleSheet.create({

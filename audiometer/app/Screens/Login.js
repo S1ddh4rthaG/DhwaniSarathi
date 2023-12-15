@@ -10,7 +10,6 @@ import {
   StyleSheet,
 } from "react-native";
 
-// import './locales/i18n';
 import { t, useTranslation } from "react-i18next";
 import { baseurl } from "../Constants/ip.js";
 
@@ -35,6 +34,7 @@ const Login = () => {
         username,
         password
       );
+
       if (response) {
         let url = `${baseurl}/logininfos/${response.user.uid}/`;
         const response1 = await fetch(url);
@@ -43,14 +43,21 @@ const Login = () => {
           const data = await response1.json();
 
           responseObject = data;
-          console.log(responseObject);
+
+          await AsyncStorage.setItem("userId", response.user.uid);
           await AsyncStorage.setItem(
             "userType",
             JSON.stringify(responseObject.Type)
           );
-          const userType = await AsyncStorage.getItem("userType");
-          console.log(userType);
-          router.push("/Screens/Home");
+
+          console.log("User data fetched successfully:", responseObject)
+
+          if (responseObject.Type == 1) {
+            router.push("/Screens/Educator/EducatorHome");
+          }
+          else {
+            router.push("/Screens/Home");
+          }
         } else {
           console.error("Failed to fetch user data:", response1.status);
         }
@@ -104,7 +111,7 @@ const Login = () => {
         <Text style={styles.buttonText}>{t("Sign up")}</Text>
       </TouchableOpacity>
     </View>
-  );
+  ); 
 };
 
 const styles = StyleSheet.create({

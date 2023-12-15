@@ -14,8 +14,9 @@ import { createUserWithEmailAndPassword } from "firebase/auth";
 import { baseurl } from "../Constants/ip.js";
 import { FIREBASE_AUTH } from "../../FirebaseConfig.js";
 import { useTranslation } from "react-i18next";
+import { router } from "expo-router";
 
-const Signup = ({ navigation }) => {
+const Signup = () => {
   const { t, i18n } = useTranslation();
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
@@ -64,7 +65,7 @@ const Signup = ({ navigation }) => {
           payload["InstituteName"] = instituteName;
         }
 
-        console.log(payload);
+      
 
         let url = baseurl + "/logininfos/";
 
@@ -75,10 +76,14 @@ const Signup = ({ navigation }) => {
           },
           body: JSON.stringify(payload),
         });
-        console.log(createUserDB);
+       
       }
-      console.log(response);
-      navigation.navigate("Login");
+ 
+
+      alert("User created successfully");
+
+      router.push("/Screens/Login");
+      
     } catch (error) {
       console.log(error);
     }
