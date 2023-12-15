@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { View, Text, StyleSheet, Image, ScrollView, Dimensions } from 'react-native';
 import { useTranslation } from 'react-i18next';
 import {
@@ -18,6 +18,44 @@ const mapDataForScatter = (data, color, symbolType) => {
     }));
 };
 
+const calculateAverage = (data) => {
+    const sum = data.reduce((acc, point) => acc + point.y, 0);
+    const avg = sum / data.length;
+    return Math.round(avg);
+};
+
+// ref: https://doi.org/10.2471%2FBLT.19.230367
+const determineHearingCategory = (average) => {
+    const hearingCategories = {
+        'Normal': [-10, 19],
+        'Mild': [20, 34],
+        'Moderate': [35, 49],
+        'Moderately Severe': [50, 64],
+        'Severe': [65, 79],
+        'Profound': [80, Infinity],
+    };
+
+
+    for (const category in hearingCategories) {
+        const [min, max] = hearingCategories[category];
+        if (average >= min && average <= max) {
+            const formattedRange = `${min} to ${max}`;
+            return {
+                category,
+                formattedResult: `${category} Hearing`,
+                formattedRange,
+            };
+        }
+    }
+
+    return {
+        category: 'Uncategorized',
+        formattedResult: 'Uncategorized Hearing',
+        formattedRange: 'abnormal range',
+    };
+};
+
+
 const Results = ({ leftEarData, rightEarData }) => {
     if (!leftEarData || !rightEarData) {
         leftEarData = [
@@ -31,13 +69,32 @@ const Results = ({ leftEarData, rightEarData }) => {
 
         rightEarData = [
             { x: '125', y: 50 },
-            { x: '250', y: 30 },
-            { x: '500', y: 40 },
-            { x: '1000', y: 45 },
-            { x: '2000', y: 35 },
+            { x: '250', y: 60 },
+            { x: '500', y: 70 },
+            { x: '1000', y: 65 },
+            { x: '2000', y: 55 },
             { x: '4000', y: 40 },
         ];
     }
+
+    // Calculate average hearing level
+    const leftEarAverage = calculateAverage(leftEarData);
+    const rightEarAverage = calculateAverage(rightEarData);
+
+    const categoryInfo = {
+        'Normal': 'You can hear a whisper, rustling leaves, and ticking clocks.',
+        'Mild': 'You can hear a conversation in a quiet room, but may have difficulty hearing a whisper or soft sounds.',
+        'Moderate': ' You may difficulty hearing some quieter conversations.',
+        'Moderately Severe': ' You may have difficulty hearing a normal conversation. May lip-read or use hearing aids to assist with communication.',
+        'Severe': 'You can understand speech only if the speaker is in close proximity.',
+        'Profound': ' You face proble in understanding speech. Unable to hear "loud" stimuli such as lawn mowers or passing cars.',
+    };
+
+    // Get category info for left and right ears
+    const leftEarCategoryInfo = determineHearingCategory(leftEarAverage);
+    const rightEarCategoryInfo = determineHearingCategory(rightEarAverage);
+    const combinedCategoryInfo = determineHearingCategory((leftEarAverage + rightEarAverage) / 2);
+
 
     const { t } = useTranslation();
     const yTickCount = 12;
@@ -47,36 +104,37 @@ const Results = ({ leftEarData, rightEarData }) => {
         height: 300,
     });
 
+    // useEffect(() => {
+    //     // Update chart dimensions if needed
+    //     // You can add logic here to dynamically adjust chart dimensions
+    // }, [leftEarData, rightEarData]);
+
     return (
         <ScrollView contentContainerStyle={styles.scrollViewContainer}>
             <View style={styles.container}>
                 <Text style={styles.title}>{t('Your Results')}</Text>
 
-                {/* Original Grid Item */}
                 <View style={styles.gridItem}>
-                    <Text style={styles.headerText}>{t('Normal Hearing')}</Text>
+                    <Text style={styles.headerText}>{t(combinedCategoryInfo.formattedResult)}</Text>
                     <Text style={styles.pText}>
-                        {t('You have normal hearing. You can hear sounds from 0 to 20 dB HL.')}
+                        {t(`You can hear sounds from ${combinedCategoryInfo.formattedRange} dB. ${categoryInfo[combinedCategoryInfo.category]}`)}
+                        {/* {t(`You have ${combinedCategoryInfo.formattedResult.toLowerCase()}. You can hear sounds from ${combinedCategoryInfo.formattedRange} dB HL. ${categoryInfo[combinedCategoryInfo.category]}`)} */}
                     </Text>
                 </View>
 
-                {/* New Two-Column Container */}
                 <View style={styles.gridItem}>
                     <View style={styles.twoColumnContainer2}>
-                        {/* Left Column (Categories) */}
                         <View style={styles.column2}>
                             <Text style={styles.columnHeaderText}>{t('Categories')}</Text>
                             <Text style={styles.columnText}>{t('Normal\nMild\nModerate\nModerately severe\nSevere\nProfound')}</Text>
                         </View>
 
-                        {/* Right Column (Range) */}
                         <View style={styles.column2}>
                             <Text style={styles.columnHeaderText}>{t('Range (dB HL)')}</Text>
                             <Text style={styles.columnText}>-10 to 19{'\n'}20 to 34{'\n'}35 to 49{'\n'}50 to 64{'\n'}65 to 79{'\n'}80+</Text>
                         </View>
                     </View>
                 </View>
-
 
                 <View style={styles.twoColumnContainer}>
                     <View style={styles.earGridItem}>
@@ -86,7 +144,8 @@ const Results = ({ leftEarData, rightEarData }) => {
                             source={require('../assets/leftear.png')}
                             resizeMode='cover'
                         />
-                        <Text style={styles.resultText}>{t('12 dB HL')}</Text>
+                        <Text style={styles.resultText2}>{t(`${leftEarAverage} dB`)}</Text>
+                        <Text style={styles.resultText}>{t(leftEarCategoryInfo.formattedResult)}</Text>
                     </View>
 
                     <View style={styles.earGridItem}>
@@ -96,7 +155,8 @@ const Results = ({ leftEarData, rightEarData }) => {
                             source={require('../assets/rightear.png')}
                             resizeMode='cover'
                         />
-                        <Text style={styles.resultText}>{t('10 dB HL')}</Text>
+                        <Text style={styles.resultText2}>{t(`${rightEarAverage} dB`)}</Text>
+                        <Text style={styles.resultText}>{t(rightEarCategoryInfo.formattedResult)}</Text>
                     </View>
                 </View>
 
@@ -369,6 +429,11 @@ const styles = StyleSheet.create({
         height: 100,
     },
     resultText: {
+        fontSize: 15,
+        textAlign: 'center',
+        color: 'white',
+    },
+    resultText2: {
         fontSize: 20,
         textAlign: 'center',
         color: 'white',
