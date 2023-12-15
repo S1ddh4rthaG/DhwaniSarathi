@@ -67,7 +67,7 @@ export default () => {
 
       <Stack.Navigator /*initialRouteName={user ? "Signout" : "Signup"}*/ initialRouteName="Home">
         <Stack.Screen
-          name="Home0"
+          name="Home"
           component={Home}
           options={{
             headerTitle: () => <Header name={t("")} />,
@@ -376,7 +376,7 @@ export default () => {
           }}
         />
         <Stack.Screen
-          name="Home"
+          name="Results"
           component={Results}
           options={{
             headerTitle: () => <Header name={t("")} />,
