@@ -1,8 +1,26 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, Image, TouchableOpacity, StyleSheet } from 'react-native';
+import { Box, IconButton, HStack, Icon, MaterialIcons, StatusBar, View, Text, TouchableOpacity, StyleSheet } from 'react-native';
+// import {AppBar} from 'react-native-paper'; 
+import { useNavigation } from '@react-navigation/native';
+// import './locales/i18n';  
 import { useTranslation } from 'react-i18next';
+import { Image } from 'react-native';
+import { Button, Provider as PaperProvider, DefaultTheme, Appbar } from 'react-native-paper';
+
 import { Audio } from 'expo-av';
 import {router} from 'expo-router';
+
+
+const theme = {
+    ...DefaultTheme,
+    roundness: 2,
+    colors: {
+      ...DefaultTheme.colors,
+      primary: '#EB455F',
+      accent: '#f1c40f',
+    },
+  };
+
 
 const QuietPlaceDetection = () => {
   const { t, i18n } = useTranslation();
@@ -72,8 +90,8 @@ const QuietPlaceDetection = () => {
 
   const calculateRGB = (decibels) => {
     // Use decibel values to calculate RGB components
-    const red = Math.min(255, Math.round(40-1*decibels));
-    const green = Math.min(255, Math.round((120-1*decibels)));
+    const red = Math.min(255, Math.round(200-1*decibels));
+    const green = Math.min(255, Math.round((40-1*decibels)));
     const blue = 0;
     return `rgb(${red}, ${green}, ${blue})`;
   };
@@ -82,34 +100,32 @@ const QuietPlaceDetection = () => {
   const [barColor, setBarColor] = useState('#0096FF'); // Initial color
 
   return (
-    <View style={styles.container}>
-      <Text style={styles.title}>{t('Check Your Surrounding')}</Text>
-      <Image style={styles.image} source={require('../assets/microphone.png')} resizeMode='cover' />
+    <PaperProvider theme={theme}>
+    <View style={{ flex: 1, justifyContent: 'top', padding: 32 }}>
+      <Text style={{ fontSize: 24, alignSelf: 'center', fontWeight: 'bold', marginBottom: 40, color: "#2B3467" }}>{t('Check Your Surrounding')}</Text>
+      <Image style={{ width: 300, height: 300, alignSelf: 'center' }} source={require('../assets/images/microphone.png')} resizeMode='cover' />
 
       <View
         style={[
           styles.bar,
-          { width: 100 + getWidth(160 + decibels), height: 40, backgroundColor: calculateRGB(decibels) },
+          { width: 100 + getWidth(160 + decibels), height: 90, backgroundColor: calculateRGB(decibels) },
         ]}
       >
         <Text style={styles.barText}>{decibels} dB</Text>
       </View>
 
-      <TouchableOpacity
-        style={styles.Button}
-        onPress={isRecording ? stopRecording : startRecording}
-      >
-        <Text style={styles.buttonText}>
-          {isRecording ? 'Stop Recording' : 'Start Recording'}
-        </Text>
-      </TouchableOpacity>
+      <Button mode="contained" onPress={isRecording ? stopRecording : startRecording} style={{ margin: 5 }}>
+      {isRecording ? 'Stop Recording' : 'Start Recording'}
+        </Button>
 
-      <TouchableOpacity style={styles.Button1} onPress={()=>{router.push("/newScreens/BeforeTest2")} }>
-        <Text style={styles.buttonText}>{t('Continue')}</Text>
-      </TouchableOpacity>
-    </View>
+      <Button mode="contained" onPress={() => router.push('/newScreens/BeforeTest2')} style={{ margin: 10 }}>
+          {t('Continue')}
+        </Button>
+      </View>
+      </PaperProvider>
   );
 };
+
 
 
 
@@ -124,39 +140,32 @@ const styles = StyleSheet.create({
     borderWidth: 5,
     borderRadius: 10
   },
-  bar: {
-    backgroundColor: '#0096FF',
-    justifyContent: 'center',
+  image: {
+    width: 100,
+    height: 100,
     alignSelf: 'center',
-    height: 30,
-    alignContent: 'center',
-    borderRadius: 10,
+    borderColor: '#0096FF',
+    borderWidth: 3
+  },
+  bar: {
+    backgroundColor: '#0096FF', // Greenish Yellow
+    marginTop: 20,
+    paddingVertical: 30,
+    width: "100%",
     borderColor: 'white',
     borderWidth: 1,
-    elevation: 5,
-    width: 60,
-    marginBottom: 20,
-    elevation: 10
+    elevation: 10,
+    alignSelf: 'center',
+    marginBottom: 40,
+    borderRadius: 10,
+    alignContent: 'center'
   },
   barText: {
-    color: 'black',
     textAlign: 'center',
+    fontSize: 15,
     fontWeight: 'bold',
-    fontSize: 18
-  },
-  title: {
-    fontSize: 24,
-    color: 'black',
-    marginBottom: 20,
-    textAlign: 'center',
-    fontWeight: 'bold',
-    marginTop: 20,
-  },
-  image: {
-    width: 50,
-    height: 50,
     alignSelf: 'center',
-    marginBottom: 20,
+    color: 'white'
   },
   Button: {
     backgroundColor: '#0096FF', // Greenish Yellow
@@ -178,8 +187,7 @@ const styles = StyleSheet.create({
     width: "100%",
     borderColor: 'white',
     borderWidth: 1,
-    elevation: 5,
-    
+    elevation: 5
   },
   buttonText: {
     color: 'black',
@@ -194,4 +202,5 @@ const styles = StyleSheet.create({
     marginBottom: 20,
   },
 });
+
 export default QuietPlaceDetection;
