@@ -1,11 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { View, Text, Image, TouchableOpacity, StyleSheet } from 'react-native';
-import Slider from '@react-native-community/slider';
 import { useTranslation } from 'react-i18next';
 import { Audio } from 'expo-av';
-import { namedQuery } from 'firebase/firestore';
+import {router} from 'expo-router';
 
-const QuietPlaceDetection = ({navigation}) => {
+const QuietPlaceDetection = () => {
   const { t, i18n } = useTranslation();
   const [recording, setRecording] = useState();
   const [isRecording, setIsRecording] = useState(false);
@@ -105,7 +104,7 @@ const QuietPlaceDetection = ({navigation}) => {
         </Text>
       </TouchableOpacity>
 
-      <TouchableOpacity style={styles.Button1} onPress={()=>{navigation.navigate('BeforeTest2')}}>
+      <TouchableOpacity style={styles.Button1} onPress={()=>{router.push("/newScreens/BeforeTest2")} }>
         <Text style={styles.buttonText}>{t('Continue')}</Text>
       </TouchableOpacity>
     </View>

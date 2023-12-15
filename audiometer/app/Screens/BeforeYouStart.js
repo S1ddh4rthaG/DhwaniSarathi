@@ -1,23 +1,18 @@
 import React ,{useState}from 'react';
 import { View, Text, Image,  TouchableOpacity, StyleSheet } from 'react-native';
 import Slider from '@react-native-community/slider';
-// import './locales/i18n'; 
- import {useTranslation} from 'react-i18next'; 
+import {useTranslation} from 'react-i18next'; 
+import { router } from 'expo-router';
 
   
-const BeforeYouStart = ({navigation}) => {
+const BeforeYouStart = () => {
     
   const [loudness, setLoudness]= useState(40); 
   const handleLoudnessChange = (value)=>{
     setLoudness(value); 
   }
-  //const [currentLanguage, setLanguage] = useState('hi'); 
   const {t,i18n} =useTranslation(); 
-  // const changeLanguage= value=>{
-  //   i18n.changeLanguage(value)
-  //   .then(()=>setLanguage(value))
-  //   .catch(err => console.log(err)); 
-  // }
+
   return (
     <View style={styles.container}>
       <Text style={styles.title}>{t('Before You Start..')}</Text>
@@ -45,7 +40,7 @@ const BeforeYouStart = ({navigation}) => {
 
       
       </View>
-      <TouchableOpacity style={styles.Button} onPress={()=>{navigation.navigate('RightEar')}}>
+      <TouchableOpacity style={styles.Button} onPress={()=>{router.push("/newScreens/BeforeTest1")}}>
         <Text style={styles.buttonText}>{t('Proceed to Test!!')}</Text>
       </TouchableOpacity>
     </View>
