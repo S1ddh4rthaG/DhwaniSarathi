@@ -1,15 +1,15 @@
-import React, { useState } from 'react';
+import React, { useState ,useEffect } from 'react';
 import { Box, IconButton, HStack, Icon, MaterialIcons, StatusBar, View, Text, TouchableOpacity, StyleSheet } from 'react-native';
 // import {AppBar} from 'react-native-paper'; 
 import {useNavigation} from '@react-navigation/native'; 
 // import './locales/i18n';  
 import {useTranslation} from 'react-i18next';
 import {Image} from 'react-native'; 
-
+import { LANGUAGES } from '../Constants/lng';
 const Home = () => {
   const navigation= useNavigation()
   const {t,i18n} =useTranslation(); 
-  // const [currentLanguage, setLanguage] = useState('en'); 
+  // const [currentLanguage, setLanguage] = useState('hi'); 
   // const changeLanguage= value=>{
   //   i18n.changeLanguage(value)
   //   .then(()=>setLanguage(value))

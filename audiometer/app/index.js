@@ -31,7 +31,6 @@ import RightEar from "./Screens/RightEar.js";
 import ClassroomList from "./Screens/Educator/ClassroomList";
 import QuietPlaceDetection from "./newScreens/QuietPlaceDetection";
 import { Link, Redirect } from "expo-router";
-
 export default () => {
   const [user, setUser] = useState(null);
   useEffect(() => {
@@ -56,7 +55,7 @@ export default () => {
     });
   }, []);
 
-  return <Redirect href ="/Screens/Login" />;
+  return <Redirect href ="/Screens/Home" />;
 };
 
 // const styles = StyleSheet.create({
