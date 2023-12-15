@@ -1,7 +1,21 @@
-import React ,{useState}from 'react';
-import { View, TextInput, Text, TouchableOpacity, StyleSheet } from 'react-native';
-import {useTranslation} from 'react-i18next'; 
-import {Image} from 'react-native'
+import React, { useState } from 'react';
+import { View, TouchableOpacity, StyleSheet } from 'react-native';
+import { Text, TextInput, Button, Card } from 'react-native-paper';
+import { DefaultTheme, Provider as PaperProvider } from 'react-native-paper';
+
+// import './locales/i18n'; 
+import { useTranslation } from 'react-i18next';
+import { Image } from 'react-native'
+
+const theme = {
+  ...DefaultTheme,
+  roundness: 2,
+  colors: {
+    ...DefaultTheme.colors,
+    primary: '#EB455F',
+    accent: '#f1c40f',
+  },
+};
 import { router } from 'expo-router';
 
 const FillDetails = () => {
@@ -25,142 +39,131 @@ const FillDetails = () => {
 
     const handleStartTest = () => {
       //TODO: IF student store the details
-      router.push('/Screens/BeforeYouStart')
+      router.push('/newScreens/BeforeTest1')
     }
     
-  return (
-    <View style={styles.container}>
-            <Text style={styles.title}>{t('Fill Your Details')}</Text>
-
-            <Text style={styles.title2}>{t('For Students')}</Text>
-            <Image style={styles.image} source={require('../assets/student.png')} resizeMode='cover' />
-            <Text style={styles.title2}>{t('Student Roll Number')}</Text>
-            <TextInput
-                style={styles.input}
-                placeholder={t('Enter your roll number')}
-                onChangeText={handleRollNumberChange}
-                value={rollNumber}
-                textAlign="left"  // Set text alignment to left
-                color="black"
-                placeholderTextColor='black'
-            />
-
-            <Text style={styles.title2}>{t('Classroom Code')}</Text>
-            <TextInput
-                style={styles.input}
-                placeholder={t('Code provided by your teacher/educator')}
-                onChangeText={handleClassroomCodeChange}
-                value={classroomCode}
-                textAlign="left"  // Set text alignment to left
-                color="black"
-                placeholderTextColor="black"
-            />
-
-            <TouchableOpacity style={styles.Button} onPress={handleStartTest}>
-                <Text style={styles.buttonText}>{t('Start Test')}</Text>
-            </TouchableOpacity>
-      </View>
-  );
+    return (
+      <PaperProvider theme={theme}>
+        <Card style={styles.container}>
+  
+          <Text style={styles.title2}>{t('For Students(only)')}</Text>
+          <Text style={styles.title}>{t('Fill Your Details')}</Text>
+          <Image style={styles.image} source={require('../assets/images/student_test.jpeg')} resizeMode='cover' />
+  
+          <TextInput
+            label={t("Student Roll Number")}
+            value={rollNumber}
+            onChangeText={handleRollNumberChange}
+            style={styles.input}
+            mode="outlined"
+          />
+  
+          <TextInput
+            label={t("Classroom Code")}
+            value={classroomCode}
+            onChangeText={handleClassroomCodeChange}
+            style={styles.input}
+            mode="outlined"
+          />
+  
+          <Button style={styles.Button} mode="contained" onPress={handleStartTest}>
+            <Text style={styles.buttonText}>{t("Start Test")}</Text>
+          </Button>
+        </Card>
+      </PaperProvider>
+    );
 };
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#B5B6BA',
-    padding: 20,
+    backgroundColor: '#fff',
+    padding: 32,
     justifyContent: 'center',
     borderColor: 'white',
     borderWidth: 5,
     borderRadius: 10
   },
-  sliderContainer: {
-    width: '80%',
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    marginBottom: 50,
-  },
-  sliderLabel: {
-    fontSize: 15,
-    color: 'white',
-  },
-  sliderLabel1: {
-    fontSize: 15,
-    color: 'red',
-  },
-  slider: {
-    flex: 1,
-    width: '100%',
+  educatorText: {
+    fontSize: 14,
+    color: '#2B3467',
+    marginBottom: 12,
   },
   image: {
-    width: 100,
-    height: 100,
-    alignContent: 'center',
+    width: 300,
+    height: 300,
     alignSelf: 'center',
-    marginTop: 20,
-    marginBottom: 20
   },
   title: {
     fontSize: 24,
-    color: 'black',
-    marginBottom: 20,
+    // color: 'black',
+    // marginBottom: 20,
     textAlign: 'center',
+    marginBottom: 10,
     fontWeight: 'bold',
-    marginTop: 20,
+    marginTop: 10,
   },
   title2: {
-    fontSize: 18,
-    color: 'black',
-    marginBottom: 20,
+    fontSize: 14,
+    // color: 'black',
+    // marginBottom: 20,
     textAlign: 'left',
     fontWeight: 'bold'
   },
   subtitle: {
-    fontSize: 15,
-    color: 'white',
-    marginBottom: 10,
-    textAlign: 'left',
+    // fontSize: 15,
+    // color: 'white',
+    // marginBottom: 10,
+    // textAlign: 'left',
   },
   Button: {
-    backgroundColor: '#0096FF', // Greenish Yellow
-    marginTop: 'auto', // Push the button to the bottom
-    borderRadius:20,
-    paddingVertical: 15,
-    width: '100%',
-    borderColor: 'white',
-    borderWidth: 1,
-    elevation: 5
-  },
-  educatorContainer: {
-    marginTop: 20,
-    alignItems: 'center',
-  },
-  educatorText: {
-    color: 'white',
+    // backgroundColor: '#0096FF', // Greenish Yellow
+    // borderRadius: 20,
+    paddingVertical: 20,
+    // width: "100%",
+    // borderColor: 'white',
+    // borderWidth: 1,
+    // elevation: 5
     marginBottom: 10,
   },
-  educatorButton: {
-    backgroundColor: '#0096FF', // Greenish Yellow
-    paddingVertical: 10,
-    paddingHorizontal: 20,
-    borderRadius: 10,
-  },
   buttonText: {
-    color: 'black',
-    textAlign: 'center',
-    fontSize: 18,
-    fontWeight: 'bold',
+    fontSize: 20,
+    color: '#fff',
+  },
+  //new style created for the 2nd button as it has the padding below it as shown in the figma 
+  Button1: {
+    // backgroundColor: '#0096FF', // Greenish Yellow
+    // marginTop: 20,
+    // borderRadius: 20,
+    // paddingVertical: 15,
+    // width: "100%",
+    // borderColor: 'white',
+    // borderWidth: 1,
+    // elevation: 5
+  },
+  input: {
+    // height: 40,
+    // borderColor: 'white',
+    // borderWidth: 1,
+    marginBottom: 20,
+    // paddingHorizontal: 10,
+    // width: '100%',
+    // color: 'white',
+    // fontStyle: 'normal',
   },
 
-  input: {
-    height: 40,
-    borderColor: 'white',
-    borderWidth: 1,
-    marginBottom: 20,
-    paddingHorizontal: 10,
-    width: '100%',
-    color: 'white',
-    fontStyle: 'normal',
+  gif: {
+    // width: '100%',
+    // height: 200, // Adjust the height as needed
+    // marginBottom: 20,
   },
+
+  signUpCard: {
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginTop: 30,
+    padding: 15,
+  }
 });
 export default FillDetails;

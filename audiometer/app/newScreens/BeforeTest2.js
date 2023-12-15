@@ -1,8 +1,21 @@
-import React ,{useState}from 'react';
-import { View, Text, Image,  TouchableOpacity, StyleSheet } from 'react-native';
-import {useTranslation} from 'react-i18next'; 
+import React, { useState } from 'react';
+import { View, Text, Image, TouchableOpacity, StyleSheet } from 'react-native';
+import { DefaultTheme, Provider as PaperProvider, Button } from 'react-native-paper';
+// import './locales/i18n'; 
+import { useTranslation } from 'react-i18next';
+
 import { router } from 'expo-router';
   
+const theme = {
+  ...DefaultTheme,
+  roundness: 2,
+  colors: {
+    ...DefaultTheme.colors,
+    primary: '#EB455F',
+    accent: '#f1c40f',
+  },
+};
+
 const BeforeTest2 = () => {
     
   const [loudness, setLoudness]= useState(40); 
@@ -11,125 +24,134 @@ const BeforeTest2 = () => {
   }
   const {t,i18n} =useTranslation(); 
   return (
-    <View style={styles.container}>
-      <Text style={styles.title}>{t('We recommend')}</Text>
-      <Image style={styles.image}
-        source={require('../assets/notifications.png')}
-        resizeMode='cover'/>
-      <Text style={styles.title2}>{t('Turn off notifications')}</Text>
+    <PaperProvider theme={theme}>
+      <View style={styles.container}>
+        <Text style={styles.title}>{t('We recommend..')}</Text>
+        <Image
+          style={styles.image1}
+          source={require('../assets/images/mute.png')}
+          resizeMode='cover'
+        />
+        <Text style={styles.title2}>{t('Turn off notifications')}</Text>
 
-      <Image style={styles.image}
-        source={require('../assets/equalizer.png')}
-        resizeMode='cover'/>
-      <Text style={styles.title2}>{t('Set Equalizer to Neutral')}</Text>
+        <Image
+          style={styles.image2}
+          source={require('../assets/images/equalizer.png')}
+          resizeMode='cover'
+        />
+        <Text style={styles.title2}>{t('Set equalizer to neutral')}</Text>
 
-      <TouchableOpacity style={styles.Button} onPress={()=>{router.push('/newScreens/BeforeTest3')} }>
-        <Text style={styles.buttonText}>{t('Ok')}</Text>
-      </TouchableOpacity>
-    </View>
+        <Button
+          style={styles.button}
+          mode="contained"
+          onPress={() => {
+            router.push('/newScreens/BeforeTest3')
+          }}
+        >
+          <Text style={styles.buttonText}>{t('Next')}</Text>
+        </Button>
+      </View>
+    </PaperProvider>
   );
 };
 
 const styles = StyleSheet.create({
-    container: {
-      flex: 1,
-      backgroundColor: '#B5B6BA',
-      padding: 20,
-      justifyContent: 'center',
-      alignItems: 'center',
-      borderColor: 'white',
-      borderWidth: 5,
-      borderRadius: 10
-    },
-    sliderContainer: {
-      width: '80%',
-      flexDirection: 'row',
-      justifyContent: 'space-between',
-      alignItems: 'center',
-      marginBottom: 50,
-    },
-    sliderLabel: {
-      fontSize: 15,
-      color: 'white',
-    },
-    sliderLabel1: {
-      fontSize: 15,
-      color: 'red',
-    },
-    slider: {
-      flex: 1,
-      width: '100%',
-    },
-    image: {
-      width: 50,
-      height: 50,
-      alignContent: 'center',
-      alignSelf: 'center',
-      marginTop: 20,
-      marginBottom: 20
-    },
-    title: {
-      fontSize: 22,
-      color: 'black',
-      marginBottom: 20,
-      textAlign: 'center',
-      fontWeight: 'bold',
-      marginTop: 20,
-    },
-    title2: {
-      fontSize: 18,
-      color: 'black',
-      marginBottom: 20,
-      textAlign: 'left',
-      fontWeight: 'bold'
-    },
-    subtitle: {
-      fontSize: 15,
-      color: 'white',
-      marginBottom: 10,
-      textAlign: 'left',
-    },
-    Button: {
-      backgroundColor: '#0096FF', // Greenish Yellow
-      marginTop: 'auto', // Push the button to the bottom
-      borderRadius: 20,
-      paddingVertical: 15,
-      width: '100%',
-      borderColor: 'white',
-      borderWidth: 1,
-      elevation: 5
-    },
-    educatorContainer: {
-      marginTop: 20,
-      alignItems: 'center',
-    },
-    educatorText: {
-      color: 'white',
-      marginBottom: 10,
-    },
-    educatorButton: {
-      backgroundColor: '#0096FF', // Greenish Yellow
-      paddingVertical: 10,
-      paddingHorizontal: 20,
-      borderRadius: 10,
-    },
-    buttonText: {
-      color: 'black',
-      textAlign: 'center',
-      fontSize: 18,
-      fontWeight: 'bold',
-    },
-  
-    input: {
-      height: 40,
-      borderColor: 'white',
-      borderWidth: 1,
-      marginBottom: 20,
-      paddingHorizontal: 10,
-      width: '100%',
-      color: 'white',
-      fontStyle: 'italic',
-    },
-  });
-  
-  export default BeforeTest2;
+  container: {
+    flex: 1,
+    backgroundColor: '#fff',
+    padding: 24,
+    justifyContent: 'flex-start',
+    borderColor: 'white',
+    borderWidth: 5,
+    borderRadius: 10
+  },
+  sliderContainer: {
+    width: '80%',
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    marginBottom: 50,
+  },
+  sliderLabel: {
+    fontSize: 15,
+    color: 'white',
+  },
+  sliderLabel1: {
+    fontSize: 15,
+    color: 'red',
+  },
+  slider: {
+    flex: 1,
+    width: '100%',
+  },
+  image1: {
+    width: 100,
+    height: 100,
+    alignContent: 'center',
+    alignSelf: 'center',
+    marginBottom: 10,
+  },
+  image2: {
+    width: 100,
+    height: 100,
+    alignContent: 'center',
+    alignSelf: 'center',
+    marginBottom: 15,
+  },
+  title: {
+    fontSize: 28,
+    marginBottom: 65,
+    textAlign: 'center',
+    fontWeight: 'bold',
+  },
+  title2: {
+    fontSize: 20,
+    fontWeight: 'bold',
+    alignContent: 'center',
+    alignSelf: 'center',
+    marginBottom: 50,
+  },
+  subtitle: {
+    fontSize: 15,
+    color: 'white',
+    marginBottom: 10,
+    textAlign: 'left',
+  },
+  button: {
+    marginTop: 'auto', // Push the button to the bottom
+    paddingVertical: 15,
+    width: '100%',
+    borderColor: 'white',
+  },
+  educatorContainer: {
+    marginTop: 20,
+    alignItems: 'center',
+  },
+  educatorText: {
+    color: 'white',
+    marginBottom: 10,
+  },
+  educatorButton: {
+    backgroundColor: '#0096FF', // Greenish Yellow
+    paddingVertical: 10,
+    paddingHorizontal: 20,
+    borderRadius: 10,
+  },
+  buttonText: {
+    fontSize: 20,
+    color: '#fff',
+  },
+
+  input: {
+    height: 40,
+    borderColor: 'white',
+    borderWidth: 1,
+    marginBottom: 20,
+    paddingHorizontal: 10,
+    width: '100%',
+    color: 'white',
+    fontStyle: 'italic',
+  },
+});
+
+export default BeforeTest2;

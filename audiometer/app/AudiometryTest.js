@@ -2,6 +2,20 @@ import React, { useState } from 'react';
 import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
 import { router } from "expo-router";
 import { Audiometry } from "./utils/Audiometry.js";
+import { PureTone } from "./utils/PureTone.js";
+
+import { DefaultTheme, Provider as PaperProvider, Button, Card } from 'react-native-paper';
+import { useTranslation } from 'react-i18next';
+
+const theme = {
+  ...DefaultTheme,
+  roundness: 2,
+  colors: {
+    ...DefaultTheme.colors,
+    primary: '#EB455F',
+    accent: '#f1c40f',
+  },
+};
 
 const AudiometryTest = () => {
   const [playState, setPlayState] = useState(0); // 0: stopped, 1: playing, 2: paused
@@ -13,6 +27,7 @@ const AudiometryTest = () => {
   const [audiometry, setAudiometry] = useState(new Audiometry());
   const [isTestOver, setIsTestOver] = useState(false);
 
+  const { t, i18n } = useTranslation();
   // Update state values with view getters
   const updateState = () => {
     setEar(audiometry.getEar());
@@ -47,53 +62,87 @@ const AudiometryTest = () => {
   }
 
   return (
-    <View style={styles.container}>
-      <Text style={styles.title}>Audiometry Test</Text>
+    <PaperProvider theme={theme}>
+      <Card style={styles.container}>
+        {/* <Text style={styles.title}>Audiometry Test</Text> */}
 
-      {playState !== 1 && (
-        <TouchableOpacity style={styles.Button} onPress={start}>
-          <Text style={styles.buttonText}>Start</Text>
-        </TouchableOpacity>
-      )}
-
-      {
-        playState === 1 && (
+        {playState !== 1 && (
           <View>
-            <Text style={styles.title2}>Ear: {ear}</Text>
-            <Text style={styles.title2}>Conduction: {conduction}</Text>
-            <Text style={styles.title2}>Masking: {masking ? "Yes" : "No"}</Text>
-            <Text style={styles.title2}>Frequency: {frequency}</Text>
-            <Text style={styles.title2}>Threshold: {threshold}</Text>
-
-            {/* Button to play sound */}
-            <TouchableOpacity style={styles.Button} onPress={() => audiometry.playTone()}>
-              <Text style={styles.buttonText}>Play</Text>
-            </TouchableOpacity>
-
-            {/* Button for updating response */}
-            <TouchableOpacity style={styles.Button} onPress={() => updateResponse(true)}>
-              <Text style={styles.buttonText}>Yes</Text>
-            </TouchableOpacity>
-            <TouchableOpacity style={styles.Button} onPress={() => updateResponse(false)}>
-              <Text style={styles.buttonText}>No</Text>
-            </TouchableOpacity>
+            <Image style={styles.image} source={require('./assets/images/atest_icon.jpeg')} />
+            <Text style={styles.title}>{t('Pure Tone Audiometry Test')}</Text>
+            <Button style={styles.Button2} mode="contained" onPress={start}>
+              <Text style={styles.buttonText}>{t('Start Test')}</Text>
+            </Button>
           </View>
-        )
-      }
+        )}
 
+        {/* {
+          isTestOver && (
+            <Button style={styles.Button2} mode="contained" onPress={() => { }}>
+              Results
+              <Text>{JSON.stringify(getResults())}</Text>
+            </Button>
+          )
+        } */}
 
-    </View>
+        {
+          !isTestOver && playState === 1 && (
+            <View>
+              <View>
+                <Text style={styles.titleTest}>{t('Can you hear the sound?')}</Text>
+                <Text style={styles.titleEar}>{t(ear === 'left' ? 'Left Ear' : 'Right Ear')}</Text>
+                {
+                  ear === 'left' && (
+                    <Image style={styles.image} source={require('./assets/images/left_ear.png')} />
+                  )
+                }
+                {
+                  ear === 'right' && (
+                    <Image style={styles.image} source={require('./assets/images/right_ear.png')} />
+                  )
+                }
+                <View style={styles.buttonContainer2}>
+                  <Button style={styles.ButtonFT} mode="contained" theme={{ colors: { primary: '#2B3467' } }}>
+                    <Text style={styles.buttonTextFT}>{(frequency + 'Hz')}</Text>
+                  </Button>
+                  <Button style={styles.ButtonFT} mode="contained" theme={{ colors: { primary: '#2B3467' } }}>
+                    <Text style={styles.buttonTextFT}>{(threshold + ' dB')}</Text>
+                  </Button>
+                  <Button style={styles.ButtonFT} mode="contained" theme={{ colors: { primary: '#2B3467' } }}>
+                    <Text style={styles.buttonTextFT}>{masking ? 'MSK' : 'UNMSK'}</Text>
+                  </Button>
+                </View>
+              </View>
+
+              <Button style={styles.Button} mode="contained" icon={"play-circle"}
+                onPress={() => audiometry.playTone()}>
+                {t('replay?')}
+              </Button>
+              <View style={styles.buttonContainer}>
+                <Button style={styles.ButtonYes} mode="contained" theme={{ colors: { primary: 'green' } }} onPress={() => updateResponse(true)}>
+                  <Text style={styles.buttonText}>{t('Yes')}</Text>
+                </Button>
+                <Button style={styles.ButtonNo} mode="contained" theme={{ colors: { primary: 'red' } }} onPress={() => updateResponse(false)}>
+                  <Text style={styles.buttonText}>{t('No')}</Text>
+                </Button>
+              </View>
+            </View>
+          )
+        }
+      </Card>
+    </PaperProvider>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: 'black',
-    padding: 20,
-    justifyContent: 'flex-start',
-    alignItems: "center"
-
+    backgroundColor: '#fff',
+    padding: 24,
+    justifyContent: 'center',
+    borderColor: 'white',
+    borderWidth: 5,
+    borderRadius: 10
   },
   sliderContainer: {
     width: '80%',
@@ -117,47 +166,115 @@ const styles = StyleSheet.create({
 
   },
   image: {
-    width: 100,
-    height: 100,
+    width: 300,
+    height: 300,
     alignContent: 'center',
-    marginBottom: 100
+    alignSelf: 'center',
+    marginBottom: 40,
+    borderWidth: 5,
+    borderColor: 'black',
+    borderRadius: 10
+  },
+  image2: {
+    width: 300,
+    height: 300,
+    alignContent: 'center',
+    alignSelf: 'center',
+    marginBottom: 10,
+    borderWidth: 5,
+    borderColor: 'black',
+    borderRadius: 10
   },
   title: {
-    fontSize: 30,
+    fontSize: 24,
+    marginBottom: 30,
+    textAlign: 'center',
     fontWeight: 'bold',
-    color: 'white',
-    marginBottom: 60,
-    textAlign: "center"
+  },
+  titleTest: {
+    fontSize: 24,
+    marginBottom: 5,
+    textAlign: 'center',
+    fontWeight: 'bold',
   },
   title2: {
     fontSize: 25,
-    color: 'white',
-    marginBottom: 30,
-    textAlign: "left",
-
+    textAlign: 'center',
+  },
+  titleEar: {
+    fontSize: 20,
+    textAlign: 'center',
+    fontWeight: 'bold',
+    marginBottom: 10,
+    padding: 10,
   },
   subtitle: {
     fontSize: 18,
-    color: 'white',
     marginBottom: 10,
     textAlign: "left",
   },
-  Button: {
-    backgroundColor: 'blue', // Greenish Yellow
+  buttonContainer: {
+    // Make all buttons side by side
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
     marginTop: 20,
-    borderRadius: 10,
-    paddingVertical: 20,
-
-    width: '100%'
+    marginBottom: 20,
+  },
+  buttonContainer2: {
+    // Make all buttons side by side
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+  },
+  Button: {
+    // backgroundColor: 'blue', // Greenish Yellow
+    // borderRadius: 10,
+    paddingVertical: 1,
+    marginTop: 20,
+    width: '40%'
+  },
+  ButtonYes: {
+    // backgroundColor: 'blue', // Greenish Yellow
+    // borderRadius: 10,
+    paddingVertical: 10,
+    marginTop: 20,
+    width: '45%',
+    color: 'green'
+  },
+  ButtonFT: {
+    // backgroundColor: 'blue', // Greenish Yellow
+    // borderRadius: 10,
+    paddingVertical: 1,
+    width: '32%',
+    borderRadius: 50
+  },
+  buttonTextFT: {
+    fontSize: 15,
+  },
+  ButtonNo: {
+    // backgroundColor: 'blue', // Greenish Yellow
+    // borderRadius: 10,
+    paddingVertical: 10,
+    marginTop: 20,
+    width: '45%',
+    color: 'red'
+  },
+  Button2: {
+    // backgroundColor: 'blue', // Greenish Yellow
+    // borderRadius: 10,
+    paddingVertical: 15,
+    marginTop: 20,
+    width: '100%',
   },
 
   Button1: {
-    backgroundColor: '#0096FF', // Greenish Yellow
-    marginTop: 50,
-    borderRadius: 10,
-    paddingVertical: 20,
+    // backgroundColor: '#0096FF', // Greenish Yellow
+    // marginTop: 50,
+    // borderRadius: 10,
+    // paddingVertical: 20,
 
-    width: '100%'
+    // width: '100%'
   },
   buttonText1: {
     color: 'black',
@@ -174,27 +291,27 @@ const styles = StyleSheet.create({
     marginBottom: 10,
   },
   educatorButton: {
-    backgroundColor: '#0096FF', // Greenish Yellow
-    paddingVertical: 10,
-    paddingHorizontal: 20,
-    borderRadius: 10,
+    // backgroundColor: '#0096FF', // Greenish Yellow
+    // paddingVertical: 10,
+    // paddingHorizontal: 20,
+    // borderRadius: 10,
   },
   buttonText: {
-    color: 'white',
-    textAlign: 'center',
+    // color: 'white',
+    // textAlign: 'center',
     fontSize: 20,
-    //fontWeight: 'bold'
+    fontWeight: 'bold'
   },
 
   input: {
-    height: 40,
-    borderColor: 'white',
-    borderWidth: 1,
-    marginBottom: 20,
-    paddingHorizontal: 10,
-    width: '100%',
-    color: 'white',
-    fontStyle: 'italic'
+    // height: 40,
+    // borderColor: 'white',
+    // borderWidth: 1,
+    // marginBottom: 20,
+    // paddingHorizontal: 10,
+    // width: '100%',
+    // color: 'white',
+    // fontStyle: 'italic'
 
   },
 });

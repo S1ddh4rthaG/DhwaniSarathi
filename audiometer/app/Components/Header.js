@@ -6,7 +6,7 @@ const Header = ({ name }) => {
   return (
     <View style={styles.container}>
       <View style={styles.headerContent}>
-        <Text style={styles.title}>Audiometer</Text>
+        <Text style={styles.title}></Text>
         <TouchableOpacity style={styles.headerRight}>
           {/* Your right header component */}
         </TouchableOpacity>
@@ -17,7 +17,7 @@ const Header = ({ name }) => {
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: '#0096FF',
+    backgroundColor: 'white',
     borderBottomLeftRadius: 10,
     borderBottomRightRadius: 10,
     borderWidth: 2,

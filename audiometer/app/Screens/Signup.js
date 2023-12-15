@@ -2,20 +2,29 @@
 import React, { useState } from "react";
 import {
   View,
-  Text,
-  TextInput,
-  Button,
+  Image,
   StyleSheet,
   TouchableOpacity,
-  Image,
 } from "react-native";
+import { Button, TextInput, Text, Card } from 'react-native-paper';
 import { Picker } from "@react-native-picker/picker";
 import { createUserWithEmailAndPassword } from "firebase/auth";
 import { baseurl } from "../Constants/ip.js";
 import { FIREBASE_AUTH } from "../../FirebaseConfig.js";
 import { useTranslation } from "react-i18next";
-import { router } from "expo-router";
 
+import { DefaultTheme, Provider as PaperProvider } from "react-native-paper";
+
+import { router } from "expo-router";
+const theme = {
+  ...DefaultTheme,
+  roundness: 2,
+  colors: {
+    ...DefaultTheme.colors,
+    primary: '#EB455F',
+    accent: '#f1c40f',
+  },
+};
 const Signup = () => {
   const { t, i18n } = useTranslation();
   const [name, setName] = useState("");
@@ -90,213 +99,167 @@ const Signup = () => {
   };
 
   return (
-    <View style={styles.container}>
-      <Image
-        style={styles.image}
-        source={require("../assets/signup.png")}
-        resizeMode="cover"
-      />
-      <Text style={styles.title2}>{t("User Type")}</Text>
-      <Picker
-        selectedValue={userType}
-        style={styles.picker}
-        itemStyle={styles.pickerItem}
-        onValueChange={(itemValue) => setUserType(itemValue)}
-      >
-        <Picker.Item style={styles.pickerItem} label={t("User")} value="User" />
-        <Picker.Item
-          style={styles.pickerItem}
-          label={t("Educator")}
-          value="Educator"
+    <PaperProvider theme={theme}>
+      <Card style={styles.container}>
+        <Image style={styles.image} source={require('../assets/images/signup.png')} resizeMode='cover' />
+        <TextInput
+          label={t("Name")}
+          value={name}
+          onChangeText={(text) => setName(text)}
+          style={styles.input}
+          mode="outlined"
         />
-      </Picker>
-
-      {userType === "User" ? (
-        <>
-          <Text style={styles.title2}>{t("Name")}</Text>
-          <TextInput
-            style={styles.input}
-            placeholder={t("Enter your name")}
-            onChangeText={(text) => setName(text)}
-            value={name}
-            textAlign="left"
-            color="black"
-            placeholderTextColor="black"
-          />
-          {/* <Text style={styles.title2}>{t("Age")}</Text>
-          <TextInput
-            style={styles.input}
-            placeholder={t("Enter your Age")}
-            onChangeText={(text) => setAge(text)}
-            value={String(age)} // Convert 'age' to string explicitly
-            textAlign="left"
-            color="black"
-            placeholderTextColor="black"
-          /> */}
-        </>
-      ) : (
-        <>
-          <Text style={styles.title2}>{t("Educator Name")}</Text>
-          <TextInput
-            style={styles.input}
-            placeholder={t("Enter your name")}
-            onChangeText={(text) => setEducatorName(text)}
-            value={educatorName} // Use the 'educatorName' state variable
-            textAlign="left"
-            color="black"
-            placeholderTextColor="black"
-          />
-          <Text style={styles.title2}>{t("Institute Name")}</Text>
-          <TextInput
-            style={styles.input}
-            placeholder={t("Enter Institute name")}
-            onChangeText={(text) => setInstituteName(text)}
-            value={instituteName} // Use the 'instituteName' state variable
-            textAlign="left"
-            color="black"
-            placeholderTextColor="black"
-          />
-        </>
-      )}
-
-      <Text style={styles.title2}>{t("Email")}</Text>
-      <TextInput
-        style={styles.input}
-        placeholder={t("Enter your email id")}
-        onChangeText={(text) => setEmail(text)}
-        value={email}
-        textAlign="left"
-        color="black"
-        placeholderTextColor="black"
-      />
-      <Text style={styles.title2}>{t("Password")}</Text>
-      <TextInput
-        style={styles.input}
-        placeholder={t("Enter your password")}
-        onChangeText={(text) => setPassword(text)}
-        value={password}
-        textAlign="left"
-        color="black"
-        placeholderTextColor="black"
-      />
-
-      <Text style={styles.title2}>{t("Confirm Password")}</Text>
-      <TextInput
-        style={styles.input}
-        placeholder={t("Confirm Password")}
-        onChangeText={(text) => setConfirmPassword(text)}
-        value={confirmPassword}
-        textAlign="left"
-        color="black"
-        placeholderTextColor="black"
-      />
-
-      <TouchableOpacity style={styles.Button} onPress={handleSignup}>
-        <Text style={styles.buttonText}>{t("Sign Up")}</Text>
-      </TouchableOpacity>
-    </View>
+        <TextInput
+          label={t("Email")}
+          value={email}
+          onChangeText={(text) => setEmail(text)}
+          style={styles.input}
+          mode="outlined"
+        />
+        <TextInput
+          label={t("Age")}
+          value={String(age)}
+          onChangeText={(text) => setAge(text)}
+          style={styles.input}
+          mode="outlined"
+        />
+        <TextInput
+          label={t("Password")}
+          value={password}
+          onChangeText={(text) => setPassword(text)}
+          secureTextEntry
+          style={styles.input}
+          mode="outlined"
+        />
+        <TextInput
+          label={t("Confirm Password")}
+          value={confirmPassword}
+          onChangeText={(text) => setConfirmPassword(text)}
+          secureTextEntry
+          style={styles.input}
+          mode="outlined"
+        />
+        <Picker
+          selectedValue={userType}
+          style={styles.picker}
+          itemStyle={styles.pickerItem}
+          onValueChange={(itemValue) => setGender(itemValue)}
+        >
+          <Picker.Item style={styles.pickerItem} label={t("Male")} value="Male" />
+          <Picker.Item label={t("Female")} value="Female" />
+        </Picker>
+        <Button style={styles.Button} mode="contained" onPress={handleSignup}>
+          <Text style={styles.buttonText}>{t("Sign Up")}</Text>
+        </Button>
+      </Card>
+    </PaperProvider>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#B5B6BA",
-    padding: 20,
-    justifyContent: "flex-start",
-    borderColor: "white",
+    backgroundColor: '#fff',
+    padding: 32,
+    paddingTop: 0,
+    borderColor: 'white',
     borderWidth: 5,
-    borderRadius: 10,
+    borderRadius: 10
   },
   sliderContainer: {
-    width: "80%",
-    flexDirection: "row",
-    justifyContent: "space-between",
-    alignItems: "center",
-    marginBottom: 50,
+    // width: '80%',
+    // flexDirection: 'row',
+    // justifyContent: 'space-between',
+    // alignItems: 'center',
+    // marginBottom: 50,
   },
   sliderLabel: {
-    fontSize: 15,
-    color: "white",
+    // fontSize: 15,
+    // color: 'white',
   },
   sliderLabel1: {
-    fontSize: 15,
-    color: "red",
+    // fontSize: 15,
+    // color: 'red',
   },
   slider: {
-    flex: 1,
-    width: "100%",
+    // flex: 1,
+    // width: '100%',
   },
   image: {
-    width: 50,
-    height: 50,
-    alignContent: "center",
-    alignSelf: "center",
+    width: 250,
+    height: 250,
+    alignContent: 'center',
+    alignSelf: 'center',
   },
   title: {
-    fontSize: 24,
-    color: "black",
-    marginBottom: 20,
-    textAlign: "center",
-    fontWeight: "bold",
-    marginTop: 20,
+    // fontSize: 24,
+    // color: 'black',
+    // marginBottom: 20,
+    // textAlign: 'center',
+    // fontWeight: 'bold',
+    // marginTop: 20,
   },
   title2: {
-    fontSize: 18,
-    color: "black",
-    marginBottom: 5,
-    textAlign: "left",
-    fontWeight: "bold",
+    // fontSize: 18,
+    // color: 'black',
+    // marginBottom: 5,
+    // textAlign: 'left',
+    // fontWeight: 'bold'
+  },
+  picker: {
+    backgroundColor: 'white',
+    marginBottom: 20,
+    borderColor: 'black',
   },
   pickerItem: {
-    color: "black",
-    backgroundColor: "white",
+    // color: 'black', 
+    // backgroundColor: 'white'
+
   },
   subtitle: {
-    fontSize: 15,
-    color: "white",
-    marginBottom: 10,
-    textAlign: "left",
+    // fontSize: 15,
+    // color: 'white',
+    // marginBottom: 10,
+    // textAlign: 'left',
   },
   Button: {
-    backgroundColor: "#0096FF", // Greenish Yellow
-    marginTop: "auto", // Push the button to the bottom
-    borderRadius: 10,
-    paddingVertical: 15,
-    width: "100%",
-    borderColor: "white",
-    borderWidth: 1,
+    // backgroundColor: '#0096FF', // Greenish Yellow
+    // marginTop: 'auto', // Push the button to the bottom
+    // borderRadius: 10,
+    // paddingVertical: 15,
+    // width: '100%',
+    // borderColor: 'white',
+    // borderWidth: 1,
   },
   educatorContainer: {
-    marginTop: 20,
-    alignItems: "center",
+    // marginTop: 20,
+    // alignItems: 'center',
   },
   educatorText: {
-    color: "white",
-    marginBottom: 10,
+    // color: 'white',
+    // marginBottom: 10,
   },
   educatorButton: {
-    backgroundColor: "#0096FF", // Greenish Yellow
-    paddingVertical: 10,
-    paddingHorizontal: 20,
-    borderRadius: 10,
+    // backgroundColor: '#0096FF', // Greenish Yellow
+    // paddingVertical: 10,
+    // paddingHorizontal: 20,
+    // borderRadius: 10,
   },
   buttonText: {
-    color: "black",
-    textAlign: "center",
-    fontSize: 18,
-    fontWeight: "bold",
+    fontSize: 16,
+    color: '#fff',
   },
 
   input: {
-    height: 40,
-    borderColor: "white",
-    borderWidth: 1,
-    marginBottom: 10,
-    paddingHorizontal: 10,
-    width: "100%",
-    color: "white",
-    fontStyle: "normal",
+    // height: 40,
+    // borderColor: 'white',
+    // borderWidth: 1,
+    // marginBottom: 10,
+    // paddingHorizontal: 10,
+    // width: '100%',
+    // color: 'white',
+    // fontStyle: 'normal',
+    marginBottom: 15,
   },
 });
 
