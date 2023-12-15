@@ -1,10 +1,10 @@
 import React ,{useState}from 'react';
 import { View, TextInput, Text, TouchableOpacity, StyleSheet } from 'react-native';
-
-// import './locales/i18n'; 
 import {useTranslation} from 'react-i18next'; 
 import {Image} from 'react-native'
-const FillDetails = ({navigation}) => {
+import { router } from 'expo-router';
+
+const FillDetails = () => {
     const [name, setName] = useState('');
     const [age, setAge]= useState(''); 
     const [rollNumber, setRollNumber]= useState(''); 
@@ -22,16 +22,10 @@ const FillDetails = ({navigation}) => {
         setClassroomCode(inputText);
     };
     const {t,i18n} =useTranslation(); 
-    // const [currentLanguage, setLanguage] = useState('en'); 
-    // const changeLanguage= value=>{
-    //   i18n.changeLanguage(value)
-    //   .then(()=>setLanguage(value))
-    //   .catch(err => console.log(err)); 
-    // }
 
     const handleStartTest = () => {
       //TODO: IF student store the details
-      navigation.navigate('BeforeTest1');
+      router.push('/Screens/BeforeYouStart')
     }
     
   return (

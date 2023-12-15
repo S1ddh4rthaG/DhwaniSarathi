@@ -1,11 +1,10 @@
 import React ,{useState}from 'react';
 import { View, Text, Image,  TouchableOpacity, StyleSheet } from 'react-native';
-import Slider from '@react-native-community/slider';
-// import './locales/i18n'; 
- import {useTranslation} from 'react-i18next'; 
+import {useTranslation} from 'react-i18next'; 
+import { router } from 'expo-router';
 
   
-const BeforeTest1 = ({navigation}) => {
+const BeforeTest1 = () => {
     
   const [loudness, setLoudness]= useState(40); 
   const handleLoudnessChange = (value)=>{
@@ -25,7 +24,7 @@ const BeforeTest1 = ({navigation}) => {
         resizeMode='cover'/>
       <Text style={styles.title2}>{t('Headphones')}</Text>
 
-      <TouchableOpacity style={styles.Button} onPress={()=>{navigation.navigate('QuietPlaceDetection')}}>
+      <TouchableOpacity style={styles.Button} onPress={()=>{router.push('/newScreens/QuietPlaceDetection')}}>
         <Text style={styles.buttonText}>{t('Lets Start!')}</Text>
       </TouchableOpacity>
     </View>

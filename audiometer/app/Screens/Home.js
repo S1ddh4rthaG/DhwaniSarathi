@@ -1,25 +1,20 @@
 import React, { useState } from 'react';
 import { Box, IconButton, HStack, Icon, MaterialIcons, StatusBar, View, Text, TouchableOpacity, StyleSheet } from 'react-native';
 // import {AppBar} from 'react-native-paper'; 
-import {useNavigation} from '@react-navigation/native'; 
-// import './locales/i18n';  
 import {useTranslation} from 'react-i18next';
 import {Image} from 'react-native'; 
+import { router } from "expo-router";
 
 const Home = () => {
-  const navigation= useNavigation()
   const {t,i18n} =useTranslation(); 
-  // const [currentLanguage, setLanguage] = useState('en'); 
-  // const changeLanguage= value=>{
-  //   i18n.changeLanguage(value)
-  //   .then(()=>setLanguage(value))
-  //   .catch(err => console.log(err)); 
-  // }
+
+  
+
   return (
     <View style={styles.container}>
      
       <Image style={styles.image} source={require('../assets/audiometer.jpeg')} resizeMode='cover' />
-      <TouchableOpacity style={styles.Button} onPress={()=>navigation.navigate('FillDetails')}>
+      <TouchableOpacity style={styles.Button} onPress={()=>router.push('/Screens/FillDetails')}>
         <Text style={styles.buttonText}>{t('Start Full Test')}</Text>
       </TouchableOpacity>
 
