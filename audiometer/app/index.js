@@ -19,7 +19,7 @@ import { I18nextProvider } from "react-i18next";
 import Signout from "./Screens/Signout";
 import BeforeTest1 from "./newScreens/BeforeTest1";
 import BeforeTest2 from './newScreens/BeforeTest2';
-import BeforeTest3 from './newScreens/BeforeTest3'; 
+import BeforeTest3 from './newScreens/BeforeTest3';
 import { FIREBASE_AUTH } from "../FirebaseConfig.js";
 import { onAuthStateChanged } from "firebase/auth";
 import AudiometryTest from "./AudiometryTest.js";
@@ -28,7 +28,12 @@ import AssignmentList from "./Screens/Educator/AssignmentList.js";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import RightEar from "./Screens/RightEar.js";
 import ClassroomList from "./Screens/Educator/ClassroomList";
+import { PaperProvider } from "react-native-paper";
+import { AppRegistry } from 'react-native';
+import { name as appName } from '../app.json';
 const Stack = createStackNavigator();
+
+// Temporarily
 
 export default () => {
   const [user, setUser] = useState(null); // Initialize user state as null
@@ -59,22 +64,22 @@ export default () => {
     const { t } = useTranslation();
     return (
       //TODO: check if user is Educator or User
-      
+
       <Stack.Navigator /*initialRouteName={user ? "Signout" : "Signup"}*/ initialRouteName="Home">
         <Stack.Screen
           name="Home"
-          component={AudiometryTest}
+          component={Home}
           options={{
-            headerTitle: () => <Header name={t("Hertz hEARing Test")} />,
+            headerTitle: () => <Header name={t("")} />,
             headerTitleAlign: "Signin", // Center the header title
-
+            
             headerRight: () => (
               <View style={{ flexDirection: "row", alignItems: "center" }}>
-                <TouchableOpacity style={{ marginRight: 15 }}>
+                <TouchableOpacity style={{ marginRight: 20 }}>
                   <MaterialCommunityIcons
                     style={styles.button}
                     name="account-circle"
-                    size={28}
+                    size={30}
                     color="black"
                   />
                 </TouchableOpacity>
@@ -82,11 +87,8 @@ export default () => {
             ),
             headerStyle: {
               height: 70,
-              backgroundColor: "#0096FF",
-              borderBottomLeftRadius: 10,
-              borderBottomRightRadius: 10,
-              borderWidth: 2,
-              borderColor: 'white'
+              backgroundColor: "transparent",
+              shadowColor: "transparent",
             },
           }}
         />
@@ -161,7 +163,7 @@ export default () => {
 
 
 
-      <Stack.Screen
+        <Stack.Screen
           name="BeforeTest3"
           alignItems="center"
           component={BeforeTest3}
@@ -183,7 +185,7 @@ export default () => {
           }}
         />
 
-        
+
         <Stack.Screen
           name="Login"
           component={Login}
@@ -192,7 +194,7 @@ export default () => {
             headerTitleAlign: "Signin", // Center the header title
             headerRight: () => (
               <View style={{ flexDirection: "row", alignItems: "center" }}>
-               
+
               </View>
             ),
             headerStyle: {
@@ -208,7 +210,7 @@ export default () => {
 
         <Stack.Screen
           name="GetStarted"
-          component={GetStarted}
+          component={Home}
           options={{
             headerTitle: () => <Header name={t("Hertz hEARing Test")} />,
             headerTitleAlign: "center", // Center the header title
@@ -226,14 +228,6 @@ export default () => {
                 {/* Additional icons or content for the right side */}
               </View>
             ),
-            headerStyle: {
-              height: 70,
-              backgroundColor: "#0096FF",
-              borderBottomLeftRadius: 10,
-              borderBottomRightRadius: 10,
-              borderWidth: 2,
-              borderColor: 'white'
-            },
           }}
         />
 
@@ -415,9 +409,11 @@ export default () => {
   }
 
   return (
-    <I18nextProvider i18n={i18n}>
-      <NavigationContainer independent={true}>{Mystack()}</NavigationContainer>
-    </I18nextProvider>
+    <PaperProvider>
+      <I18nextProvider i18n={i18n}>
+        <NavigationContainer independent={true}>{Mystack()}</NavigationContainer>
+      </I18nextProvider>
+    </PaperProvider>
   );
 };
 
