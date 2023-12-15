@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { View, Text, StyleSheet, Image, ScrollView, Dimensions } from 'react-native';
 import { useTranslation } from 'react-i18next';
 import { useLocalSearchParams } from "expo-router";
@@ -11,7 +11,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const { width: screenWidth, height: screenHeight } = Dimensions.get('window');
 
-const mapDataForScatter = (data, symbolType) => {
+const mapDataForScatter = (data, color, symbolType) => {
     return data.map(item => ({
         x: item.x,
         y: item.y,
@@ -57,21 +57,20 @@ const determineHearingCategory = (average) => {
     };
 };
 
+const getData = async () => {
+    try {
+        const userId = await AsyncStorage.getItem("userId");
+        const userType = await AsyncStorage.getItem("userType");
 
-// const getData = async () => {
-//     try {
-//         const userId = await AsyncStorage.getItem("userId");
-//         const userType = await AsyncStorage.getItem("userType");
+        console.log('userId:', userId);
+        console.log('userType:', userType);
 
-//         console.log('userId:', userId);
-//         console.log('userType:', userType);
-
-//         return { userId: userId || null, userType: userType || null };
-//     } catch (e) {
-//         console.log('Error reading from AsyncStorage', e);
-//         return { userId: null, userType: null };
-//     }
-// };
+        return { userId: userId || null, userType: userType || null };
+    } catch (e) {
+        console.log('Error reading from AsyncStorage', e);
+        return { userId: null, userType: null };
+    }
+};
 
 const Results = ({ leftEarData, rightEarData }) => {
     const params = useLocalSearchParams();
@@ -89,7 +88,7 @@ const Results = ({ leftEarData, rightEarData }) => {
     // console.log('results', resultProp);
     console.log('results type', typeof resultProp);
 
-    if (Array.isArray(resultProp)) {
+    if ((typeof resultProp) === 'object' && Array.isArray(resultProp)) {
         leftEarData = resultProp
             .filter(item => item.ear === 'left' && item.measurementType === 'AIR_UNMASKED_LEFT')
             .map(item => ({ x: item.frequency.toString(), y: item.threshold }));
@@ -99,7 +98,7 @@ const Results = ({ leftEarData, rightEarData }) => {
             .map(item => ({ x: item.frequency.toString(), y: item.threshold }));
 
     } else {
-        console.error('Invalid results format');
+        console.log('Invalid results format');
     }
 
     if (!leftEarData || !rightEarData) {
@@ -110,6 +109,7 @@ const Results = ({ leftEarData, rightEarData }) => {
             { x: '1000', y: 35 },
             { x: '2000', y: 45 },
             { x: '4000', y: 50 },
+            { x: '8000', y: 55 }
         ];
 
         rightEarData = [
@@ -119,6 +119,7 @@ const Results = ({ leftEarData, rightEarData }) => {
             { x: '1000', y: 65 },
             { x: '2000', y: 55 },
             { x: '4000', y: 40 },
+            { x: '8000', y: 30 }
         ];
     }
 
@@ -139,7 +140,6 @@ const Results = ({ leftEarData, rightEarData }) => {
     const leftEarCategoryInfo = determineHearingCategory(leftEarAverage);
     const rightEarCategoryInfo = determineHearingCategory(rightEarAverage);
     const combinedCategoryInfo = determineHearingCategory((leftEarAverage + rightEarAverage) / 2);
-
 
     const { t } = useTranslation();
     const yTickCount = 12;
@@ -270,10 +270,10 @@ const Results = ({ leftEarData, rightEarData }) => {
                             {/* VictoryScatter shapes =  "star"  "square"  "diamond"  "circle"  "triangleUp"*/}
 
                             <VictoryScatter
-                                data={mapDataForScatter(leftEarData, 'red', 'plus')}
-                                labels={({ datum }) => datum.x}
+                                data={mapDataForScatter(leftEarData, 'blue', 'plus')}
+                                labels={({ datum }) => `${datum.x}, ${datum.y}`}
                                 labelComponent={
-                                    <VictoryTooltip dy={-15} constrainToVisibleArea renderInPortal={false} />
+                                    <VictoryTooltip dy={-20} constrainToVisibleArea renderInPortal={false} />
                                 }
                                 style={{
                                     data: { fill: 'blue' },
@@ -283,10 +283,10 @@ const Results = ({ leftEarData, rightEarData }) => {
                                 }}
                             />
                             <VictoryScatter
-                                data={mapDataForScatter(rightEarData, 'blue', 'circle')}
-                                labels={({ datum }) => datum.x}
+                                data={mapDataForScatter(rightEarData, 'red', 'circle')}
+                                labels={({ datum }) => `${datum.x}, ${datum.y}`}
                                 labelComponent={
-                                    <VictoryTooltip dy={-15} constrainToVisibleArea renderInPortal={false} />
+                                    <VictoryTooltip dy={-20} constrainToVisibleArea renderInPortal={false} />
                                 }
                                 style={{
                                     data: { fill: 'red' },
@@ -333,13 +333,13 @@ const Results = ({ leftEarData, rightEarData }) => {
                             <VictoryLine
                                 data={leftEarData}
                                 style={{
-                                    data: { strokeWidth: 4 },
+                                    data: { strokeWidth: 4, stroke: 'blue' },
                                 }}
                             />
                             <VictoryLine
                                 data={rightEarData}
                                 style={{
-                                    data: { strokeWidth: 4, stroke: 'green' },
+                                    data: { strokeWidth: 4, stroke: 'red' },
                                 }}
                             />
 
@@ -347,7 +347,7 @@ const Results = ({ leftEarData, rightEarData }) => {
                                 data={leftEarData}
                                 size={6}
                                 style={{
-                                    data: { fill: 'red', shape: 'cross' },
+                                    data: { fill: 'blue', shape: 'cross' },
                                 }}
                                 labels={({ datum }) => datum.x}
                                 labelComponent={
@@ -358,7 +358,7 @@ const Results = ({ leftEarData, rightEarData }) => {
                                 data={rightEarData}
                                 size={6}
                                 style={{
-                                    data: { fill: 'green', shape: 'circle' },
+                                    data: { fill: 'red', shape: 'circle' },
                                 }}
                                 labels={({ datum }) => datum.x}
                                 labelComponent={

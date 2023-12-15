@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
+import { View, Text, TouchableOpacity, Image, StyleSheet } from 'react-native';
 import { router } from "expo-router";
 import { Audiometry } from "./utils/Audiometry.js";
 import { PureTone } from "./utils/PureTone.js";
@@ -64,8 +64,6 @@ const AudiometryTest = () => {
   return (
     <PaperProvider theme={theme}>
       <Card style={styles.container}>
-        {/* <Text style={styles.title}>Audiometry Test</Text> */}
-
         {playState !== 1 && (
           <View>
             <Image style={styles.image} source={require('./assets/images/atest_icon.jpeg')} />
