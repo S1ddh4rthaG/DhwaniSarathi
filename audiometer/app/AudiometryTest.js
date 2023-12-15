@@ -1,12 +1,7 @@
 import React, { useState } from 'react';
-import { View, StyleView, Text, Image, TouchableOpacity, StyleSheet } from 'react-native';
-import Slider from '@react-native-community/slider';
-import { NavigationContainer } from "@react-navigation/native";
-import { createStackNavigator } from "@react-navigation/stack";
-import { MaterialCommunityIcons } from "@expo/vector-icons";
-
+import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
+import { router } from "expo-router";
 import { Audiometry } from "./utils/Audiometry.js";
-import { PureTone } from "./utils/PureTone.js";
 
 const AudiometryTest = () => {
   const [playState, setPlayState] = useState(0); // 0: stopped, 1: playing, 2: paused
@@ -42,6 +37,14 @@ const AudiometryTest = () => {
   const getResults = () => {
     return audiometry.getResults();
   }
+  console.log(JSON.stringify(getResults()));
+
+  if (isTestOver) {
+    router.push({
+      pathname: '/Screens/Results',
+      params: { id: 42, results: JSON.stringify(getResults()) },
+    });
+  }
 
   return (
     <View style={styles.container}>
@@ -52,16 +55,6 @@ const AudiometryTest = () => {
           <Text style={styles.buttonText}>Start</Text>
         </TouchableOpacity>
       )}
-
-      {
-        isTestOver && (
-          <TouchableOpacity style={styles.Button} onPress={() => { }}>
-            <Text style={styles.buttonText}>Results</Text>
-            {/* Display object given by getResults functions */}
-            <Text style={styles.title2}>{JSON.stringify(getResults())}</Text>
-          </TouchableOpacity>
-        )
-      }
 
       {
         playState === 1 && (
@@ -92,42 +85,6 @@ const AudiometryTest = () => {
     </View>
   );
 };
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 const styles = StyleSheet.create({
   container: {

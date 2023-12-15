@@ -24,7 +24,7 @@ export function Vol2dB(dB) { return (20 * Math.log10(dB) + MAX_DB) }
 export function dB2Vol(dB) { return Math.pow(10, (dB - MAX_DB) / 20); }
 
 export const FREQUENCY_PTS = [125, 250, 500, 1000, 2000, 4000, 8000];
-export const AMPLITUDE_PTS = [-10, 0, 10, 20, 30, 40, 50, 60, 70, 80, 90, 100, 110, 120, 130, 140]
+export const AMPLITUDE_PTS = [0, 10, 20, 30, 40, 50, 60, 70, 80, 90, 100, 110, 120, 130, 140]
 export const VOLUME_PTS = AMPLITUDE_PTS.map(dB2Vol).map((vol) => roundKDigit(vol, 5));
 
 export function getFrequencyIndex(frequency) { return FREQUENCY_PTS.indexOf(frequency); }

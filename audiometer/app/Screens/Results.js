@@ -1,15 +1,17 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { View, Text, StyleSheet, Image, ScrollView, Dimensions } from 'react-native';
 import { useTranslation } from 'react-i18next';
+import { useLocalSearchParams } from "expo-router";
 import {
     VictoryChart, VictoryLine, VictoryAxis,
     VictoryTooltip,
     VictoryScatter, VictoryTheme, VictoryLabel, VictoryLegend
 } from 'victory-native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const { width: screenWidth, height: screenHeight } = Dimensions.get('window');
 
-const mapDataForScatter = (data, color, symbolType) => {
+const mapDataForScatter = (data, symbolType) => {
     return data.map(item => ({
         x: item.x,
         y: item.y,
@@ -56,7 +58,50 @@ const determineHearingCategory = (average) => {
 };
 
 
+// const getData = async () => {
+//     try {
+//         const userId = await AsyncStorage.getItem("userId");
+//         const userType = await AsyncStorage.getItem("userType");
+
+//         console.log('userId:', userId);
+//         console.log('userType:', userType);
+
+//         return { userId: userId || null, userType: userType || null };
+//     } catch (e) {
+//         console.log('Error reading from AsyncStorage', e);
+//         return { userId: null, userType: null };
+//     }
+// };
+
 const Results = ({ leftEarData, rightEarData }) => {
+    const params = useLocalSearchParams();
+    console.log('params id', params.id);
+    let resultProp = params.results;
+    if (typeof resultProp === 'string') {
+        try {
+            resultProp = JSON.parse(resultProp);
+        } catch (error) {
+            console.error('Error parsing results JSON:', error);
+            resultProp = null;
+        }
+    }
+
+    // console.log('results', resultProp);
+    console.log('results type', typeof resultProp);
+
+    if (Array.isArray(resultProp)) {
+        leftEarData = resultProp
+            .filter(item => item.ear === 'left' && item.measurementType === 'AIR_UNMASKED_LEFT')
+            .map(item => ({ x: item.frequency.toString(), y: item.threshold }));
+
+        rightEarData = resultProp
+            .filter(item => item.ear === 'right' && item.measurementType === 'AIR_UNMASKED_RIGHT')
+            .map(item => ({ x: item.frequency.toString(), y: item.threshold }));
+
+    } else {
+        console.error('Invalid results format');
+    }
+
     if (!leftEarData || !rightEarData) {
         leftEarData = [
             { x: '125', y: 40 },
@@ -118,7 +163,6 @@ const Results = ({ leftEarData, rightEarData }) => {
                     <Text style={styles.headerText}>{t(combinedCategoryInfo.formattedResult)}</Text>
                     <Text style={styles.pText}>
                         {t(`You can hear sounds from ${combinedCategoryInfo.formattedRange} dB. ${categoryInfo[combinedCategoryInfo.category]}`)}
-                        {/* {t(`You have ${combinedCategoryInfo.formattedResult.toLowerCase()}. You can hear sounds from ${combinedCategoryInfo.formattedRange} dB HL. ${categoryInfo[combinedCategoryInfo.category]}`)} */}
                     </Text>
                 </View>
 
@@ -181,12 +225,12 @@ const Results = ({ leftEarData, rightEarData }) => {
                             }}
                         >
                             <VictoryAxis
-                                tickValues={['250', '500', '1000', '2000', '4000', '8000']}
-                                tickFormat={['250', '500', '1k', '2k', '4k', '8k']}
+                                tickValues={['125', '250', '500', '1000', '2000', '4000', '8000']}
+                                tickFormat={['125', '250', '500', '1k', '2k', '4k', '8k']}
                                 orientation='top'
                                 style={{
                                     axisLabel: { fill: 'white', padding: 30, fontWeight: 'bold' },
-                                    tickLabels: { fill: 'white', padding: 5 },
+                                    tickLabels: { fill: 'white', padding: 15 },
                                     grid: { stroke: 'rgba(255, 255, 255, 0.2)' },
                                 }}
                             // label="Hz"
@@ -194,7 +238,7 @@ const Results = ({ leftEarData, rightEarData }) => {
                             <VictoryAxis
                                 dependentAxis
                                 invertAxis={true}
-                                tickValues={[0, 20, 40, 60, 80, 100, 120]}
+                                tickValues={[-10, 0, 20, 40, 60, 80, 100, 120]}
                                 style={{
                                     axisLabel: { fill: 'white', padding: 30, fontWeight: 'bold' },
                                     tickLabels: { fill: 'white', padding: 5 },
@@ -416,6 +460,7 @@ const styles = StyleSheet.create({
     },
     headerText: {
         fontSize: 20,
+        marginBottom: 10,
         textAlign: 'center',
         color: 'white',
     },
@@ -430,6 +475,7 @@ const styles = StyleSheet.create({
     },
     resultText: {
         fontSize: 15,
+        height: 20,
         textAlign: 'center',
         color: 'white',
     },
