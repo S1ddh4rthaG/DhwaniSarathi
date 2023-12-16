@@ -37,6 +37,8 @@ const Signout = () => {
   };
   return (
     <PaperProvider theme={theme}>
+
+    <Image source={require('../assets/images/sad_signout.jpeg')} style={{ width: 300, height: 300, marginTop: 120,alignSelf: 'center' }} />
       <Card style={styles.container}>
         <Button style={styles.Button} mode="contained" onPress={handleSignOut}>
           <Text style={styles.buttonText}>{t("Signout?")}</Text>
