@@ -1,15 +1,24 @@
 import React, { useState, useEffect } from 'react';
 import { View, Text, TextInput, FlatList, TouchableOpacity, StyleSheet, ActivityIndicator } from 'react-native';
 import { baseurl } from '../../Constants/ip.js';
+import { Link, useLocalSearchParams } from "expo-router";
 
 const AssignmentList = () => {
     const [searchQuery, setSearchQuery] = useState('');
     const [assignments, setAssignments] = useState([]);
     const [loading, setLoading] = useState(true);
 
+    const params = useLocalSearchParams();
+    console.log('CID', params);
+    let CID = params.CID;
+
     useEffect(() => {
+
+        if (CID == null) {
+            CID = '354598f9-2d73-4272-9cbc-3e27da8ec238';
+        }
+
         const fetchData = async () => {
-            const CID = '354598f9-2d73-4272-9cbc-3e27da8ec238';
             const url = `${baseurl}/classrooms/${CID}/assignments/`;
 
             try {
@@ -30,10 +39,17 @@ const AssignmentList = () => {
     }, []);
 
     const renderAssignmentCard = ({ item }) => (
-        <TouchableOpacity style={styles.card}>
-            <Text style={styles.cardTitle}>{item.AssignmentName}</Text>
-            <Text style={styles.cardDate}>Deadline: {item.Deadline}</Text>
-        </TouchableOpacity>
+        <Link style={styles.card}
+            href={{
+                pathname: 'Screens/Educator/ClassResults',
+                params: { id: 456, AID: item.AID, CID: CID }
+            }}
+        >
+            <TouchableOpacity >
+                <Text style={styles.cardTitle}>{item.AssignmentName}</Text>
+                <Text style={styles.cardDate}>Deadline: {item.Deadline}</Text>
+            </TouchableOpacity>
+        </Link>
     );
 
     const searchFilter = (item) => {

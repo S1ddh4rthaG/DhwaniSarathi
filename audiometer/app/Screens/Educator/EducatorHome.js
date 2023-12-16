@@ -1,6 +1,8 @@
-import React, { Component } from 'react';
-import { StyleSheet, Pressable, Text, View, Image, ImageBackground, Button, Alert, TouchableOpacity, TextInput } from 'react-native';
+import React from 'react';
+import { StyleSheet, View, Text, Image, KeyboardAvoidingView, TouchableWithoutFeedback, Platform, ImageBackground, Pressable, Button, Alert, TouchableOpacity, TextInput } from 'react-native';
 import ClassroomList from './ClassroomList';
+import { ScrollView } from 'react-native-virtualized-view';
+
 export default function EducatorHome() {
 
     const profile = {
@@ -11,83 +13,86 @@ export default function EducatorHome() {
     }
 
     return (
-        <View style={styles.container}>
-            <View style={styles.header}>
+        <KeyboardAvoidingView
+            behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+            style={{ flex: 1 }}
+        >
+            <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
+                <ScrollView style={styles.container2}>
+                    <View style={styles.header}>
 
+                        <ImageBackground source={require('../../assets/background.png')}
+                            style={styles.backgroundImage} />
+                        <View style={[styles.content, { backgroundColor: 'white', opacity: 0.6 }]}>
+                            <Text style={[styles.text, styles.heading]}>Educator Profile Page</Text>
+                        </View>
 
-                <ImageBackground source={require('../../assets/background.png')}
-                    style={styles.backgroundImage} />
-                <View style={[styles.content, { backgroundColor: 'white', opacity: 0.6 }]}>
-                    <Text style={[styles.text, styles.heading]}>Educator Profile Page</Text>
-                </View>
+                        <View style={styles.headerContent}>
+                            <View style={{ flex: 1 }}>
+                                <Text style={styles.name}>Welcome</Text>
+                                <Text style={styles.userInfo}>{profile.name}</Text>
 
-                <View style={styles.headerContent}>
-                    <View style={{ flex: 1 }}>
-                        <Text style={styles.name}>Welcome</Text>
-                        <Text style={styles.userInfo}>{profile.name}</Text>
+                            </View>
+                            <View>
+                                <Image
+                                    style={styles.avatar}
+                                    source={require('../../assets/profile.png')}
+                                />
+                            </View>
+                        </View>
+
+                        <View style={styles.content}>
+
+                            <View style={styles.profileDataContainer}>
+                                <Text style={styles.ptext}>{profile.Age} years</Text>
+                                <Text style={styles.ptext}>{profile.Gender}</Text>
+                                <Text style={styles.ptext}>ID: {profile.EducatorID}</Text>
+                            </View>
+
+                        </View>
+
 
                     </View>
-                    <View>
-                        <Image
-                            style={styles.avatar}
-                            source={require('../../assets/profile.png')}
-                        />
+
+                    <View style={styles.body}>
+
+                        <Pressable style={styles.RectangleShapeView}>
+                            <Text style={styles.headtText}>Date</Text>
+                            <Text style={styles.SubjectText}>30 Sept, 2022 </Text>
+                        </Pressable>
+                        <View styles={{
+                            flexDirection: 'row', alignItems: 'center', margin: 0, padding: 0
+                        }}>
+
+
+                            {/* create a new classroom on button click here*/}
+
+                            <TouchableOpacity style={styles.btn} onPress={() => Alert.alert('Button pressed')}>
+                                <Text style={styles.btnText}>Create Classroom</Text>
+                            </TouchableOpacity>
+
+
+
+                        </View>
+                        <View style={{ width: '100%', backgroundColor: '#FFD700', height: 40, justifyContent: 'center' }}>
+                            <Text style={{ textAlign: 'center', color: 'black', fontWeight: 'bold', fontSize: 20 }}>Classrooms</Text>
+                        </View>
+
+                        <ClassroomList />
+
                     </View>
-                </View>
 
-                <View style={styles.content}>
-
-                    <View style={styles.profileDataContainer}>
-                        <Text style={styles.ptext}>{profile.Age} years</Text>
-                        <Text style={styles.ptext}>{profile.Gender}</Text>
-                        <Text style={styles.ptext}>ID: {profile.EducatorID}</Text>
-                    </View>
-
-                </View>
-
-
-            </View>
-
-            <View style={styles.body}>
-
-                <Pressable style={styles.RectangleShapeView}>
-                    <Text style={styles.headtText}>Date</Text>
-                    <Text style={styles.SubjectText}>30 Sept, 2022 </Text>
-                </Pressable>
-                <View styles={{
-                    flexDirection: 'row', alignItems: 'center', margin: 0, padding: 0
-                }}>
-
-
-                    {/* create a new classroom on button click here*/}
-
-                    <TouchableOpacity style={styles.btn} onPress={() => Alert.alert('Button pressed')}>
-                        <Text style={styles.btnText}>Create Classroom</Text>
-                    </TouchableOpacity>
-
-
-
-                </View>
-                <View style={{ width: '100%', backgroundColor: '#FFD700', height: 40, justifyContent: 'center' }}>
-                    <Text style={{ textAlign: 'center', color: 'black', fontWeight: 'bold', fontSize: 20 }}>Classrooms</Text>
-                </View>
-
-
-                <ClassroomList />
-
-            </View>
-
-        </View>
+                </ScrollView>
+            </TouchableWithoutFeedback>
+        </KeyboardAvoidingView>
     );
 
 }
 
 const styles = StyleSheet.create({
     header: {
-
         height: 300
     },
-
     headerContent: {
         padding: 30,
         alignItems: 'center',
@@ -103,19 +108,16 @@ const styles = StyleSheet.create({
         borderWidth: 2,
         borderColor: 'white',
         marginBottom: 10,
-
     },
     location: {
         borderColor: 'white',
         width: 10,
         height: 10,
-
     },
     hamburger: {
         borderColor: 'white',
         width: 10,
         height: 10,
-
     },
     profileDataContainer: {
         flexDirection: 'row', // To display texts in a row
@@ -124,10 +126,8 @@ const styles = StyleSheet.create({
         fontSize: 22,
         color: 'black',
         fontWeight: 'bold',
-
     },
     headtText: {
-
         color: 'grey',
         fontWeight: 'bold',
         marginLeft: 20,
@@ -137,8 +137,6 @@ const styles = StyleSheet.create({
         color: 'black',
         fontWeight: 'bold',
         fontSize: 16,
-
-
         marginLeft: 20,
         marginTop: 10
     },
@@ -213,7 +211,8 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         justifyContent: 'center',
-        overflow: 'scroll',
-
+    },
+    container2: {
+        flex: 1,
     },
 });

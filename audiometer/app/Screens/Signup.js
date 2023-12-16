@@ -32,7 +32,7 @@ const Signup = () => {
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [userType, setUserType] = useState("User");
-  const [age, setAge] = useState(0);
+  const [age, setAge] = useState(40);
   const [gender, setGender] = useState("male");
   const [educatorName, setEducatorName] = useState("");
   const [instituteName, setInstituteName] = useState("");
@@ -74,7 +74,7 @@ const Signup = () => {
           payload["InstituteName"] = instituteName;
         }
 
-      
+
 
         let url = baseurl + "/logininfos/";
 
@@ -85,14 +85,14 @@ const Signup = () => {
           },
           body: JSON.stringify(payload),
         });
-       
+
       }
- 
+
 
       alert("User created successfully");
 
       router.push("/Screens/Login");
-      
+
     } catch (error) {
       console.log(error);
     }

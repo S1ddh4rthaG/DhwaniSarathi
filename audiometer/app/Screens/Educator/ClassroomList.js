@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { View, Text, TextInput, FlatList, Image, TouchableOpacity, StyleSheet, ActivityIndicator } from 'react-native';
 import { baseurl } from "../../Constants/ip.js";
+import { Link } from 'expo-router';
 
 const ClassroomList = () => {
     const [searchQuery, setSearchQuery] = useState('');
@@ -31,13 +32,22 @@ const ClassroomList = () => {
     }, []);
 
     const renderClassroomCard = ({ item }) => (
-        <View style={[styles.card, { backgroundColor: "#ffdcb2" }]}>
-            <Text style={styles.cardTitle}>{item.ClassroomName}</Text>
-            {/* Add more relevant data based on your response */}
-            <Text style={styles.cardCode}>Classroom ID: {item.CID}</Text>
-            <Text style={styles.cardCode}>Educator ID: {item.EID}</Text>
-            {/* Add more data as needed */}
-        </View>
+        <Link
+            style={[styles.card, { backgroundColor: "#ffdcb2" }]}
+            href={{
+                pathname: 'Screens/Educator/AssignmentList',
+                params: { id: 123, CID: item.CID },
+            }}
+        >
+            <View
+            >
+                <Text style={styles.cardTitle}>{item.ClassroomName}</Text>
+                {/* Add more relevant data based on your response */}
+                <Text style={styles.cardCode}>Classroom ID: {item.CID}</Text>
+                <Text style={styles.cardCode}>Educator ID: {item.EID}</Text>
+                {/* Add more data as needed */}
+            </View>
+        </Link>
     );
 
     const searchFilter = (item) => {
