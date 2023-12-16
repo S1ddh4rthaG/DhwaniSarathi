@@ -1,10 +1,6 @@
 import React, { useState } from 'react';
-import { View, StyleView, Text, Image, TouchableOpacity, StyleSheet } from 'react-native';
-import Slider from '@react-native-community/slider';
-import { NavigationContainer } from "@react-navigation/native";
-import { createStackNavigator } from "@react-navigation/stack";
-import { MaterialCommunityIcons } from "@expo/vector-icons";
-
+import { View, Text, TouchableOpacity, Image, StyleSheet } from 'react-native';
+import { router } from "expo-router";
 import { Audiometry } from "./utils/Audiometry.js";
 import { PureTone } from "./utils/PureTone.js";
 
@@ -56,12 +52,18 @@ const AudiometryTest = () => {
   const getResults = () => {
     return audiometry.getResults();
   }
+  console.log(JSON.stringify(getResults()));
+
+  if (isTestOver) {
+    router.push({
+      pathname: '/Screens/Results',
+      params: { id: 42, results: JSON.stringify(getResults()) },
+    });
+  }
 
   return (
     <PaperProvider theme={theme}>
       <Card style={styles.container}>
-        {/* <Text style={styles.title}>Audiometry Test</Text> */}
-
         {playState !== 1 && (
           <View>
             <Image style={styles.image} source={require('./assets/images/atest_icon.jpeg')} />
@@ -72,15 +74,14 @@ const AudiometryTest = () => {
           </View>
         )}
 
-        {
+        {/* {
           isTestOver && (
             <Button style={styles.Button2} mode="contained" onPress={() => { }}>
               Results
-              {/* Display object given by getResults functions */}
               <Text>{JSON.stringify(getResults())}</Text>
             </Button>
           )
-        }
+        } */}
 
         {
           !isTestOver && playState === 1 && (
