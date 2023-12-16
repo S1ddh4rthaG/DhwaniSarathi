@@ -11,6 +11,14 @@
         {
           "photosPermission": "The app accesses your photos to let you share them with your friends."
         }
+      ],
+      [
+        "expo-media-library",
+        {
+          "photosPermission": "Allow app to access your photos.",
+          "savePhotosPermission": "Allow app to save photos.",
+          "isAccessMediaLocationEnabled": true
+        }
       ]
     ],
     "name": "audiometer",

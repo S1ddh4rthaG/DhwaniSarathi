@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from 'react';
-import { View, Text, StyleSheet, Image, ScrollView, Dimensions } from 'react-native';
+import React, { useState, useEffect, useRef } from 'react';
+import { View, Text, StyleSheet, Image, ScrollView, Dimensions, TouchableOpacity, Modal, } from 'react-native';
 import { useTranslation } from 'react-i18next';
 import { useLocalSearchParams } from "expo-router";
 import {
@@ -8,6 +8,12 @@ import {
     VictoryScatter, VictoryTheme, VictoryLabel, VictoryLegend
 } from 'victory-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { Ionicons } from '@expo/vector-icons';
+import * as Sharing from 'expo-sharing';
+import * as FileSystem from 'expo-file-system';
+import * as MediaLibrary from 'expo-media-library';
+import ViewShot from 'react-native-view-shot';
+
 
 const { width: screenWidth, height: screenHeight } = Dimensions.get('window');
 
@@ -73,6 +79,7 @@ const getData = async () => {
 };
 
 const Results = ({ leftEarData, rightEarData }) => {
+    const viewShotRef = useRef();
     const params = useLocalSearchParams();
     console.log('params id', params.id);
     let resultProp = params.results;
@@ -85,7 +92,6 @@ const Results = ({ leftEarData, rightEarData }) => {
         }
     }
 
-    // console.log('results', resultProp);
     console.log('results type', typeof resultProp);
 
     if ((typeof resultProp) === 'object' && Array.isArray(resultProp)) {
@@ -123,7 +129,6 @@ const Results = ({ leftEarData, rightEarData }) => {
         ];
     }
 
-    // Calculate average hearing level
     const leftEarAverage = calculateAverage(leftEarData);
     const rightEarAverage = calculateAverage(rightEarData);
 
@@ -136,7 +141,6 @@ const Results = ({ leftEarData, rightEarData }) => {
         'Profound': ' You face proble in understanding speech. Unable to hear "loud" stimuli such as lawn mowers or passing cars.',
     };
 
-    // Get category info for left and right ears
     const leftEarCategoryInfo = determineHearingCategory(leftEarAverage);
     const rightEarCategoryInfo = determineHearingCategory(rightEarAverage);
     const combinedCategoryInfo = determineHearingCategory((leftEarAverage + rightEarAverage) / 2);
@@ -154,165 +158,249 @@ const Results = ({ leftEarData, rightEarData }) => {
     //     // You can add logic here to dynamically adjust chart dimensions
     // }, [leftEarData, rightEarData]);
 
+    const [modalVisible, setModalVisible] = useState(false);
+
+    const handleExportPDF = async (e) => {
+        e.preventDefault();
+        console.log('Export to PDF');
+        await MediaLibrary.requestPermissionsAsync();
+        try {
+            const uri = await viewShotRef.current.capture();
+            await Sharing.shareAsync(uri, { dialogTitle: 'Share Image' });
+        } catch (error) {
+            console.error('Error sharing image:', error);
+        }
+    };
+
+    const handleShareWhatsApp = async (e) => {
+        e.preventDefault();
+        console.log('Capture and Share Image');
+        await MediaLibrary.requestPermissionsAsync();
+
+        try {
+            const uri = await viewShotRef.current.capture();
+            await shareImageOnWhatsApp(uri);
+        } catch (error) {
+            console.error('Error capturing and sharing image:', error);
+        }
+    };
+
+    const shareImageOnWhatsApp = async (imageUri) => {
+        try {
+            const tempFileUri = `${FileSystem.cacheDirectory}whatsapp_image.jpg`;
+
+            await FileSystem.copyAsync({
+                from: imageUri,
+                to: tempFileUri,
+            });
+
+            await Sharing.shareAsync(tempFileUri, { dialogTitle: 'Share on WhatsApp', UTI: 'image/jpeg' });
+
+            await FileSystem.deleteAsync(tempFileUri);
+        } catch (error) {
+            console.error('Error sharing image on WhatsApp:', error);
+        }
+    };
+
+    const handleShareWithDoctor = (e) => {
+        e.preventDefault();
+        console.log('Share with Doctor');
+    };
+
     return (
         <ScrollView contentContainerStyle={styles.scrollViewContainer}>
             <View style={styles.container}>
-                <Text style={styles.title}>{t('Your Results')}</Text>
 
-                <View style={styles.gridItem}>
-                    <Text style={styles.headerText}>{t(combinedCategoryInfo.formattedResult)}</Text>
-                    <Text style={styles.pText}>
-                        {t(`You can hear sounds from ${combinedCategoryInfo.formattedRange} dB. ${categoryInfo[combinedCategoryInfo.category]}`)}
-                    </Text>
-                </View>
+                <TouchableOpacity
+                    style={styles.shareButton}
+                    onPress={() => setModalVisible(true)}
+                >
+                    <Ionicons name="share" size={30} color="white" />
+                </TouchableOpacity>
 
-                <View style={styles.gridItem}>
-                    <View style={styles.twoColumnContainer2}>
-                        <View style={styles.column2}>
-                            <Text style={styles.columnHeaderText}>{t('Categories')}</Text>
-                            <Text style={styles.columnText}>{t('Normal\nMild\nModerate\nModerately severe\nSevere\nProfound')}</Text>
+                <Modal
+                    animationType="slide"
+                    transparent={true}
+                    visible={modalVisible}
+                    onRequestClose={() => setModalVisible(false)}
+                >
+                    <View style={styles.modalContainer}>
+                        <TouchableOpacity style={styles.option} onPress={handleExportPDF}>
+                            <Text style={styles.optionText}>Export to PDF</Text>
+                        </TouchableOpacity>
+
+                        <TouchableOpacity style={styles.option} onPress={handleShareWhatsApp}>
+                            <Text style={styles.optionText}>Share on WhatsApp</Text>
+                        </TouchableOpacity>
+
+                        <TouchableOpacity style={styles.option} onPress={handleShareWithDoctor}>
+                            <Text style={styles.optionText}>Share with Doctor</Text>
+                        </TouchableOpacity>
+
+                        <TouchableOpacity onPress={() => setModalVisible(false)}>
+                            <Text style={styles.cancelText}>Cancel</Text>
+                        </TouchableOpacity>
+                    </View>
+                </Modal>
+
+                <ViewShot ref={viewShotRef} options={{ format: 'jpg', quality: 0.9 }}>
+                    <Text style={styles.title}>{t('Your Results')}</Text>
+
+                    <View style={styles.gridItem}>
+                        <Text style={styles.headerText}>{t(combinedCategoryInfo.formattedResult)}</Text>
+                        <Text style={styles.pText}>
+                            {t(`You can hear sounds from ${combinedCategoryInfo.formattedRange} dB. ${categoryInfo[combinedCategoryInfo.category]}`)}
+                        </Text>
+                    </View>
+
+                    <View style={styles.gridItem}>
+                        <View style={styles.twoColumnContainer2}>
+                            <View style={styles.column2}>
+                                <Text style={styles.columnHeaderText}>{t('Categories')}</Text>
+                                <Text style={styles.columnText}>{t('Normal\nMild\nModerate\nModerately severe\nSevere\nProfound')}</Text>
+                            </View>
+
+                            <View style={styles.column2}>
+                                <Text style={styles.columnHeaderText}>{t('Range (dB HL)')}</Text>
+                                <Text style={styles.columnText}>-10 to 19{'\n'}20 to 34{'\n'}35 to 49{'\n'}50 to 64{'\n'}65 to 79{'\n'}80+</Text>
+                            </View>
+                        </View>
+                    </View>
+
+                    <View style={styles.twoColumnContainer}>
+                        <View style={styles.earGridItem}>
+                            <Text style={styles.headerText}>{t('Left Ear')}</Text>
+                            <Image
+                                style={styles.image}
+                                source={require('../assets/leftear.png')}
+                                resizeMode='cover'
+                            />
+                            <Text style={styles.resultText2}>{t(`${leftEarAverage} dB`)}</Text>
+                            <Text style={styles.resultText}>{t(leftEarCategoryInfo.formattedResult)}</Text>
                         </View>
 
-                        <View style={styles.column2}>
-                            <Text style={styles.columnHeaderText}>{t('Range (dB HL)')}</Text>
-                            <Text style={styles.columnText}>-10 to 19{'\n'}20 to 34{'\n'}35 to 49{'\n'}50 to 64{'\n'}65 to 79{'\n'}80+</Text>
+                        <View style={styles.earGridItem}>
+                            <Text style={styles.headerText}>{t('Right Ear')}</Text>
+                            <Image
+                                style={styles.image}
+                                source={require('../assets/rightear.png')}
+                                resizeMode='cover'
+                            />
+                            <Text style={styles.resultText2}>{t(`${rightEarAverage} dB`)}</Text>
+                            <Text style={styles.resultText}>{t(rightEarCategoryInfo.formattedResult)}</Text>
                         </View>
                     </View>
-                </View>
 
-                <View style={styles.twoColumnContainer}>
-                    <View style={styles.earGridItem}>
-                        <Text style={styles.headerText}>{t('Left Ear')}</Text>
-                        <Image
-                            style={styles.image}
-                            source={require('../assets/leftear.png')}
-                            resizeMode='cover'
-                        />
-                        <Text style={styles.resultText2}>{t(`${leftEarAverage} dB`)}</Text>
-                        <Text style={styles.resultText}>{t(leftEarCategoryInfo.formattedResult)}</Text>
-                    </View>
-
-                    <View style={styles.earGridItem}>
-                        <Text style={styles.headerText}>{t('Right Ear')}</Text>
-                        <Image
-                            style={styles.image}
-                            source={require('../assets/rightear.png')}
-                            resizeMode='cover'
-                        />
-                        <Text style={styles.resultText2}>{t(`${rightEarAverage} dB`)}</Text>
-                        <Text style={styles.resultText}>{t(rightEarCategoryInfo.formattedResult)}</Text>
-                    </View>
-                </View>
-
-                <View style={styles.gridItem}>
-                    <Text style={styles.headerText}>{t('Your Audiogram')}</Text>
-                    <Text style={styles.pText}>
-                        {t(
-                            'An Audiogram shows how loud sounds need to be at different frequencies for you to hear them.'
-                        )}
-                    </Text>
-                    <View style={{
-                        padding: 10,
-                        paddingLeft: 20,
-                    }}>
-                        <VictoryChart
-                            theme={VictoryTheme.material}
-                            width={360}
-                            height={300}
-                            domainPadding={{ x: 10 }}
-                            style={{
-                                background: { fill: 'rgba(93,123,123,1)' }
-                            }}
-                        >
-                            <VictoryAxis
-                                tickValues={['125', '250', '500', '1000', '2000', '4000', '8000']}
-                                tickFormat={['125', '250', '500', '1k', '2k', '4k', '8k']}
-                                orientation='top'
+                    <View style={styles.gridItem}>
+                        <Text style={styles.headerText}>{t('Your Audiogram')}</Text>
+                        <Text style={styles.pText}>
+                            {t(
+                                'An Audiogram shows how loud sounds need to be at different frequencies for you to hear them.'
+                            )}
+                        </Text>
+                        <View style={{
+                            padding: 10,
+                            paddingLeft: 20,
+                        }}>
+                            <VictoryChart
+                                theme={VictoryTheme.material}
+                                width={360}
+                                height={300}
+                                domainPadding={{ x: 10 }}
                                 style={{
-                                    axisLabel: { fill: 'white', padding: 30, fontWeight: 'bold' },
-                                    tickLabels: { fill: 'white', padding: 15 },
-                                    grid: { stroke: 'rgba(255, 255, 255, 0.2)' },
+                                    background: { fill: 'rgba(93,123,123,1)' }
                                 }}
-                            // label="Hz"
-                            />
-                            <VictoryAxis
-                                dependentAxis
-                                invertAxis={true}
-                                tickValues={[-10, 0, 20, 40, 60, 80, 100, 120]}
-                                style={{
-                                    axisLabel: { fill: 'white', padding: 30, fontWeight: 'bold' },
-                                    tickLabels: { fill: 'white', padding: 5 },
-                                    grid: { stroke: 'rgba(255, 255, 255, 0.2)' },
-                                }}
-                            // label="dB"
-                            />
-                            <VictoryLine
-                                data={leftEarData}
-                                x="x"
-                                y="y"
-                                style={{
-                                    data: { stroke: 'blue', strokeWidth: 2 },
-                                    labels: { fill: 'blue', fontSize: 12 },
-                                }}
-                                labelComponent={<VictoryLabel dy={-110} />}
-                            />
-                            <VictoryLine
-                                data={rightEarData}
-                                x="x"
-                                y="y"
-                                style={{
-                                    data: { stroke: 'red', strokeWidth: 2 },
-                                    labels: { fill: 'red', fontSize: 12 },
-                                }}
-                                labelComponent={<VictoryLabel dy={-110} />}
-                            />
+                            >
+                                <VictoryAxis
+                                    tickValues={['125', '250', '500', '1000', '2000', '4000', '8000']}
+                                    tickFormat={['125', '250', '500', '1k', '2k', '4k', '8k']}
+                                    orientation='top'
+                                    style={{
+                                        axisLabel: { fill: 'white', padding: 30, fontWeight: 'bold' },
+                                        tickLabels: { fill: 'white', padding: 15 },
+                                        grid: { stroke: 'rgba(255, 255, 255, 0.2)' },
+                                    }}
+                                // label="Hz"
+                                />
+                                <VictoryAxis
+                                    dependentAxis
+                                    invertAxis={true}
+                                    tickValues={[-10, 0, 20, 40, 60, 80, 100, 120]}
+                                    style={{
+                                        axisLabel: { fill: 'white', padding: 30, fontWeight: 'bold' },
+                                        tickLabels: { fill: 'white', padding: 5 },
+                                        grid: { stroke: 'rgba(255, 255, 255, 0.2)' },
+                                    }}
+                                // label="dB"
+                                />
+                                <VictoryLine
+                                    data={leftEarData}
+                                    x="x"
+                                    y="y"
+                                    style={{
+                                        data: { stroke: 'blue', strokeWidth: 2 },
+                                        labels: { fill: 'blue', fontSize: 12 },
+                                    }}
+                                    labelComponent={<VictoryLabel dy={-110} />}
+                                />
+                                <VictoryLine
+                                    data={rightEarData}
+                                    x="x"
+                                    y="y"
+                                    style={{
+                                        data: { stroke: 'red', strokeWidth: 2 },
+                                        labels: { fill: 'red', fontSize: 12 },
+                                    }}
+                                    labelComponent={<VictoryLabel dy={-110} />}
+                                />
 
-                            {/* VictoryScatter shapes =  "star"  "square"  "diamond"  "circle"  "triangleUp"*/}
+                                {/* VictoryScatter shapes =  "star"  "square"  "diamond"  "circle"  "triangleUp"*/}
 
-                            <VictoryScatter
-                                data={mapDataForScatter(leftEarData, 'blue', 'plus')}
-                                labels={({ datum }) => `${datum.x}, ${datum.y}`}
-                                labelComponent={
-                                    <VictoryTooltip dy={-20} constrainToVisibleArea renderInPortal={false} />
-                                }
-                                style={{
-                                    data: { fill: 'blue' },
-                                    labels: {
-                                        fill: 'blue', fontSize: 20, padding: 8
+                                <VictoryScatter
+                                    data={mapDataForScatter(leftEarData, 'blue', 'plus')}
+                                    labels={({ datum }) => `${datum.x}, ${datum.y}`}
+                                    labelComponent={
+                                        <VictoryTooltip dy={-20} constrainToVisibleArea renderInPortal={false} />
                                     }
-                                }}
-                            />
-                            <VictoryScatter
-                                data={mapDataForScatter(rightEarData, 'red', 'circle')}
-                                labels={({ datum }) => `${datum.x}, ${datum.y}`}
-                                labelComponent={
-                                    <VictoryTooltip dy={-20} constrainToVisibleArea renderInPortal={false} />
-                                }
-                                style={{
-                                    data: { fill: 'red' },
-                                    labels: { fill: 'red', fontSize: 20, padding: 8 },
-                                }}
+                                    style={{
+                                        data: { fill: 'blue' },
+                                        labels: {
+                                            fill: 'blue', fontSize: 20, padding: 8
+                                        }
+                                    }}
+                                />
+                                <VictoryScatter
+                                    data={mapDataForScatter(rightEarData, 'red', 'circle')}
+                                    labels={({ datum }) => `${datum.x}, ${datum.y}`}
+                                    labelComponent={
+                                        <VictoryTooltip dy={-20} constrainToVisibleArea renderInPortal={false} />
+                                    }
+                                    style={{
+                                        data: { fill: 'red' },
+                                        labels: { fill: 'red', fontSize: 20, padding: 8 },
+                                    }}
 
-                            />
+                                />
 
 
-                            <VictoryLegend
-                                x={110}
-                                y={270}
-                                orientation="horizontal"
-                                gutter={10}
-                                style={{
-                                    border: { stroke: 'white' }, labels: { fill: 'white' }
-                                }}
-                                data={[
-                                    { name: 'Left Ear', symbol: { fill: 'blue', type: 'plus' } },
-                                    { name: 'Right Ear', symbol: { fill: 'red', type: 'circle' } },
-                                ]}
-                            />
-                        </VictoryChart>
+                                <VictoryLegend
+                                    x={110}
+                                    y={270}
+                                    orientation="horizontal"
+                                    gutter={10}
+                                    style={{
+                                        border: { stroke: 'white' }, labels: { fill: 'white' }
+                                    }}
+                                    data={[
+                                        { name: 'Left Ear', symbol: { fill: 'blue', type: 'plus' } },
+                                        { name: 'Right Ear', symbol: { fill: 'red', type: 'circle' } },
+                                    ]}
+                                />
+                            </VictoryChart>
 
+                        </View>
                     </View>
-                </View>
+                </ViewShot>
 
                 <View style={styles.container}>
                     <View style={styles.backgroundContainer}>
@@ -506,6 +594,36 @@ const styles = StyleSheet.create({
         backgroundColor: 'transparent',
         borderRadius: 10,
         overflow: 'hidden',
+    },
+    shareButton: {
+        position: 'absolute',
+        top: 10,
+        right: 10,
+        zIndex: 2,
+        borderRadius: 50,
+        padding: 10,
+    },
+    modalContainer: {
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center',
+        backgroundColor: 'rgba(0, 0, 0, 0.5)',
+    },
+    option: {
+        padding: 20,
+        borderBottomWidth: 1,
+        borderBottomColor: '#ccc',
+        width: '100%',
+        alignItems: 'center',
+    },
+    optionText: {
+        fontSize: 18,
+        color: 'white',
+    },
+    cancelText: {
+        marginTop: 20,
+        fontSize: 18,
+        color: 'blue',
     },
 });
 
