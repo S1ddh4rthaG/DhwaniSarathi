@@ -39,7 +39,7 @@ const FillDetails = () => {
 
     const handleStartTest = () => {
       //TODO: IF student store the details
-      router.push('/newScreens/BeforeTest1')
+      router.push('/Screens/BeforeTest1')
     }
     
     return (

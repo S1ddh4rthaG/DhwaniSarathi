@@ -13,10 +13,10 @@ export default () => {
   }, []);
 
   if (user) {
-    return <Redirect href="/Screens/Signout" />;
+    return <Redirect href="/Screens/Home" />;
   }
 
-  return <Redirect href ="/Screens/Signout" />;
+  return <Redirect href ="/Screens/Login" />;
 };
 
 // const styles = StyleSheet.create({

@@ -40,7 +40,7 @@ const BeforeYouStart = () => {
 
       
       </View>
-      <TouchableOpacity style={styles.Button} onPress={()=>{router.push("/newScreens/BeforeTest1")}}>
+      <TouchableOpacity style={styles.Button}>
         <Text style={styles.buttonText}>{t('Proceed to Test!!')}</Text>
       </TouchableOpacity>
     </View>

@@ -17,7 +17,7 @@ const LeftEar = () => {
   return (
     <View style={styles.container}>
       <Text style={styles.title}>{t('Left Ear')}</Text>
-      <Image style={styles.image} source={require('../assets/leftear.png')} resizeMode='cover' />
+      <Image style={styles.image}  resizeMode='cover' />
       
       <TouchableOpacity style={styles.Button}>
         <Text style={styles.buttonText}>{t('Frequency 1000HZ')}</Text>

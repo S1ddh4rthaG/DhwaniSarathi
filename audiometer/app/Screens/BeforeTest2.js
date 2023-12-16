@@ -5,7 +5,7 @@ import { DefaultTheme, Provider as PaperProvider, Button } from 'react-native-pa
 import { useTranslation } from 'react-i18next';
 
 import { router } from 'expo-router';
-
+  
 const theme = {
   ...DefaultTheme,
   roundness: 2,
@@ -16,7 +16,7 @@ const theme = {
   },
 };
 
-const BeforeTest1 = () => {
+const BeforeTest2 = () => {
     
   const [loudness, setLoudness]= useState(40); 
   const handleLoudnessChange = (value)=>{
@@ -26,26 +26,26 @@ const BeforeTest1 = () => {
   return (
     <PaperProvider theme={theme}>
       <View style={styles.container}>
-        <Text style={styles.title}>{t('Make sure..')}</Text>
+        <Text style={styles.title}>{t('We recommend..')}</Text>
         <Image
           style={styles.image1}
-          source={require('../assets/images/shh.png')}
+          source={require('../assets/images/mute.png')}
           resizeMode='cover'
         />
-        <Text style={styles.title2}>{t('Quiet Place')}</Text>
+        <Text style={styles.title2}>{t('Turn off notifications')}</Text>
 
         <Image
           style={styles.image2}
-          source={require('../assets/images/headphones.png')}
+          source={require('../assets/images/equalizer.png')}
           resizeMode='cover'
         />
-        <Text style={styles.title2}>{t('Headphones')}</Text>
+        <Text style={styles.title2}>{t('Set equalizer to neutral')}</Text>
 
         <Button
           style={styles.button}
           mode="contained"
           onPress={() => {
-            router.push('/newScreens/QuietPlaceDetection'); 
+            router.push('/Screens/BeforeTest3')
           }}
         >
           <Text style={styles.buttonText}>{t('Next')}</Text>
@@ -85,15 +85,15 @@ const styles = StyleSheet.create({
     width: '100%',
   },
   image1: {
-    width: 150,
-    height: 150,
+    width: 100,
+    height: 100,
     alignContent: 'center',
     alignSelf: 'center',
     marginBottom: 10,
   },
   image2: {
-    width: 120,
-    height: 120,
+    width: 100,
+    height: 100,
     alignContent: 'center',
     alignSelf: 'center',
     marginBottom: 15,
@@ -105,7 +105,7 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
   },
   title2: {
-    fontSize: 24,
+    fontSize: 20,
     fontWeight: 'bold',
     alignContent: 'center',
     alignSelf: 'center',
@@ -154,4 +154,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default BeforeTest1;
+export default BeforeTest2;

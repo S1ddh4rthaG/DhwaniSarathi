@@ -32,17 +32,19 @@ const Home = () => {
           {t('Start Full Test')}
         </Button>
         <Button mode="contained" onPress={() => { }} style={{ margin: 5 }}>
-          {t('Test Single Frequency')}
-        </Button>
-        <Button mode="contained" onPress={() => { }} style={{ margin: 5 }}>
-          {t('Calibration')}
-        </Button>
-        <Button mode="contained" onPress={() => { }} style={{ margin: 5 }}>
           {t('Test Results')}
         </Button>
         <Button mode="contained" onPress={() => { }} style={{ margin: 5 }}>
           {t('Instructions')}
         </Button>
+        <Button mode="contained" onPress={() => { }} style={{ margin: 5 }}>
+          {t('Legal Compliance Information')}
+        </Button>
+        <Button mode="contained" onPress={() => {router.push('/Screens/Maps')}} style={{ margin: 5 }}>
+          {t('Doctors Near Me')}
+        </Button>
+        
+        
       </View>
     </PaperProvider>
   );

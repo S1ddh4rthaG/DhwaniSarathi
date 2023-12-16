@@ -118,7 +118,7 @@ const QuietPlaceDetection = () => {
       {isRecording ? 'Stop Recording' : 'Start Recording'}
         </Button>
 
-      <Button mode="contained" onPress={() => router.push('/newScreens/BeforeTest2')} style={{ margin: 10 }}>
+      <Button mode="contained" onPress={() => router.push('/Screens/BeforeTest2')} style={{ margin: 10 }}>
           {t('Continue')}
         </Button>
       </View>
