@@ -37,7 +37,7 @@ const Home = () => {
         <Button mode="contained" onPress={() => { }} style={{ margin: 5 }}>
           {t('Instructions')}
         </Button>
-        <Button mode="contained" onPress={() => { }} style={{ margin: 5 }}>
+        <Button mode="contained" onPress={() => { router.push('/Screens/LegalComplianceInformation')}} style={{ margin: 5 }}>
           {t('Legal Compliance Information')}
         </Button>
         <Button mode="contained" onPress={() => {router.push('/Screens/Maps')}} style={{ margin: 5 }}>
