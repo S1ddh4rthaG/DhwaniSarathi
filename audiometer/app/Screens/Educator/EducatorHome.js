@@ -1,19 +1,59 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { StyleSheet, View, Text, Image, KeyboardAvoidingView, TouchableWithoutFeedback, Platform, ImageBackground, Pressable, Button, Alert, TouchableOpacity, TextInput } from 'react-native';
-import ClassroomList from './ClassroomList';
+import ClassroomList from '../../Components/ClassroomList.js';
 import { ScrollView } from 'react-native-virtualized-view';
+import { Link, useLocalSearchParams } from "expo-router";
+import { useState } from 'react';
+import { baseurl } from '../../Constants/ip.js';
+
 
 export default function EducatorHome() {
+    
+    const params = useLocalSearchParams();
+    const [profile, setProfile] = useState({});
+    const [loading, setLoading] = useState(true);
 
-    const profile = {
-        name: 'My Name',
-        Age: 30,
-        Gender: 'Male',
-        EducatorID: '123456789'
-    }
+    useEffect(() => {
+        //get the profile data from the backend
+        const fetchData = async () => {
+            var EID;
+            if (params.EID){
+
+               EID = params.EID;
+            }
+            const url = `${baseurl}/educators/${EID}`;
+
+            try {
+                const response = await fetch(url);
+                if (response.ok) {
+                    const data = await response.json();
+                    console.log(data);
+                    setProfile(data);
+                    setLoading(false);
+                } else {
+                    console.error("Failed to fetch Profile:", response.status);
+                }
+            } catch (error) {
+                console.error("Error fetching Profile:", error);
+            }
+        };
+        fetchData();
+
+    }, []);
+
+   
+    //  const sampleProfile =
+    //     {
+    //         "EID": "124",
+    //         "EducatorName": "Sachin",
+    //         "InstituteName": "IIT Tirupati"
+    //     }
+     
 
     return (
-        <KeyboardAvoidingView
+        (loading == true) ? (<Text>Loading...</Text> ):
+        
+        (<KeyboardAvoidingView
             behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
             style={{ flex: 1 }}
         >
@@ -30,8 +70,8 @@ export default function EducatorHome() {
                         <View style={styles.headerContent}>
                             <View style={{ flex: 1 }}>
                                 <Text style={styles.name}>Welcome</Text>
-                                <Text style={styles.userInfo}>{profile.name}</Text>
-
+                                <Text style={styles.userInfo}>{profile.EducatorName}</Text>
+                                <Text style={styles.userInfo}>{profile.InstituteName}</Text>
                             </View>
                             <View>
                                 <Image
@@ -41,7 +81,7 @@ export default function EducatorHome() {
                             </View>
                         </View>
 
-                        <View style={styles.content}>
+                        {/* <View style={styles.content}>
 
                             <View style={styles.profileDataContainer}>
                                 <Text style={styles.ptext}>{profile.Age} years</Text>
@@ -49,7 +89,7 @@ export default function EducatorHome() {
                                 <Text style={styles.ptext}>ID: {profile.EducatorID}</Text>
                             </View>
 
-                        </View>
+                        </View> */}
 
 
                     </View>
@@ -78,15 +118,15 @@ export default function EducatorHome() {
                             <Text style={{ textAlign: 'center', color: 'black', fontWeight: 'bold', fontSize: 20 }}>Classrooms</Text>
                         </View>
 
-                        <ClassroomList />
+                        <ClassroomList EID = {profile.EID} />
 
                     </View>
 
                 </ScrollView>
             </TouchableWithoutFeedback>
-        </KeyboardAvoidingView>
+        </KeyboardAvoidingView>)
     );
-
+                    
 }
 
 const styles = StyleSheet.create({

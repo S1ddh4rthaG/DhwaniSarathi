@@ -64,10 +64,20 @@ const Login = () => {
           console.log("User data fetched successfully:", responseObject)
 
           if (responseObject.Type == 1) {
-            router.push("/Screens/Educator/EducatorHome");
+            router.push(
+              {
+                pathname: "/Screens/Educator/EducatorHome",
+                params: { EID:  response.user.uid},
+              }
+            );
           }
           else {
-            router.push("/Screens/Home");
+            router.push(
+              {
+                pathname: "/Screens/Home",
+                params: { UID:  response.user.uid},
+              }
+            );
           }
         } else {
           console.error("Failed to fetch user data:", response1.status);

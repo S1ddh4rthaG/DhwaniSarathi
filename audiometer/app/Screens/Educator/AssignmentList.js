@@ -9,7 +9,6 @@ const AssignmentList = () => {
     const [loading, setLoading] = useState(true);
 
     const params = useLocalSearchParams();
-    console.log('CID', params);
     let CID = params.CID;
 
     useEffect(() => {
@@ -42,7 +41,7 @@ const AssignmentList = () => {
         <Link style={styles.card}
             href={{
                 pathname: 'Screens/Educator/ClassResults',
-                params: { id: 456, AID: item.AID, CID: CID }
+                params: {  AID: item.AID }
             }}
         >
             <TouchableOpacity >

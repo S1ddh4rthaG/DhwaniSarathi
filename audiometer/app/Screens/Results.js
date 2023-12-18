@@ -253,7 +253,7 @@ const Results = ({ leftEarData, rightEarData }) => {
                         </Text>
                     </View>
 
-                    <View style={styles.gridItem}>
+                    <View style={[styles.gridItem, { minHeight: 250 }]}>
                         <View style={styles.twoColumnContainer2}>
                             <View style={styles.column2}>
                                 <Text style={styles.columnHeaderText}>{t('Categories')}</Text>
@@ -291,7 +291,7 @@ const Results = ({ leftEarData, rightEarData }) => {
                         </View>
                     </View>
 
-                    <View style={styles.gridItem}>
+                    <View style={[styles.gridItem, { minHeight: 500, }]}>
                         <Text style={styles.headerText}>{t('Your Audiogram')}</Text>
                         <Text style={styles.pText}>
                             {t(
@@ -308,7 +308,7 @@ const Results = ({ leftEarData, rightEarData }) => {
                                 height={300}
                                 domainPadding={{ x: 10 }}
                                 style={{
-                                    background: { fill: 'rgba(93,123,123,1)' }
+                                    background: { fill: 'white' }
                                 }}
                             >
                                 <VictoryAxis
@@ -316,9 +316,9 @@ const Results = ({ leftEarData, rightEarData }) => {
                                     tickFormat={['125', '250', '500', '1k', '2k', '4k', '8k']}
                                     orientation='top'
                                     style={{
-                                        axisLabel: { fill: 'white', padding: 30, fontWeight: 'bold' },
-                                        tickLabels: { fill: 'white', padding: 15 },
-                                        grid: { stroke: 'rgba(255, 255, 255, 0.2)' },
+                                        axisLabel: { fill: 'grey', padding: 30, fontWeight: 'bold' },
+                                        tickLabels: { fill: 'grey', padding: 15 },
+                                        grid: { stroke: 'grey' },
                                     }}
                                 // label="Hz"
                                 />
@@ -327,9 +327,9 @@ const Results = ({ leftEarData, rightEarData }) => {
                                     invertAxis={true}
                                     tickValues={[-10, 0, 20, 40, 60, 80, 100, 120]}
                                     style={{
-                                        axisLabel: { fill: 'white', padding: 30, fontWeight: 'bold' },
-                                        tickLabels: { fill: 'white', padding: 5 },
-                                        grid: { stroke: 'rgba(255, 255, 255, 0.2)' },
+                                        axisLabel: { fill: 'grey', padding: 30, fontWeight: 'bold' },
+                                        tickLabels: { fill: 'grey', padding: 5 },
+                                        grid: { stroke: 'grey' },
                                     }}
                                 // label="dB"
                                 />
@@ -338,8 +338,8 @@ const Results = ({ leftEarData, rightEarData }) => {
                                     x="x"
                                     y="y"
                                     style={{
-                                        data: { stroke: 'blue', strokeWidth: 2 },
-                                        labels: { fill: 'blue', fontSize: 12 },
+                                        data: { stroke: '#2b3467', strokeWidth: 2 },
+                                        labels: { fill: '#2b3467', fontSize: 12 },
                                     }}
                                     labelComponent={<VictoryLabel dy={-110} />}
                                 />
@@ -348,8 +348,8 @@ const Results = ({ leftEarData, rightEarData }) => {
                                     x="x"
                                     y="y"
                                     style={{
-                                        data: { stroke: 'red', strokeWidth: 2 },
-                                        labels: { fill: 'red', fontSize: 12 },
+                                        data: { stroke: '#eb455f', strokeWidth: 2 },
+                                        labels: { fill: '#eb455f', fontSize: 12 },
                                     }}
                                     labelComponent={<VictoryLabel dy={-110} />}
                                 />
@@ -357,27 +357,27 @@ const Results = ({ leftEarData, rightEarData }) => {
                                 {/* VictoryScatter shapes =  "star"  "square"  "diamond"  "circle"  "triangleUp"*/}
 
                                 <VictoryScatter
-                                    data={mapDataForScatter(leftEarData, 'blue', 'plus')}
+                                    data={mapDataForScatter(leftEarData, '#2b3467', 'plus')}
                                     labels={({ datum }) => `${datum.x}, ${datum.y}`}
                                     labelComponent={
                                         <VictoryTooltip dy={-20} constrainToVisibleArea renderInPortal={false} />
                                     }
                                     style={{
-                                        data: { fill: 'blue' },
+                                        data: { fill: '#2b3467' },
                                         labels: {
-                                            fill: 'blue', fontSize: 20, padding: 8
+                                            fill: '#2b3467', fontSize: 20, padding: 8
                                         }
                                     }}
                                 />
                                 <VictoryScatter
-                                    data={mapDataForScatter(rightEarData, 'red', 'circle')}
+                                    data={mapDataForScatter(rightEarData, '#eb455f', 'circle')}
                                     labels={({ datum }) => `${datum.x}, ${datum.y}`}
                                     labelComponent={
                                         <VictoryTooltip dy={-20} constrainToVisibleArea renderInPortal={false} />
                                     }
                                     style={{
-                                        data: { fill: 'red' },
-                                        labels: { fill: 'red', fontSize: 20, padding: 8 },
+                                        data: { fill: '#eb455f' },
+                                        labels: { fill: '#eb455f', fontSize: 20, padding: 8 },
                                     }}
 
                                 />
@@ -389,13 +389,15 @@ const Results = ({ leftEarData, rightEarData }) => {
                                     orientation="horizontal"
                                     gutter={10}
                                     style={{
-                                        border: { stroke: 'white' }, labels: { fill: 'white' }
+                                        border: { stroke: 'grey' }, labels: { fill: 'grey' }
                                     }}
+
                                     data={[
-                                        { name: 'Left Ear', symbol: { fill: 'blue', type: 'plus' } },
-                                        { name: 'Right Ear', symbol: { fill: 'red', type: 'circle' } },
+                                        { name: 'Left Ear', symbol: { fill: '#2b3467', type: 'plus' } },
+                                        { name: 'Right Ear', symbol: { fill: '#eb455f', type: 'circle' } },
                                     ]}
                                 />
+
                             </VictoryChart>
 
                         </View>
@@ -421,7 +423,7 @@ const Results = ({ leftEarData, rightEarData }) => {
                             <VictoryLine
                                 data={leftEarData}
                                 style={{
-                                    data: { strokeWidth: 4, stroke: 'blue' },
+                                    data: { strokeWidth: 4, stroke: '#2b3467' },
                                 }}
                             />
                             <VictoryLine
@@ -435,7 +437,7 @@ const Results = ({ leftEarData, rightEarData }) => {
                                 data={leftEarData}
                                 size={6}
                                 style={{
-                                    data: { fill: 'blue', shape: 'cross' },
+                                    data: { fill: '#2b3467', shape: 'cross' },
                                 }}
                                 labels={({ datum }) => datum.x}
                                 labelComponent={
@@ -485,13 +487,13 @@ const Results = ({ leftEarData, rightEarData }) => {
 const styles = StyleSheet.create({
     scrollViewContainer: {
         flexGrow: 1,
-        backgroundColor: 'black',
+        backgroundColor: 'white',
     },
     container: {
         flex: 1,
         alignItems: 'stretch',
         padding: 10,
-        backgroundColor: 'black',
+        backgroundColor: '#f5f5f5',
     },
     title: {
         fontSize: 30,
@@ -500,6 +502,7 @@ const styles = StyleSheet.create({
         textAlign: 'center',
         paddingTop: 10,
         paddingBottom: 10,
+        backgroundColor: '#eb4557'
     },
     gridItem: {
         flex: 1,
@@ -508,8 +511,9 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         margin: 7,
         padding: 10,
-        backgroundColor: 'rgba(93,123,123,1)',
+        backgroundColor: 'white',
         borderRadius: 10,
+
     },
     twoColumnContainer: {
         flexDirection: 'row',
@@ -527,13 +531,13 @@ const styles = StyleSheet.create({
     columnHeaderText: {
         fontSize: 16,
         fontWeight: 'bold',
-        color: 'white',
+        color: '#eb455f',
         marginBottom: 5,
     },
 
     columnText: {
         fontSize: 14,
-        color: 'rgba(219,230,230,1)',
+        color: '#2b3467',
     },
     earGridItem: {
         flex: 1,
@@ -542,7 +546,7 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         margin: 7,
         padding: 10,
-        backgroundColor: 'rgba(93,123,123,1)',
+        backgroundColor: 'white',
         borderRadius: 10,
         width: '48%', // Adjust the width as needed
     },
@@ -550,12 +554,12 @@ const styles = StyleSheet.create({
         fontSize: 20,
         marginBottom: 10,
         textAlign: 'center',
-        color: 'white',
+        color: '#eb4557',
     },
     pText: {
         fontSize: 15,
         textAlign: 'auto',
-        color: 'rgba(219,230,230,1)',
+        color: '#2b3467',
     },
     image: {
         width: 100,
@@ -565,12 +569,12 @@ const styles = StyleSheet.create({
         fontSize: 15,
         height: 20,
         textAlign: 'center',
-        color: 'white',
+        color: '#eb455f',
     },
     resultText2: {
         fontSize: 20,
         textAlign: 'center',
-        color: 'white',
+        color: '#2b3467',
     },
     backgroundContainer: {
         width: screenWidth,
@@ -607,23 +611,23 @@ const styles = StyleSheet.create({
         flex: 1,
         justifyContent: 'center',
         alignItems: 'center',
-        backgroundColor: 'rgba(0, 0, 0, 0.5)',
+        backgroundColor: '#bad7e9',
     },
     option: {
         padding: 20,
         borderBottomWidth: 1,
-        borderBottomColor: '#ccc',
+        borderBottomColor: 'black',
         width: '100%',
         alignItems: 'center',
     },
     optionText: {
         fontSize: 18,
-        color: 'white',
+        color: 'black',
     },
     cancelText: {
         marginTop: 20,
         fontSize: 18,
-        color: 'blue',
+        color: '#2b3467',
     },
 });
 
