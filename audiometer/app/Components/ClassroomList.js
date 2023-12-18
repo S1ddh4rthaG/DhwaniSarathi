@@ -1,16 +1,17 @@
 import React, { useState, useEffect } from "react";
 import { View, Text, TextInput, FlatList, Image, TouchableOpacity, StyleSheet, ActivityIndicator } from 'react-native';
-import { baseurl } from "../../Constants/ip.js";
+import { baseurl } from "../Constants/ip.js";
 import { Link } from 'expo-router';
 
-const ClassroomList = () => {
+const ClassroomList = ({EID}) => {
     const [searchQuery, setSearchQuery] = useState('');
     const [classrooms, setClassrooms] = useState([]);
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
         const fetchData = async () => {
-            const EID = 124; // Get EID from AsyncStorage or any source
+            console.log("Fetching Classrooms", EID);
+            // const EID = 124; // Get EID from AsyncStorage or any source
 
             const url = `${baseurl}/educators/${EID}/classrooms/`;
 
@@ -36,7 +37,7 @@ const ClassroomList = () => {
             style={[styles.card, { backgroundColor: "#ffdcb2" }]}
             href={{
                 pathname: 'Screens/Educator/AssignmentList',
-                params: { id: 123, CID: item.CID },
+                params: { CID: item.CID },
             }}
         >
             <View
