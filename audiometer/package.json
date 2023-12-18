@@ -55,7 +55,7 @@
     "react-native-voice": "^0.3.0",
     "react-native-waveview": "^1.1.0",
     "react-native-web": "~0.19.6",
-    "react-native-webview": "^13.6.3",
+    "react-native-webview": "13.2.2",
     "react-native-wheel-of-fortune": "^1.5.4",
     "victory-native": "^36.7.0"
   },
