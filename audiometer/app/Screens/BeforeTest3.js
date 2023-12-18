@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
 import { View, Text, Image, TouchableOpacity, StyleSheet } from 'react-native';
-import { DefaultTheme, Provider as PaperProvider, Button } from 'react-native-paper';
+import { DefaultTheme, Provider as PaperProvider, Button, ProgressBar } from 'react-native-paper';
 // import './locales/i18n'; 
 import { useTranslation } from 'react-i18next';
 
 import { router } from 'expo-router';
-  
+
 const theme = {
   ...DefaultTheme,
   roundness: 2,
@@ -17,15 +17,16 @@ const theme = {
 };
 
 const BeforeTest3 = () => {
-    
-  const [loudness, setLoudness]= useState(40); 
-  const handleLoudnessChange = (value)=>{
-    setLoudness(value); 
+
+  const [loudness, setLoudness] = useState(40);
+  const handleLoudnessChange = (value) => {
+    setLoudness(value);
   }
-  const {t,i18n} =useTranslation(); 
+  const { t, i18n } = useTranslation();
   return (
     <PaperProvider theme={theme}>
       <View style={styles.container}>
+        <ProgressBar progress={1} color={'#2B3467'} style={{}} />
         <Text style={styles.title}>{t('Before you start the audiometry test..')}</Text>
         <Image
           style={styles.image1}
@@ -60,7 +61,7 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: '#fff',
     padding: 24,
-    justifyContent: 'flex-start',
+    maxHeight: 100,
     borderColor: 'white',
     borderWidth: 5,
     borderRadius: 10
@@ -103,6 +104,7 @@ const styles = StyleSheet.create({
     marginBottom: 65,
     textAlign: 'center',
     fontWeight: 'bold',
+
   },
   title2: {
     fontSize: 18,

@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { View, Text, Image, TouchableOpacity, StyleSheet } from 'react-native';
-import { DefaultTheme, Provider as PaperProvider, Button } from 'react-native-paper';
+import { DefaultTheme, Provider as PaperProvider, Button, ProgressBar } from 'react-native-paper';
 // import './locales/i18n'; 
 import { useTranslation } from 'react-i18next';
 
@@ -17,15 +17,16 @@ const theme = {
 };
 
 const BeforeTest1 = () => {
-    
-  const [loudness, setLoudness]= useState(40); 
-  const handleLoudnessChange = (value)=>{
-    setLoudness(value); 
+
+  const [loudness, setLoudness] = useState(40);
+  const handleLoudnessChange = (value) => {
+    setLoudness(value);
   }
-  const {t,i18n} =useTranslation(); 
+  const { t, i18n } = useTranslation();
   return (
     <PaperProvider theme={theme}>
       <View style={styles.container}>
+        <ProgressBar progress={0.25} color={'#2B3467'} style={{}} />
         <Text style={styles.title}>{t('Make sure..')}</Text>
         <Image
           style={styles.image1}
@@ -45,7 +46,7 @@ const BeforeTest1 = () => {
           style={styles.button}
           mode="contained"
           onPress={() => {
-            router.push('/Screens/QuietPlaceDetection'); 
+            router.push('/Screens/QuietPlaceDetection');
           }}
         >
           <Text style={styles.buttonText}>{t('Next')}</Text>
@@ -60,7 +61,7 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: '#fff',
     padding: 24,
-    justifyContent: 'flex-start',
+    maxHeight: 100,
     borderColor: 'white',
     borderWidth: 5,
     borderRadius: 10

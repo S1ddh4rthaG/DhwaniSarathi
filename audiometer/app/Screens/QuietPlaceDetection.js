@@ -5,21 +5,21 @@ import { useNavigation } from '@react-navigation/native';
 // import './locales/i18n';  
 import { useTranslation } from 'react-i18next';
 import { Image } from 'react-native';
-import { Button, Provider as PaperProvider, DefaultTheme, Appbar } from 'react-native-paper';
+import { Button, Provider as PaperProvider, DefaultTheme, Appbar, ProgressBar } from 'react-native-paper';
 
 import { Audio } from 'expo-av';
-import {router} from 'expo-router';
+import { router } from 'expo-router';
 
 
 const theme = {
-    ...DefaultTheme,
-    roundness: 2,
-    colors: {
-      ...DefaultTheme.colors,
-      primary: '#EB455F',
-      accent: '#f1c40f',
-    },
-  };
+  ...DefaultTheme,
+  roundness: 2,
+  colors: {
+    ...DefaultTheme.colors,
+    primary: '#EB455F',
+    accent: '#f1c40f',
+  },
+};
 
 
 const QuietPlaceDetection = () => {
@@ -27,7 +27,7 @@ const QuietPlaceDetection = () => {
   const [recording, setRecording] = useState();
   const [isRecording, setIsRecording] = useState(false);
   const [decibels, setDecibels] = useState(0);
-  const [barWidth, setBarWidth] = useState(60); 
+  const [barWidth, setBarWidth] = useState(60);
   useEffect(() => {
     (async () => {
       const { status } = await Audio.requestPermissionsAsync();
@@ -36,7 +36,7 @@ const QuietPlaceDetection = () => {
       }
     })();
   }, []);
-  
+
   const startRecording = async () => {
     try {
       await Audio.setAudioModeAsync({
@@ -74,7 +74,7 @@ const QuietPlaceDetection = () => {
       if (recording) {
         await recording.stopAndUnloadAsync();
         setIsRecording(false);
-        setBarWidth(60); 
+        setBarWidth(60);
       }
     } catch (error) {
       console.error(error);
@@ -90,8 +90,8 @@ const QuietPlaceDetection = () => {
 
   const calculateRGB = (decibels) => {
     // Use decibel values to calculate RGB components
-    const red = Math.min(255, Math.round(200-1*decibels));
-    const green = Math.min(255, Math.round((40-1*decibels)));
+    const red = Math.min(255, Math.round(200 - 1 * decibels));
+    const green = Math.min(255, Math.round((40 - 1 * decibels)));
     const blue = 0;
     return `rgb(${red}, ${green}, ${blue})`;
   };
@@ -101,28 +101,29 @@ const QuietPlaceDetection = () => {
 
   return (
     <PaperProvider theme={theme}>
-    <View style={{ flex: 1, justifyContent: 'top', padding: 32 }}>
-      <Text style={{ fontSize: 24, alignSelf: 'center', fontWeight: 'bold', marginBottom: 40, color: "#2B3467" }}>{t('Check Your Surrounding')}</Text>
-      <Image style={{ width: 300, height: 300, alignSelf: 'center' }} source={require('../assets/images/microphone.png')} resizeMode='cover' />
+      <View style={{ flex: 1, justifyContent: 'top', padding: 32, maxHeight: 100 }}>
+        <ProgressBar progress={0.5} color={'#2B3467'} style={{}} />
+        <Text style={{ fontSize: 24, alignSelf: 'center', fontWeight: 'bold', marginBottom: 40, color: "#2B3467" }}>{t('Check Your Surrounding')}</Text>
+        <Image style={{ width: 300, height: 300, alignSelf: 'center' }} source={require('../assets/images/microphone.png')} resizeMode='cover' />
 
-      <View
-        style={[
-          styles.bar,
-          { width: 100 + getWidth(160 + decibels), height: 90, backgroundColor: calculateRGB(decibels) },
-        ]}
-      >
-        <Text style={styles.barText}>{decibels} dB</Text>
-      </View>
+        <View
+          style={[
+            styles.bar,
+            { width: 100 + getWidth(160 + decibels), height: 90, backgroundColor: calculateRGB(decibels) },
+          ]}
+        >
+          <Text style={styles.barText}>{decibels} dB</Text>
+        </View>
 
-      <Button mode="contained" onPress={isRecording ? stopRecording : startRecording} style={{ margin: 5 }}>
-      {isRecording ? 'Stop Recording' : 'Start Recording'}
+        <Button mode="contained" onPress={isRecording ? stopRecording : startRecording} style={{ margin: 5 }}>
+          {isRecording ? 'Stop Recording' : 'Start Recording'}
         </Button>
 
-      <Button mode="contained" onPress={() => router.push('/Screens/BeforeTest2')} style={{ margin: 10 }}>
+        <Button mode="contained" onPress={() => router.push('/Screens/BeforeTest2')} style={{ margin: 10 }}>
           {t('Continue')}
         </Button>
       </View>
-      </PaperProvider>
+    </PaperProvider>
   );
 };
 
@@ -176,7 +177,7 @@ const styles = StyleSheet.create({
     borderColor: 'white',
     borderWidth: 1,
     elevation: 5
-  
+
   },
   //new style created for the 2nd button as it has the padding below it as shown in the figma 
   Button1: {
