@@ -41,7 +41,7 @@ const theme = {
 };
 import { router } from "expo-router";
 
-const Home = () => {
+const HomeNew = () => {
   const { t, i18n } = useTranslation();
   const [assignments, setAssignments] = useState([]);
   useEffect(() => {
@@ -228,7 +228,7 @@ const Home = () => {
 
           {/* Button 3 */}
           <View style={{ alignItems: "center" }}>
-            <Button mode="contained" style={styles.bNav} onPress={() => {}}>
+            <Button mode="contained" style={styles.bNav} onPress={() => {router.push('/Screens/UserTutorial')}}>
               {/* Instructions */}
               <Icon name="info" size={18} color="white" style={styles.bIcon} />
             </Button>
@@ -380,4 +380,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default Home;
+export default HomeNew;

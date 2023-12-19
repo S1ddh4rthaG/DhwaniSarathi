@@ -15,7 +15,7 @@ import { FIREBASE_AUTH } from "../../FirebaseConfig.js";
 import { useTranslation } from "react-i18next";
 
 import { DefaultTheme, Provider as PaperProvider } from "react-native-paper";
-
+import { useTogglePasswordVisibility } from "../Components/useTogglePasswordVisibility.js";
 import { router } from "expo-router";
 const theme = {
   ...DefaultTheme,
@@ -117,6 +117,13 @@ const Signup = () => {
     return ageItems;
   };
 
+  const { passwordVisibility, rightIcon, handlePasswordVisibility } =
+  useTogglePasswordVisibility();
+
+
+
+  
+
   return (
     <PaperProvider theme={theme}>
       <Card style={styles.container}>
@@ -139,7 +146,7 @@ const Signup = () => {
           label={t("Password")}
           value={password}
           onChangeText={(text) => setPassword(text)}
-          secureTextEntry
+          secureTextEntry={passwordVisibility}
           style={styles.input}
           mode="outlined"
         />
@@ -147,7 +154,7 @@ const Signup = () => {
           label={t("Confirm Password")}
           value={confirmPassword}
           onChangeText={(text) => setConfirmPassword(text)}
-          secureTextEntry
+          secureTextEntry={passwordVisibility}
           style={styles.input}
           mode="outlined"
         />
