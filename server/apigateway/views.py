@@ -21,31 +21,35 @@ def logininfo_list(request):
         return Response(serializer.data)
     
     elif(request.method == 'POST'):
-        serializer = LoginInfoSerializer(data=request.data)
+        # serializer = LoginInfoSerializer(data=request.data)
         print(request.data)
-        if(serializer.is_valid()):
-            serializer.save()
-            #based on the type of user, create a new user or educator
-            if serializer.data['Type'] == 0:
-                # Create a new User
-                request.data['UID'] = serializer.data['FID']
-                user_serializer = UserSerializer(data=request.data)
-                if user_serializer.is_valid():
-                    user_serializer.save()
-                else:
-                    print(user_serializer.errors)
-                    return Response(user_serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-            else:
-                # Create a new Educator
-                request.data['EID'] = serializer.data['FID']
-                educator_serializer = EducatorSerializer(data=request.data)
-                if educator_serializer.is_valid():
-                    educator_serializer.save()
-                else:
-                    return Response(educator_serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
+
+
+        # if(serializer.is_valid()):
+        #     serializer.save()
+        #     #based on the type of user, create a new user or educator
+        #     if serializer.data['Type'] == 0:
+        #         # Create a new User
+        #         request.data['UID'] = serializer.data['FID']
+        #         user_serializer = UserSerializer(data=request.data)
+        #         if user_serializer.is_valid():
+        #             user_serializer.save()
+        #         else:
+        #             print(user_serializer.errors)
+        #             return Response(user_serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+        #     else:
+        #         # Create a new Educator
+        #         request.data['EID'] = serializer.data['FID']
+        #         educator_serializer = EducatorSerializer(data=request.data)
+        #         if educator_serializer.is_valid():
+        #             educator_serializer.save()
+        #         else:
+        #             return Response(educator_serializer.errors, status=status.HTTP_400_BAD_REQUEST)
                     
-            return Response(serializer.data, status=status.HTTP_201_CREATED)
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+        #     return Response(serializer.data, status=status.HTTP_201_CREATED)
+        # return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
     
 
 # url/logininfos/FID   
@@ -87,11 +91,24 @@ def user_list(request):
         return Response(serializer.data)
     
     elif(request.method == 'POST'):
-        serializer = UserSerializer(data=request.data)
-        if(serializer.is_valid()):
-            serializer.save()
-            return Response(serializer.data, status=status.HTTP_201_CREATED)
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+        if 'info' not in request.data:
+            serializer = UserSerializer(data=request.data)
+            if(serializer.is_valid()):
+                serializer.save()
+                return Response(serializer.data, status=status.HTTP_201_CREATED)
+            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+        else:
+            for info in request.data['info']:
+                # Create a new User
+                user_serializer = UserSerializer(data=info)
+                if user_serializer.is_valid():
+                    user_serializer.save()
+                else:
+                    print(user_serializer.errors)
+                    return Response(user_serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+            return Response(request.data, status=status.HTTP_201_CREATED)
+
+        
     
 # url/users/UID
 @api_view(['GET', 'PUT', 'DELETE'])
@@ -300,10 +317,31 @@ def assignment_userassignmentresults(request, AID):
     except UserAssignmentResults.DoesNotExist:
         return Response(status=status.HTTP_404_NOT_FOUND)
     
-    if(request.method == 'GET'):
+    if request.method == 'GET':
         serializer = UserAssignmentResultsSerializer(userassignmentresults, many=True)
-        return Response(serializer.data)    
-    
+        results_with_user_details = []
+        for item in serializer.data:
+            user_details = None
+            try:
+                # Get the associated user details using the 'user' field
+                user_details = User.objects.get(UID=item['UID'])
+                user_serializer =  UserSerializer(user_details)
+                result_with_details = {
+                    'UID': item['UID'],
+                    'AID': item['AID'],
+                    'Results': item['Results'],
+                    # Add other fields from item as needed
+                    'UserDetails': user_serializer.data  # Add serialized user details
+                }
+                results_with_user_details.append(result_with_details)
+            except User.DoesNotExist:
+                pass  # Handle the case where user details are not found
+        return Response(results_with_user_details)
+
+                
+
+
+           
  
 # check if the AID is valid
 # url/assignments/AID/validate
