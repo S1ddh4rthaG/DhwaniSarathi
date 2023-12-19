@@ -393,11 +393,22 @@ def userassignmentresults_list(request):
         return Response(serializer.data)
     
     elif(request.method == 'POST'):
-        serializer = UserAssignmentResultsSerializer(data=request.data)
-        if(serializer.is_valid()):
-            serializer.save()
-            return Response(serializer.data, status=status.HTTP_201_CREATED)
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+        if 'info' not in request.data:
+            serializer = UserAssignmentResultsSerializer(data=request.data)
+            if(serializer.is_valid()):
+                serializer.save()
+                return Response(serializer.data, status=status.HTTP_201_CREATED)
+            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+        else:
+            for info in request.data['info']:
+                # Create a new User
+                userassignmentresults_serializer = UserAssignmentResultsSerializer(data=info)
+                if userassignmentresults_serializer.is_valid():
+                    userassignmentresults_serializer.save()
+                else:
+                    print(userassignmentresults_serializer.errors)
+                    return Response(userassignmentresults_serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+            return Response(request.data, status=status.HTTP_201_CREATED)
     
 # url/userassignmentresults/UID
 @api_view(['GET', 'PUT', 'DELETE'])
