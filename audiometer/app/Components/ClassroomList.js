@@ -40,13 +40,15 @@ const ClassroomList = ({ EID }) => {
                 params: { CID: item.CID, Count: item.Count },
             }}
         >
-            <View style={{ width: 350, height: 100, }}>
+            <View style={{ width: 350 }}>
                 <Text style={styles.cardTitle}>{item.ClassroomName}</Text>
-                {/* Add more relevant data based on your response 
-                <Text style={styles.cardCode}><Text style={{ color: '#eb455f' }}>Classroom ID:</Text> {item.CID}</Text>
-                <Text style={styles.cardCode}><Text style={{ color: '#eb455f' }}>Educator ID: </Text>{item.EID}</Text>
-                */}
-                <Text style={styles.cardCode}><Text style={{ color: '#eb455f' }}>Classroom Strength: </Text>{item.Count}</Text>
+                {/* <Text style={styles.cardCode}><Text style={{ color: '#eb455f' }}>Classroom ID:</Text> {item.CID}</Text>
+                <Text style={styles.cardCode}><Text style={{ color: '#eb455f' }}>Educator ID: </Text>{item.EID}</Text> */}
+               
+                <Text style={styles.cardCode}>
+                    <Text style={{ color: '#eb455f' }}>Classroom Strength: </Text>
+                    {item.Count}
+                </Text>
 
                 {/*<TouchableOpacity
                     style={[styles.button, { borderColor: '#2b3467', borderWidth: 1, width: 50 + '%', alignSelf: 'center', margin: 10, padding: 5, borderRadius: 5 }]}
@@ -80,6 +82,7 @@ const ClassroomList = ({ EID }) => {
                 value={searchQuery}
                 onChangeText={setSearchQuery}
             />
+            <Text style={{margin: 1}}></Text>
             <FlatList
                 contentContainerStyle={styles.listContainer}
                 data={classrooms.filter(searchFilter)}
@@ -92,17 +95,15 @@ const ClassroomList = ({ EID }) => {
 
 const styles = StyleSheet.create({
     container: {
-
         backgroundColor: 'white',
         justifyContent: 'center',
-
         borderColor: 'white',
         borderWidth: 5,
         borderRadius: 10,
 
     },
     listContainer: {
-        paddingHorizontal: 10
+        paddingHorizontal: 10,
     },
     title: {
         fontSize: 20,
@@ -115,21 +116,19 @@ const styles = StyleSheet.create({
     searchInput: {
         height: 40,
         borderWidth: 1,
-        borderRadius: 5,
+        borderRadius: 30,
         borderColor: '#2b3467',
         marginBottom: 10,
         paddingHorizontal: 10,
-        margin: 10,
+        marginHorizontal: 30,
+        marginVertical: 10
     },
     card: {
         marginBottom: 20,
-
         borderRadius: 10,
-
-
     },
     cardTitle: {
-        fontSize: 18,
+        fontSize: 24,
         fontWeight: 'bold',
         paddingVertical: 5,
         backgroundColor: '#eb455f',
@@ -141,7 +140,7 @@ const styles = StyleSheet.create({
 
     },
     cardCode: {
-        fontSize: 15,
+        fontSize: 18,
         paddingVertical: 5,
         color: 'black',
         paddingHorizontal: 10,

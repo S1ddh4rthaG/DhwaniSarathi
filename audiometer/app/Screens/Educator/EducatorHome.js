@@ -14,6 +14,7 @@ export default function EducatorHome() {
     const [loading, setLoading] = useState(true);
     const [currentDate, setCurrentDate] = useState('');
     const [classroomName, onChangeName] = React.useState('Enter Classroom Name');
+    const [classroomStrength, onChangeStrength] = React.useState('Enter Strength');
 
 
     useEffect(() => {
@@ -77,12 +78,10 @@ export default function EducatorHome() {
                     <ScrollView style={styles.container2}>
                         <View style={styles.header}>
                             <View style={[styles.content, { backgroundColor: '#eb455f', opacity: 1 }]}>
-                                <Text style={[styles.text, styles.heading, { color: 'white' }]}>Educator Profile Page</Text>
+                                <Text style={[styles.text, styles.heading, { color: 'white', padding: 2 }]}>Educator Profile Page</Text>
                             </View>
                             <ImageBackground source={require('../../assets/background.png')}
                                 style={styles.backgroundImage} >
-
-
                                 <View style={styles.headerContent}>
                                     <View>
                                         <Image
@@ -115,34 +114,39 @@ export default function EducatorHome() {
 
                         <View style={styles.body}>
 
-                            <Pressable style={[styles.RectangleShapeView, { marginTop: 40, marginBottom: 10 }]}>
+                            <Pressable style={[styles.RectangleShapeView, { marginTop: 20, marginBottom: 10 }]}>
                                 <Text style={styles.headtText}>Date: {currentDate}</Text>
                             </Pressable>
-                            <View styles={{
-                                flexDirection: 'row', alignItems: 'center', marginBottom: 10,
-                            }}>
-
+                            <View style={{ width: "100%", }}>
                                 <View style={{
-                                    width: '100%',  // To align the avatar and texts horizontally,
-                                    margin: 10,
+                                    width: '90%',  // To align the avatar and texts horizontally,
                                     padding: 0,
-                                    flexDirection: 'row',
-
+                                    flexDirection: 'column',
+                                    alignItems: 'center',
+                                    borderWidth: 1,
+                                    marginHorizontal: 25,
+                                    padding: 5,
+                                    paddingVertical: 15,
+                                    borderRadius: 10,
+                                    marginVertical: 10
                                 }}>
-                                    {/* create a new classroom on button click here*/}
+                                    <Text style={{ color: 'black', fontWeight: 'bold', fontSize: 20, marginBottom: 13 }}>Create Classroom</Text>
                                     <TextInput
                                         style={styles.input}
                                         onChangeText={onChangeName}
                                         value={classroomName}
                                     />
+                                    <TextInput
+                                        style={styles.input}
+                                        onChangeText={onChangeStrength}
+                                        value={classroomStrength}
+                                    />
                                     <TouchableOpacity style={styles.btn} onPress={() => Alert.alert('Button pressed')}>
                                         <Text style={styles.btnText}>Create Classroom</Text>
                                     </TouchableOpacity>
-
                                 </View>
-
                             </View>
-                            <View style={{ width: '100%', backgroundColor: '#2b3467', height: 50, justifyContent: 'center', marginTop: 40 }}>
+                            <View style={{ width: '90%', backgroundColor: '#2b3467', height: 50, justifyContent: 'center', marginTop: 12, borderWidth: 1, borderRadius: 30 }}>
                                 <Text style={{ textAlign: 'center', color: 'white', fontWeight: 'bold', fontSize: 20 }}>Classrooms</Text>
                             </View>
 
@@ -211,6 +215,8 @@ const styles = StyleSheet.create({
         marginLeft: 20,
         marginTop: 10,
         alignSelf: 'center',
+        fontSize: 16,
+        padding: 2
     },
     SubjectText: {
         color: 'black',
@@ -227,10 +233,8 @@ const styles = StyleSheet.create({
     btn: {
         backgroundColor: '#eb455f',
         borderRadius: 10,
-        width: '40%',
-
-        borderColor: '#bad7e9', borderWidth: 1, borderRadius: 10, padding: 10, marginTop: 20,
-
+        width: '80%',
+        borderColor: '#bad7e9', borderWidth: 1, borderRadius: 10, padding: 10, marginTop: 5,
         textAlign: 'center',
         justifyContent: 'center',
         alignContent: 'center',
@@ -245,19 +249,20 @@ const styles = StyleSheet.create({
         backgroundColor: 'white',
         flex: 1,
         alignItems: 'center',
-
     },
 
     RectangleShapeView: {
         marginTop: 20,
         width: '60%',
-        height: 40,
         backgroundColor: 'white',
         color: 'black',
         borderRadius: 10,
         borderColor: 'black',
         borderWidth: 1,
-        elevation: 3
+        elevation: 3,
+        padding: 10,
+        paddingTop: 1,
+        margin: "auto"
     },
     backgroundImage: {
         flex: 1,
@@ -286,7 +291,7 @@ const styles = StyleSheet.create({
     },
     heading: {
         fontWeight: 'bold',
-        marginTop: 20,
+        marginTop: 10,
     },
     container: {
         flex: 1,
@@ -296,10 +301,10 @@ const styles = StyleSheet.create({
         flex: 1,
     },
     input: {
-        height: 40,
-        margin: 12,
         borderWidth: 1,
         padding: 10,
+        marginVertical: 3,
+        width: "80%",
         borderRadius: 10,
         borderColor: 'grey',
         color: 'grey',
