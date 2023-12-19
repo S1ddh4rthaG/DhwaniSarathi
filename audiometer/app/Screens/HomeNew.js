@@ -5,7 +5,7 @@ import { useNavigation } from '@react-navigation/native';
 // import './locales/i18n';  
 import { useTranslation } from 'react-i18next';
 import { Image } from 'react-native';
-import { Button, Provider as PaperProvider, DefaultTheme, Appbar, Tooltip } from 'react-native-paper';
+import { Button, Provider as PaperProvider, DefaultTheme, Appbar, Tooltip, Card, TextInput } from 'react-native-paper';
 // Use icons
 import Icon from 'react-native-vector-icons/FontAwesome';
 
@@ -27,10 +27,46 @@ const Home = () => {
 
   return (
     <PaperProvider theme={theme}>
-      <View style={{ flex: 1, justifyContent: 'flex-fill', padding: 32 }}>
-        <Image source={require('../assets/images/logo.png')} style={{ width: 300, height: 300, alignSelf: 'center' }} />
-        <Text style={{ fontSize: 32, alignSelf: 'center', fontWeight: 'bold', marginBottom: 40, color: "#2B3467" }}>{t('Hertz hEARing Test')}</Text>
-
+      <View style={{ flex: 1, justifyContent: 'flex-fill', padding: 32, paddingTop: 0, paddingLeft: 0, paddingRight: 0 }}>
+        <View style={{ flexDirection: 'row', justifyContent: 'space-between', padding: 0, margin: 0, width: "100%", }}>
+          <Image source={require('../assets/images/logo.png')} style={{ width: 150, height: 150 }} />
+          <Text style={styles.bigTitle}>
+            <Text style={{ width: "100%" }}>
+              Hi,
+            </Text>
+            <Text style={{ width: "100%", marginStart: 12, paddingTop: 10, paddingStart: 10, paddingEnd: 10 }}>
+              {" Siddhartha G"}
+            </Text>
+          </Text>
+        </View>
+        <View style={{ flexDirection: 'column', justifyContent: 'space-between', padding: 1, margin: 5 }}>
+          {/* <Text style={styles.classHeading}>
+            Classroom Test
+          </Text> */}
+          <Card style={{ margin: 20, padding: 10 }}>
+            <Text style={styles.classTitle}>
+              {t("Enter Classroom Details")}
+            </Text>
+            <TextInput
+              label={t("Enter Room Code")}
+              style={styles.classInput}
+              mode="outlined"
+            />
+            <Button style={styles.classButton} mode="contained">
+              <Text style={styles.classButtonText}>{t("Enter")}</Text>
+            </Button>
+          </Card>
+        </View>
+        <View style={{ flexDirection: 'column', justifyContent: 'space-between', padding: 1, margin: 5 }}>
+          {/* <Text style={styles.classHeading}>
+            Self Test
+          </Text> */}
+          <Button style={styles.classButton} mode="contained">
+            <Text style={styles.classButtonText}>{t("Self Test!")}</Text>
+          </Button>
+        </View>
+        <View style={{ flexDirection: 'column', justifyContent: 'space-between', padding: 1, margin: 5 }}>
+        </View>
       </View>
       {/* Flex fill */}
       <View style={{ flexDirection: 'row', justifyContent: 'space-between', padding: 0 }}>
@@ -39,34 +75,23 @@ const Home = () => {
           justifyContent: 'center', alignItems: 'center', borderRadius: 25
         }}>
           <Button mode="contained" style={styles.bNav} onPress={() => router.push('/Screens/FillDetails')}>
-            {/* Start test */}
-            <Tooltip title='Start test' placement='top'>
-              <Icon name="play" size={18} color="white" style={styles.bIcon} />
-            </Tooltip>
+            <Icon name='play' size={18} color="white" style={styles.bIcon} />
           </Button>
           <Button mode="contained" style={styles.bNav} onPress={() => { }}>
             {/* Test results */}
-            <Tooltip title='Test results' placement='top'>
-              <Icon name="list" size={18} color="white" style={styles.bIcon} />
-            </Tooltip>
+            <Icon name="list" size={18} color="white" style={styles.bIcon} />
           </Button>
           <Button mode="contained" style={styles.bNav} onPress={() => { }}>
             {/* Instructions */}
-            <Tooltip title='Instructions' placement='top' >
-              <Icon name="info" size={18} color="white" style={styles.bIcon} />
-            </Tooltip>
+            <Icon name="info" size={18} color="white" style={styles.bIcon} />
           </Button>
           <Button mode="contained" style={styles.bNav} onPress={() => { router.push('/Screens/LegalComplianceInformation') }}>
             {/* Legal compliance */}
-            <Tooltip title='Legal compliance' placement='top'>
-              <Icon name="legal" size={18} color="white" style={styles.bIcon} />
-            </Tooltip>
+            <Icon name="legal" size={18} color="white" style={styles.bIcon} />
           </Button>
           <Button mode="contained" style={styles.bNav} onPress={() => { router.push('/Screens/Maps') }}>
             {/* Doctors near me */}
-            <Tooltip title='Doctors near me' placement='top'>
-              <Icon name="map-marker" size={18} color="white" style={styles.bIcon} />
-            </Tooltip>
+            <Icon name="map-marker" size={18} color="white" style={styles.bIcon} />
           </Button>
         </View>
       </View>
@@ -76,6 +101,32 @@ const Home = () => {
 
 
 const styles = StyleSheet.create({
+  classTitle: {
+    padding: 10,
+    fontSize: 24,
+  },
+  classInput: {
+    marginHorizontal: 10
+  },
+  classButton: {
+    margin: 15
+  },
+  classButtonText: {
+    fontSize: 16
+  },
+  classHeading: {
+    fontSize: 18,
+    fontWeight: "bold",
+    color: "black",
+    margin: 10
+  },
+  bigTitle: {
+    flex: 1,
+    flexDirection: "row",
+    fontSize: 24,
+    marginTop: 50,
+    color: "black"
+  },
   bIcon: {
     padding: 0,
     margin: 1,

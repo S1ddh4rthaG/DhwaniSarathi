@@ -108,12 +108,16 @@ class Audiometry {
   }
 
   playTone() {
-    this.player.unloadAsync();
+    // this.player.unloadAsync();
+    // wait for it to be unloaded
+    // setInterval(() => {
+      // console.log(this.player.getStatusAsync())
+    // }, 10);
 
     const SoundFile = PureTones[this.getFrequency() + this.getEar()[0] + (this.getMask() == true ? 'm' : 'um')]
     this.player.loadAsync(SoundFile).then(() => {
+      this.player.setVolumeAsync(Math.min(this.getVol(), 1));
       this.player.playAsync();
-      this.player.setVolumeAsync(this.getVol());
     });
   }
 
