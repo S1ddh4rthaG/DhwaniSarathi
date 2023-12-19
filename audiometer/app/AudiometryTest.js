@@ -28,6 +28,8 @@ const theme = {
 };
 
 const AudiometryTest = () => {
+  const params = useLocalSearchParams();
+  console.log(params);  
   const [playState, setPlayState] = useState(0); // 0: stopped, 1: playing, 2: paused
   const [ear, setEar] = useState("left");
   const [conduction, setConduction] = useState("air");
@@ -79,16 +81,17 @@ const AudiometryTest = () => {
     updateState();
 
     if (over) {
-      const resulttype = "userassignmentresults";
-      const userAID = "6f85bbb3-1ee1-4159-9d08-ec76acc82b68";
-      const userCID = "354598f9-2d73-4272-9cbc-3e27da8ec238";
-      const userId = "BNyCI19R1GgqUCSPqqBpKG3uxGD3";
-      //  const userId = await AsyncStorage.getItem("userID");
-
+    
+      const resulttype = params.resulttype;
+      const userAID = params.AID;
+      const userCID = params.CID;
+      //const userId = "BNyCI19R1GgqUCSPqqBpKG3uxGD3";
+      const userId = await AsyncStorage.getItem("userId");
+      console.log(userId);
       const userassignmentresults = `${baseurl}/userassignmentresults/`;
       const useronlyresults = `${baseurl}/useronlyresults/`;
-
-      if (resulttype === "userassignmentresults") {
+      
+      if (resulttype == "userassignmentresults") {
         const url = userassignmentresults;
         const data = {
           CID: userCID,
