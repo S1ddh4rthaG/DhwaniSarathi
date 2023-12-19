@@ -10,298 +10,38 @@ const AssignmentAnalytics = () => {
     const [searchQuery, setSearchQuery] = useState('');
     const [assignments, setAssignments] = useState([]);
     const [loading, setLoading] = useState(true);
+    const [assignmentResults, setAssignmentResults] = useState([]);
+    const [listUserCard, setListUserCard] = useState([]);
 
     const params = useLocalSearchParams();
     console.log(params);
     let AID = params.AID;
 
+    useEffect(() => {
+        const url = `${baseurl}/assignments/${AID}/userassignmentresults/`;
 
-    const backendData = [
-        {
-            "UID": "00028",
-            "AID": "48c63be8-4985-4697-991b-8f58e603d9d2",
-            "Results": {
-                "info": [
-                    {
-                        "ear": "left",
-                        "conduction": "air",
-                        "masking": false,
-                        "frequency": 125,
-                        "threshold": 50,
-                        "measurementType": "AIR_UNMASKED_LEFT",
-                        "response": "yes"
-                    },
-                    {
-                        "ear": "left",
-                        "conduction": "air",
-                        "masking": false,
-                        "frequency": 250,
-                        "threshold": 40,
-                        "measurementType": "AIR_UNMASKED_LEFT",
-                        "response": "yes"
-                    },
-                    {
-                        "ear": "left",
-                        "conduction": "air",
-                        "masking": false,
-                        "frequency": 500,
-                        "threshold": 30,
-                        "measurementType": "AIR_UNMASKED_LEFT",
-                        "response": "yes"
-                    },
-                    {
-                        "ear": "left",
-                        "conduction": "air",
-                        "masking": false,
-                        "frequency": 1000,
-                        "threshold": 20,
-                        "measurementType": "AIR_UNMASKED_LEFT",
-                        "response": "yes"
-                    },
-                    {
-                        "ear": "left",
-                        "conduction": "air",
-                        "masking": false,
-                        "frequency": 2000,
-                        "threshold": 20,
-                        "measurementType": "AIR_UNMASKED_LEFT",
-                        "response": "yes"
-                    },
-                    {
-                        "ear": "left",
-                        "conduction": "air",
-                        "masking": false,
-                        "frequency": 4000,
-                        "threshold": 10,
-                        "measurementType": "AIR_UNMASKED_LEFT",
-                        "response": "yes"
-                    },
-                    {
-                        "ear": "left",
-                        "conduction": "air",
-                        "masking": false,
-                        "frequency": 8000,
-                        "threshold": 30,
-                        "measurementType": "AIR_UNMASKED_LEFT",
-                        "response": "yes"
-                    },
-                    {
-                        "ear": "right",
-                        "conduction": "air",
-                        "masking": false,
-                        "frequency": 125,
-                        "threshold": 40,
-                        "measurementType": "AIR_UNMASKED_RIGHT",
-                        "response": "yes"
-                    },
-                    {
-                        "ear": "right",
-                        "conduction": "air",
-                        "masking": false,
-                        "frequency": 250,
-                        "threshold": 40,
-                        "measurementType": "AIR_UNMASKED_RIGHT",
-                        "response": "yes"
-                    },
-                    {
-                        "ear": "right",
-                        "conduction": "air",
-                        "masking": false,
-                        "frequency": 500,
-                        "threshold": 30,
-                        "measurementType": "AIR_UNMASKED_RIGHT",
-                        "response": "yes"
-                    },
-                    {
-                        "ear": "right",
-                        "conduction": "air",
-                        "masking": false,
-                        "frequency": 1000,
-                        "threshold": 20,
-                        "measurementType": "AIR_UNMASKED_RIGHT",
-                        "response": "yes"
-                    },
-                    {
-                        "ear": "right",
-                        "conduction": "air",
-                        "masking": false,
-                        "frequency": 2000,
-                        "threshold": 20,
-                        "measurementType": "AIR_UNMASKED_RIGHT",
-                        "response": "yes"
-                    },
-                    {
-                        "ear": "right",
-                        "conduction": "air",
-                        "masking": false,
-                        "frequency": 4000,
-                        "threshold": 20,
-                        "measurementType": "AIR_UNMASKED_RIGHT",
-                        "response": "yes"
-                    },
-                    {
-                        "ear": "right",
-                        "conduction": "air",
-                        "masking": false,
-                        "frequency": 8000,
-                        "threshold": 30,
-                        "measurementType": "AIR_UNMASKED_RIGHT",
-                        "response": "yes"
-                    }
-                ],
-                "pta_left": 50,
-                "pta_right": 90
-            },
-            "UserDetails": {
-                "UID": "00028",
-                "UserName": "Aaradhya",
-                "Age": 15,
-                "Gender": "female"
+        const fetchData = async () => {
+            try {
+                const response = await fetch(url);
+                if (response.ok) {
+                    const data = await response.json();
+                    console.log(data);
+                    setAssignmentResults(data);
+                    
+                    card_details = {}
+
+
+                    setLoading(false);
+                } else {
+                    console.error('Failed to fetch Assignments here', response.status);
+                }
+            } catch (error) {
+                console.error('Error fetching Assignments:', error);
             }
-        },
-        {
-            "UID": "00027",
-            "AID": "48c63be8-4985-4697-991b-8f58e603d9d2",
-            "Results": {
-                "info": [
-                    {
-                        "ear": "left",
-                        "conduction": "air",
-                        "masking": false,
-                        "frequency": 125,
-                        "threshold": 50,
-                        "measurementType": "AIR_UNMASKED_LEFT",
-                        "response": "yes"
-                    },
-                    {
-                        "ear": "left",
-                        "conduction": "air",
-                        "masking": false,
-                        "frequency": 250,
-                        "threshold": 40,
-                        "measurementType": "AIR_UNMASKED_LEFT",
-                        "response": "yes"
-                    },
-                    {
-                        "ear": "left",
-                        "conduction": "air",
-                        "masking": false,
-                        "frequency": 500,
-                        "threshold": 30,
-                        "measurementType": "AIR_UNMASKED_LEFT",
-                        "response": "yes"
-                    },
-                    {
-                        "ear": "left",
-                        "conduction": "air",
-                        "masking": false,
-                        "frequency": 1000,
-                        "threshold": 20,
-                        "measurementType": "AIR_UNMASKED_LEFT",
-                        "response": "yes"
-                    },
-                    {
-                        "ear": "left",
-                        "conduction": "air",
-                        "masking": false,
-                        "frequency": 2000,
-                        "threshold": 20,
-                        "measurementType": "AIR_UNMASKED_LEFT",
-                        "response": "yes"
-                    },
-                    {
-                        "ear": "left",
-                        "conduction": "air",
-                        "masking": false,
-                        "frequency": 4000,
-                        "threshold": 10,
-                        "measurementType": "AIR_UNMASKED_LEFT",
-                        "response": "yes"
-                    },
-                    {
-                        "ear": "left",
-                        "conduction": "air",
-                        "masking": false,
-                        "frequency": 8000,
-                        "threshold": 30,
-                        "measurementType": "AIR_UNMASKED_LEFT",
-                        "response": "yes"
-                    },
-                    {
-                        "ear": "right",
-                        "conduction": "air",
-                        "masking": false,
-                        "frequency": 125,
-                        "threshold": 40,
-                        "measurementType": "AIR_UNMASKED_RIGHT",
-                        "response": "yes"
-                    },
-                    {
-                        "ear": "right",
-                        "conduction": "air",
-                        "masking": false,
-                        "frequency": 250,
-                        "threshold": 40,
-                        "measurementType": "AIR_UNMASKED_RIGHT",
-                        "response": "yes"
-                    },
-                    {
-                        "ear": "right",
-                        "conduction": "air",
-                        "masking": false,
-                        "frequency": 500,
-                        "threshold": 30,
-                        "measurementType": "AIR_UNMASKED_RIGHT",
-                        "response": "yes"
-                    },
-                    {
-                        "ear": "right",
-                        "conduction": "air",
-                        "masking": false,
-                        "frequency": 1000,
-                        "threshold": 20,
-                        "measurementType": "AIR_UNMASKED_RIGHT",
-                        "response": "yes"
-                    },
-                    {
-                        "ear": "right",
-                        "conduction": "air",
-                        "masking": false,
-                        "frequency": 2000,
-                        "threshold": 20,
-                        "measurementType": "AIR_UNMASKED_RIGHT",
-                        "response": "yes"
-                    },
-                    {
-                        "ear": "right",
-                        "conduction": "air",
-                        "masking": false,
-                        "frequency": 4000,
-                        "threshold": 20,
-                        "measurementType": "AIR_UNMASKED_RIGHT",
-                        "response": "yes"
-                    },
-                    {
-                        "ear": "right",
-                        "conduction": "air",
-                        "masking": false,
-                        "frequency": 8000,
-                        "threshold": 30,
-                        "measurementType": "AIR_UNMASKED_RIGHT",
-                        "response": "yes"
-                    }
-                ],
-                "pta_left": 20,
-                "pta_right": 10
-            },
-            "UserDetails": {
-                "UID": "00027",
-                "UserName": "Aadi",
-                "Age": 14,
-                "Gender": "male"
-            }
-        }
-    ];
+        };
+
+        fetchData();
+    }, []);
 
     const hearingCategories = {
         'Normal': [-10, 19],
@@ -320,18 +60,11 @@ const AssignmentAnalytics = () => {
         }
     };
 
-    // const data3 = [
-    //     { x: 'Normal', y: 20 },
-    //     { x: 'Mild', y: 15 },
-    //     { x: 'Moderate', y: 25 },
-    //     { x: 'Severe', y: 15 },
-    //     { x: 'Profound', y: 25 },];
 
-    const getRandomDummyValue = () => Math.floor(Math.random() * 10);
 
     const data3 = Object.keys(hearingCategories).map(category => ({
         x: category,
-        y: getRandomDummyValue()
+        y: 0
     }));
 
     const data2 = [
@@ -366,7 +99,7 @@ const AssignmentAnalytics = () => {
     ];
 
 
-    backendData.forEach(entry => {
+    assignmentResults.forEach(entry => {
         const ptaLeft = entry.Results.pta_left;
         const ptaRight = entry.Results.pta_right;
         const maxPta = Math.max(ptaLeft, ptaRight);
@@ -377,6 +110,8 @@ const AssignmentAnalytics = () => {
             existingCategory.y += 1;
         }
     });
+
+    console.log(data3);
 
     // const data3 = backendData.reduce((acc, entry) => {
     //     const ptaLeft = entry.Results.pta_left;
@@ -467,21 +202,15 @@ const AssignmentAnalytics = () => {
         'Normal': '#00FF00',    // Green
         'Mild': '#FFFF00',      // Yellow
         'Moderate': '#FFA500',  // Orange
-        'Severe': 'orange',    // Red
+        'Severe': 'red',    // Red
         'Profound': '#800080',  // Purple
     };
 
     return (
+        
         <View style={styles.container}>
-            <Text style={styles.title}>Assignments</Text>
-            <TextInput
-                style={styles.searchInput}
-                placeholder="Search..."
-                value={searchQuery}
-                onChangeText={setSearchQuery}
-                placeholderTextColor="grey"
-            />
-
+            <Text style={styles.title}>Assignments Analytics</Text>
+           
             <FlatList
                 contentContainerStyle={styles.listContainer}
                 ListHeaderComponent={

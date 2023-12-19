@@ -130,13 +130,13 @@ const AssignmentList = () => {
     const renderAssignmentCard = ({ item }) => (
         <Link style={styles.card}
             href={{
-                pathname: 'Screens/Educator/ClassResults',
+                pathname: 'Screens/Educator/AssignmentAnalytics',
                 params: {  AID: item.AID }
             }}
         >
-            <TouchableOpacity onPress={()=>{
+            {/* <TouchableOpacity onPress={()=>{
                 router.push({pathname: '/Screens/Educator/ClassResults', params: {id: 456, AID: item.AID, CID: CID}}); 
-            }}>
+            }}> */}
                 
                 <Text style={styles.cardTitle}>{item.AssignmentName}</Text>
                 <Text style={styles.cardDate}>Deadline: {item.Deadline}</Text>
@@ -156,7 +156,7 @@ const AssignmentList = () => {
                         />
                     </View>
                 </View>
-            </TouchableOpacity>
+            {/* </TouchableOpacity> */}
         </Link>
     );
 
