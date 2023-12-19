@@ -22,7 +22,7 @@ const AssignmentList = () => {
         const fetchData = async () => {
             const url = `${baseurl}/classrooms/${CID}/assignments/`;
 
-            try{
+            try {
                 const response = await fetch(url);
                 if (response.ok) {
                     const data = await response.json();
@@ -35,7 +35,7 @@ const AssignmentList = () => {
                         AID: 'dummy-assignment-id',
                         AssignmentName: 'Dummy Assignment',
                         Deadline: '2023-12-31',
-                       
+
                         SubmittedCount: 10
                     };
 
@@ -44,7 +44,7 @@ const AssignmentList = () => {
                     console.error('Failed to fetch Assignments:', response.status);
                 }
             }
-            catch(error){
+            catch (error) {
                 console.error('Error fetching Assignments:', error);
             }
 
@@ -72,7 +72,7 @@ const AssignmentList = () => {
             //     }
             // } catch (error) {
             //     console.error('Error fetching Assignments:', error);
-                
+
             // }
 
             // Dummy Assignment
@@ -93,7 +93,7 @@ const AssignmentList = () => {
         fetchData();
     }, []);
 
-    const handleNewAssignment = async() => {
+    const handleNewAssignment = async () => {
         // Handle button press for creating a new assignment
         //post request
 
@@ -131,31 +131,34 @@ const AssignmentList = () => {
         <Link style={styles.card}
             href={{
                 pathname: 'Screens/Educator/AssignmentAnalytics',
-                params: {  AID: item.AID }
+                params: { AID: item.AID }
             }}
         >
             {/* <TouchableOpacity onPress={()=>{
                 router.push({pathname: '/Screens/Educator/ClassResults', params: {id: 456, AID: item.AID, CID: CID}}); 
             }}> */}
-                
-                <Text style={styles.cardTitle}>{item.AssignmentName}</Text>
-                <Text style={styles.cardDate}>Deadline: {item.Deadline}</Text>
-                <Text style={styles.cardField}>Class Strength: {Count}</Text>
-                <View style={styles.progressBarContainer}>
-                    <Text style={styles.cardField}>
-                        Progress: {item.SubmittedCount}/{Count}
-                    </Text>
-                    <View style={styles.progressBar}>
-                        <View
-                            style={{
-                                width: `${(item.SubmittedCount / Count) * 100}%`,
-                                height: 10,
-                                backgroundColor: '#0096FF',
-                                borderRadius: 5,
-                            }}
-                        />
-                    </View>
+
+
+            <Text style={styles.cardTitle}>{item.AssignmentName}</Text>
+            <Text style={styles.cardDate}>Deadline: {item.Deadline}</Text>
+            <Text style={styles.cardField}>Class Strength: {Count}</Text>
+            <View style={styles.progressBarContainer}>
+                <Text style={styles.cardField}>
+                    Progress: {item.SubmittedCount}/{Count}
+                </Text>
+                <View style={styles.progressBar}>
+                    <View
+                        style={{
+                            width: `${(item.SubmittedCount / Count) * 100}%`,
+                            height: 10,
+                            backgroundColor: '#2b3467',
+                            borderRadius: 5,
+                        }}
+                    />
                 </View>
+            </View>
+
+
             {/* </TouchableOpacity> */}
         </Link>
     );
@@ -168,7 +171,7 @@ const AssignmentList = () => {
     if (loading) {
         return (
             <View style={styles.container}>
-                <ActivityIndicator size="large" color="#0096FF" />
+                <ActivityIndicator size="large" color="#eb455f" />
             </View>
         );
     }
@@ -203,18 +206,18 @@ const AssignmentList = () => {
                 placeholder="Deadline"
                 placeholderTextColor="grey"
             />
-          
+
 
             <TouchableOpacity
-                    style={styles.button}
-                    onPress={() => {
-                        // Handle button press for creating a new assignment
-                        // You can navigate to a new screen or show a modal, etc.
-                        console.log('Create New Assignment');
-                        handleNewAssignment();
-                    }}
-                >
-                    <Text style={styles.buttonText}>Create New Assignment</Text>
+                style={[styles.button, { width: 80 + '%', alignSelf: 'center', margin: 5, borderRadius: 5 }]}
+                onPress={() => {
+                    // Handle button press for creating a new assignment
+                    // You can navigate to a new screen or show a modal, etc.
+                    console.log('Create New Assignment');
+                    handleNewAssignment();
+                }}
+            >
+                <Text style={styles.buttonText}>Create New Assignment</Text>
             </TouchableOpacity>
         </View>
     );
@@ -223,9 +226,7 @@ const AssignmentList = () => {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        padding: 10,
-        paddingTop: 60,
-        backgroundColor: 'black',
+        backgroundColor: '#fcfcfc',
         borderWidth: 2,
         borderColor: 'white',
         borderRadius: 10
@@ -239,15 +240,22 @@ const styles = StyleSheet.create({
         fontWeight: 'bold',
         marginBottom: 10,
         color: 'white',
+        backgroundColor: '#eb455f',
+        height: 40,
+        textAlign: 'center',
+        justifyContent: 'center',
+        textAlignVertical: 'center',
     },
     searchInput: {
         height: 40,
         borderWidth: 1,
         borderRadius: 5,
-        borderColor: '#0096FF',
+        borderColor: '#eb455f',
         marginBottom: 10,
         paddingHorizontal: 10,
-        color: 'white',
+        color: 'black',
+        width: 90 + '%',
+        alignSelf: 'center',
     },
     card: {
         flex: 1,
@@ -256,30 +264,31 @@ const styles = StyleSheet.create({
         borderRadius: 5,
         marginHorizontal: 10,
         borderWidth: 1,
-        borderColor: '#0096FF',
+        borderColor: '#eb455f',
+        backgroundColor: 'white',
     },
     cardTitle: {
         fontSize: 18,
         fontWeight: 'bold',
-        color: 'white',
+        color: '#eb455f',
     },
     cardDate: {
-        color: 'white',
+        color: 'black',
     },
     cardField: {
-        color: 'white',
+        color: 'black',
         marginTop: 5,
     },
     progressBarContainer: {
         marginTop: 5,
     },
     progressBar: {
-        backgroundColor: 'lightgrey',
+        backgroundColor: '#bad7e9',
         borderRadius: 5,
         marginTop: 5,
     },
     button: {
-        backgroundColor: '#0096FF',
+        backgroundColor: '#2b3467',
         borderRadius: 5,
         padding: 10,
         marginTop: 10,
