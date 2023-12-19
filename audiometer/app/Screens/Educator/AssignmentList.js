@@ -41,6 +41,7 @@ const AssignmentList = () => {
             const url = `${baseurl}/classrooms/${CID}/assignments/`;
 
             try {
+            try {
                 const response = await fetch(url);
                 if (response.ok) {
                     const data = await response.json();
@@ -188,7 +189,7 @@ const AssignmentList = () => {
     if (loading) {
         return (
             <View style={styles.container}>
-                <ActivityIndicator size="large" color="#0096FF" />
+                <ActivityIndicator size="large" color="#eb455f" />
             </View>
         );
     }
@@ -288,12 +289,12 @@ const styles = StyleSheet.create({
         marginTop: 5,
     },
     progressBar: {
-        backgroundColor: 'lightgrey',
+        backgroundColor: '#bad7e9',
         borderRadius: 5,
         marginTop: 5,
     },
     button: {
-        backgroundColor: '#0096FF',
+        backgroundColor: '#2b3467',
         borderRadius: 5,
         padding: 10,
         marginTop: 10,

@@ -34,7 +34,7 @@ const ClassroomList = ({ EID }) => {
 
     const renderClassroomCard = ({ item }) => (
         <Link
-            style={[styles.card, { backgroundColor: "", borderColor: '#eb455f', borderWidth: 1 }]}
+            style={[styles.card, { borderColor: '#eb455f', borderWidth: 1 }]}
             href={{
                 pathname: 'Screens/Educator/AssignmentList',
                 params: { CID: item.CID, Count: item.Count },

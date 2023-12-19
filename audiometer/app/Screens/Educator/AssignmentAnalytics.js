@@ -2,306 +2,51 @@ import React, { useState, useEffect } from 'react';
 import { View, Text, TextInput, FlatList, TouchableOpacity, StyleSheet, ActivityIndicator } from 'react-native';
 import { baseurl } from '../../Constants/ip.js';
 import { Link, router, useLocalSearchParams } from "expo-router";
-
 import { VictoryChart, VictoryPie, VictoryTooltip, VictoryLabel } from "victory-native";
-import { ScrollView } from 'react-native-gesture-handler';
+import { get } from 'react-native/Libraries/TurboModule/TurboModuleRegistry.js';
+
 
 const AssignmentAnalytics = () => {
     const [searchQuery, setSearchQuery] = useState('');
-    const [assignments, setAssignments] = useState([]);
     const [loading, setLoading] = useState(true);
+    const [assignmentResults, setAssignmentResults] = useState([]);
+    const [listUserCard, setListUserCard] = useState([]);
 
     const params = useLocalSearchParams();
-    console.log(params);
     let AID = params.AID;
 
+    useEffect(() => {
+        const url = `${baseurl}/assignments/${AID}/userassignmentresults/`;
 
-    const backendData = [
-        {
-            "UID": "00028",
-            "AID": "48c63be8-4985-4697-991b-8f58e603d9d2",
-            "Results": {
-                "info": [
-                    {
-                        "ear": "left",
-                        "conduction": "air",
-                        "masking": false,
-                        "frequency": 125,
-                        "threshold": 50,
-                        "measurementType": "AIR_UNMASKED_LEFT",
-                        "response": "yes"
-                    },
-                    {
-                        "ear": "left",
-                        "conduction": "air",
-                        "masking": false,
-                        "frequency": 250,
-                        "threshold": 40,
-                        "measurementType": "AIR_UNMASKED_LEFT",
-                        "response": "yes"
-                    },
-                    {
-                        "ear": "left",
-                        "conduction": "air",
-                        "masking": false,
-                        "frequency": 500,
-                        "threshold": 30,
-                        "measurementType": "AIR_UNMASKED_LEFT",
-                        "response": "yes"
-                    },
-                    {
-                        "ear": "left",
-                        "conduction": "air",
-                        "masking": false,
-                        "frequency": 1000,
-                        "threshold": 20,
-                        "measurementType": "AIR_UNMASKED_LEFT",
-                        "response": "yes"
-                    },
-                    {
-                        "ear": "left",
-                        "conduction": "air",
-                        "masking": false,
-                        "frequency": 2000,
-                        "threshold": 20,
-                        "measurementType": "AIR_UNMASKED_LEFT",
-                        "response": "yes"
-                    },
-                    {
-                        "ear": "left",
-                        "conduction": "air",
-                        "masking": false,
-                        "frequency": 4000,
-                        "threshold": 10,
-                        "measurementType": "AIR_UNMASKED_LEFT",
-                        "response": "yes"
-                    },
-                    {
-                        "ear": "left",
-                        "conduction": "air",
-                        "masking": false,
-                        "frequency": 8000,
-                        "threshold": 30,
-                        "measurementType": "AIR_UNMASKED_LEFT",
-                        "response": "yes"
-                    },
-                    {
-                        "ear": "right",
-                        "conduction": "air",
-                        "masking": false,
-                        "frequency": 125,
-                        "threshold": 40,
-                        "measurementType": "AIR_UNMASKED_RIGHT",
-                        "response": "yes"
-                    },
-                    {
-                        "ear": "right",
-                        "conduction": "air",
-                        "masking": false,
-                        "frequency": 250,
-                        "threshold": 40,
-                        "measurementType": "AIR_UNMASKED_RIGHT",
-                        "response": "yes"
-                    },
-                    {
-                        "ear": "right",
-                        "conduction": "air",
-                        "masking": false,
-                        "frequency": 500,
-                        "threshold": 30,
-                        "measurementType": "AIR_UNMASKED_RIGHT",
-                        "response": "yes"
-                    },
-                    {
-                        "ear": "right",
-                        "conduction": "air",
-                        "masking": false,
-                        "frequency": 1000,
-                        "threshold": 20,
-                        "measurementType": "AIR_UNMASKED_RIGHT",
-                        "response": "yes"
-                    },
-                    {
-                        "ear": "right",
-                        "conduction": "air",
-                        "masking": false,
-                        "frequency": 2000,
-                        "threshold": 20,
-                        "measurementType": "AIR_UNMASKED_RIGHT",
-                        "response": "yes"
-                    },
-                    {
-                        "ear": "right",
-                        "conduction": "air",
-                        "masking": false,
-                        "frequency": 4000,
-                        "threshold": 20,
-                        "measurementType": "AIR_UNMASKED_RIGHT",
-                        "response": "yes"
-                    },
-                    {
-                        "ear": "right",
-                        "conduction": "air",
-                        "masking": false,
-                        "frequency": 8000,
-                        "threshold": 30,
-                        "measurementType": "AIR_UNMASKED_RIGHT",
-                        "response": "yes"
-                    }
-                ],
-                "pta_left": 50,
-                "pta_right": 90
-            },
-            "UserDetails": {
-                "UID": "00028",
-                "UserName": "Aaradhya",
-                "Age": 15,
-                "Gender": "female"
+        const fetchData = async () => {
+            try {
+                const response = await fetch(url);
+                if (response.ok) {
+                    const data = await response.json();
+                  
+                    setAssignmentResults(data);
+                    
+                    let card_details = []
+
+                    data.forEach(element => {
+                        let current_details = element["UserDetails"];
+                        current_details["Results"] = element["Results"];
+                        card_details.push(current_details);
+                    });
+
+                    console.log(card_details[3]["Results"]["info"]);
+                    setListUserCard(card_details);
+                    setLoading(false);
+                } else {
+                    console.error('Failed to fetch Assignments here', response.status);
+                }
+            } catch (error) {
+                console.error('Error fetching Assignments:', error);
             }
-        },
-        {
-            "UID": "00027",
-            "AID": "48c63be8-4985-4697-991b-8f58e603d9d2",
-            "Results": {
-                "info": [
-                    {
-                        "ear": "left",
-                        "conduction": "air",
-                        "masking": false,
-                        "frequency": 125,
-                        "threshold": 50,
-                        "measurementType": "AIR_UNMASKED_LEFT",
-                        "response": "yes"
-                    },
-                    {
-                        "ear": "left",
-                        "conduction": "air",
-                        "masking": false,
-                        "frequency": 250,
-                        "threshold": 40,
-                        "measurementType": "AIR_UNMASKED_LEFT",
-                        "response": "yes"
-                    },
-                    {
-                        "ear": "left",
-                        "conduction": "air",
-                        "masking": false,
-                        "frequency": 500,
-                        "threshold": 30,
-                        "measurementType": "AIR_UNMASKED_LEFT",
-                        "response": "yes"
-                    },
-                    {
-                        "ear": "left",
-                        "conduction": "air",
-                        "masking": false,
-                        "frequency": 1000,
-                        "threshold": 20,
-                        "measurementType": "AIR_UNMASKED_LEFT",
-                        "response": "yes"
-                    },
-                    {
-                        "ear": "left",
-                        "conduction": "air",
-                        "masking": false,
-                        "frequency": 2000,
-                        "threshold": 20,
-                        "measurementType": "AIR_UNMASKED_LEFT",
-                        "response": "yes"
-                    },
-                    {
-                        "ear": "left",
-                        "conduction": "air",
-                        "masking": false,
-                        "frequency": 4000,
-                        "threshold": 10,
-                        "measurementType": "AIR_UNMASKED_LEFT",
-                        "response": "yes"
-                    },
-                    {
-                        "ear": "left",
-                        "conduction": "air",
-                        "masking": false,
-                        "frequency": 8000,
-                        "threshold": 30,
-                        "measurementType": "AIR_UNMASKED_LEFT",
-                        "response": "yes"
-                    },
-                    {
-                        "ear": "right",
-                        "conduction": "air",
-                        "masking": false,
-                        "frequency": 125,
-                        "threshold": 40,
-                        "measurementType": "AIR_UNMASKED_RIGHT",
-                        "response": "yes"
-                    },
-                    {
-                        "ear": "right",
-                        "conduction": "air",
-                        "masking": false,
-                        "frequency": 250,
-                        "threshold": 40,
-                        "measurementType": "AIR_UNMASKED_RIGHT",
-                        "response": "yes"
-                    },
-                    {
-                        "ear": "right",
-                        "conduction": "air",
-                        "masking": false,
-                        "frequency": 500,
-                        "threshold": 30,
-                        "measurementType": "AIR_UNMASKED_RIGHT",
-                        "response": "yes"
-                    },
-                    {
-                        "ear": "right",
-                        "conduction": "air",
-                        "masking": false,
-                        "frequency": 1000,
-                        "threshold": 20,
-                        "measurementType": "AIR_UNMASKED_RIGHT",
-                        "response": "yes"
-                    },
-                    {
-                        "ear": "right",
-                        "conduction": "air",
-                        "masking": false,
-                        "frequency": 2000,
-                        "threshold": 20,
-                        "measurementType": "AIR_UNMASKED_RIGHT",
-                        "response": "yes"
-                    },
-                    {
-                        "ear": "right",
-                        "conduction": "air",
-                        "masking": false,
-                        "frequency": 4000,
-                        "threshold": 20,
-                        "measurementType": "AIR_UNMASKED_RIGHT",
-                        "response": "yes"
-                    },
-                    {
-                        "ear": "right",
-                        "conduction": "air",
-                        "masking": false,
-                        "frequency": 8000,
-                        "threshold": 30,
-                        "measurementType": "AIR_UNMASKED_RIGHT",
-                        "response": "yes"
-                    }
-                ],
-                "pta_left": 20,
-                "pta_right": 10
-            },
-            "UserDetails": {
-                "UID": "00027",
-                "UserName": "Aadi",
-                "Age": 14,
-                "Gender": "male"
-            }
-        }
-    ];
+        };
+
+        fetchData();
+    }, []);
 
     const hearingCategories = {
         'Normal': [-10, 19],
@@ -320,53 +65,12 @@ const AssignmentAnalytics = () => {
         }
     };
 
-    // const data3 = [
-    //     { x: 'Normal', y: 20 },
-    //     { x: 'Mild', y: 15 },
-    //     { x: 'Moderate', y: 25 },
-    //     { x: 'Severe', y: 15 },
-    //     { x: 'Profound', y: 25 },];
-
-    const getRandomDummyValue = () => Math.floor(Math.random() * 10);
-
     const data3 = Object.keys(hearingCategories).map(category => ({
         x: category,
-        y: getRandomDummyValue()
+        y: 0
     }));
 
-    const data2 = [
-        {
-            "UID": "1",
-            "UserName": "Swami",
-            "Age": "10",
-            "Gender": "Male",
-            "Deadline": "2021-08-01"
-        },
-        {
-            "UID": "2",
-            "UserName": "Aadi",
-            "Age": "14",
-            "Gender": "Male",
-            "Deadline": "2021-08-02"
-        },
-        {
-            "UID": "3",
-            "UserName": "Aaradhya",
-            "Age": "15",
-            "Gender": "Female",
-            "Deadline": "2021-08-03"
-        },
-        {
-            "UID": "4",
-            "UserName": "Arjun",
-            "Age": "12",
-            "Gender": "Male",
-            "Deadline": "2021-08-04"
-        },
-    ];
-
-
-    backendData.forEach(entry => {
+    assignmentResults.forEach(entry => {
         const ptaLeft = entry.Results.pta_left;
         const ptaRight = entry.Results.pta_right;
         const maxPta = Math.max(ptaLeft, ptaRight);
@@ -378,64 +82,16 @@ const AssignmentAnalytics = () => {
         }
     });
 
-    // const data3 = backendData.reduce((acc, entry) => {
-    //     const ptaLeft = entry.Results.pta_left;
-    //     const ptaRight = entry.Results.pta_right;
-    //     const maxPta = Math.max(ptaLeft, ptaRight);
-    //     const category = getCategory(maxPta);
-
-    //     const existingCategory = acc.find((item) => item.x === category);
-
-    //     if (existingCategory) {
-    //         existingCategory.y += 1;
-    //     } else {
-    //         acc.push({ x: category, y: 1 });
-    //     }
-
-    //     return acc;
-    // }, []);
-
-    useEffect(() => {
-
-        if (AID == null) {
-            AID = '354598f9-2d73-4272-9cbc-3e27da8ec238';
-        }
-
-
-        const fetchData = async () => {
-            const url = `${baseurl}/assignments/${AID}/`;
-
-            try {
-                const response = await fetch(url);
-                if (response.ok) {
-                    const data = await response.json();
-                    console.log(data);
-                    // setAssignments(data);
-                    setAssignments(data2);
-                    setLoading(false);
-                } else {
-                    console.error('Failed to fetch Assignments here', response.status);
-                }
-            } catch (error) {
-                console.error('Error fetching Assignments:', error);
-            }
-        };
-
-        fetchData();
-    }, []);
+    // Remove categories with no data
+    const filterData = data3.filter(
+        (item) => item.y !== 0
+    );
 
     const renderAssignmentCard = ({ item }) => (
-        // <Link style={styles.card}
-        //     href={{
-        //         pathname: 'Screens/Results',
-        //         params: { CID: item.CID }
-        //     }}
-        // >
-        console.log("item", item),
         <TouchableOpacity
-            style={styles.card}
+            style={[styles.card, { backgroundColor: hearingCategoryColors[getCategory(Math.max(item.Results.pta_left, item.Results.pta_right))] }]}
             onPress={() => {
-                router.push('Screens/Results', { CID: item.CID });
+                router.push({pathname:'Screens/Results', params: {results: JSON.stringify(item["Results"]["info"]) }});
             }}
         >
             <Text style={styles.cardTitle}>{item.UserName}</Text>
@@ -443,7 +99,6 @@ const AssignmentAnalytics = () => {
             <Text style={styles.cardDate}>Gender: {item.Gender}</Text>
             <Text style={styles.cardMore}>More Details</Text>
         </TouchableOpacity>
-        // </Link>
     );
 
     const searchFilter = (item) => {
@@ -467,34 +122,30 @@ const AssignmentAnalytics = () => {
         'Normal': '#00FF00',    // Green
         'Mild': '#FFFF00',      // Yellow
         'Moderate': '#FFA500',  // Orange
-        'Severe': 'orange',    // Red
+        'Severe': 'red',    // Red
         'Profound': '#800080',  // Purple
     };
 
-    return (
-        <View style={styles.container}>
-            <Text style={styles.title}>Assignments</Text>
-            <TextInput
-                style={styles.searchInput}
-                placeholder="Search..."
-                value={searchQuery}
-                onChangeText={setSearchQuery}
-                placeholderTextColor="grey"
-            />
+    const colorScale = filterData.map((point) => hearingCategoryColors[point.x]);
 
+    return (
+        
+        <View style={styles.container}>
+            <Text style={styles.title}>Assignments Analytics</Text>
+           
             <FlatList
                 contentContainerStyle={styles.listContainer}
                 ListHeaderComponent={
                     <View style={styles.chartContainer}>
                         <VictoryPie
                             height={300}
-                            data={data3}
+                            data={filterData}
                             outerRadius={120}
                             innerRadius={60}
-                            colorScale={Object.values(hearingCategoryColors)}
+                            colorScale= {colorScale}
                             style={{ labels: { fill: 'white', fontSize: 16, fontWeight: 'bold' } }}
                         />
-                        {data3.map((point) => (
+                        {filterData.map((point) => (
                             <VictoryLabel
                                 key={point.x}
                                 textAnchor="middle"
@@ -506,7 +157,7 @@ const AssignmentAnalytics = () => {
                         ))}
                     </View>
                 }
-                data={assignments.filter(searchFilter)}
+                data={listUserCard.filter(searchFilter)}
                 renderItem={renderAssignmentCard}
                 keyExtractor={(item) => item.UID}
             />

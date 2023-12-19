@@ -1,5 +1,6 @@
 {
   "dependencies": {
-    "react-i18next": "^13.5.0"
+    "react-i18next": "^13.5.0",
+    "react-native-alert": "^1.0.3"
   }
 }
