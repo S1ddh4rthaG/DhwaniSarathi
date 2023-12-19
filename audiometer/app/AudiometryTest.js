@@ -28,6 +28,8 @@ const theme = {
 };
 
 const AudiometryTest = () => {
+  const params = useLocalSearchParams();
+  console.log(params);  
   const [playState, setPlayState] = useState(0); // 0: stopped, 1: playing, 2: paused
   const [ear, setEar] = useState("left");
   const [conduction, setConduction] = useState("air");
@@ -79,36 +81,37 @@ const AudiometryTest = () => {
     updateState();
 
     if (over) {
-      const resulttype = "userassignmentresults";
-      const userAID = "6f85bbb3-1ee1-4159-9d08-ec76acc82b68";
-      const userCID = "354598f9-2d73-4272-9cbc-3e27da8ec238";
-      const userId = "BNyCI19R1GgqUCSPqqBpKG3uxGD3";
-      //  const userId = await AsyncStorage.getItem("userID");
-
+    
+      const resulttype = params.resulttype;
+      const userAID = params.AID;
+      const userCID = params.CID;
+      //const userId = "BNyCI19R1GgqUCSPqqBpKG3uxGD3";
+      const userId = await AsyncStorage.getItem("userId");
+      console.log(userId);
       const userassignmentresults = `${baseurl}/userassignmentresults/`;
       const useronlyresults = `${baseurl}/useronlyresults/`;
-
-      if (resulttype === "userassignmentresults") {
+      
+      if (resulttype == "userassignmentresults") {
         const url = userassignmentresults;
         const data = {
           CID: userCID,
           UID: userId,
           AID: userAID,
-          Results: JSON.stringify(getResults()),
+          Results: getResults(),
         };
         await typeBasedPost(url, data, resulttype);
       } else {
         const url = useronlyresults;
         const data = {
           UID: userId,
-          Results: JSON.stringify(getResults()),
+          Results: getResults(),
         };
         await typeBasedPost(url, data, resulttype);
       }
      
       router.push({
         pathname: '/Screens/Results',
-        params: { results: JSON.stringify(getResults()) },
+        params: { results: JSON.stringify(getResults().info) },
       });
       
     } else {
@@ -117,7 +120,38 @@ const AudiometryTest = () => {
   };
 
   const getResults = () => {
-    return audiometry.getResults();
+    let newResults = {};
+    newResults["info"] = audiometry.getResults();
+    let pta_left = 0;
+    let pta_right = 0;
+
+    let left_count = 0;
+    let right_count = 0;
+
+    let left = newResults["info"].filter((item) => item.ear === "left" && item.measurementType === "AIR_UNMASKED_LEFT")
+    let right = newResults["info"].filter((item) => item.ear === "right"&& item.measurementType === "AIR_UNMASKED_RIGHT")
+
+    left.forEach((item) => {
+      if (item.frequency == 500 || item.frequency == 1000 || item.frequency == 2000 || item.frequency == 4000) {
+        pta_left += item.threshold;
+        left_count++;
+      }
+    });
+
+    right.forEach((item) => {
+      if (item.frequency == 500 || item.frequency == 1000 || item.frequency == 2000 || item.frequency == 4000) {
+        pta_right += item.threshold;
+        right_count++;
+      }
+    });
+
+    pta_left = Math.round(pta_left / left_count);
+    pta_right = Math.round(pta_right / right_count);
+
+    newResults["pta_left"] = pta_left;
+    newResults["pta_right"] = pta_right;
+
+    return newResults;
   };
   console.log(JSON.stringify(getResults()));
 
