@@ -1,3 +1,3 @@
-const ip = "192.168.71.51"
+const ip = "172.16.4.229"
 
 export const baseurl = `http://${ip}`;
