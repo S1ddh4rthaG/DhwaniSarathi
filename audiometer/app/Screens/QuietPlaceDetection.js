@@ -101,8 +101,8 @@ const QuietPlaceDetection = () => {
 
   return (
     <PaperProvider theme={theme}>
-      <View style={{ flex: 1, justifyContent: 'top', padding: 32, maxHeight: 100 }}>
-        <ProgressBar progress={0.5} color={'#2B3467'} style={{}} />
+      <ProgressBar progress={0.25} color={'#2B3467'} style={{ margin: 15, marginTop: 50 }} />
+      <View style={{ flex: 1, justifyContent: 'top', padding: 32 }}>
         <Text style={{ fontSize: 24, alignSelf: 'center', fontWeight: 'bold', marginBottom: 40, color: "#2B3467" }}>{t('Check Your Surrounding')}</Text>
         <Image style={{ width: 300, height: 300, alignSelf: 'center' }} source={require('../assets/images/microphone.png')} resizeMode='cover' />
 
