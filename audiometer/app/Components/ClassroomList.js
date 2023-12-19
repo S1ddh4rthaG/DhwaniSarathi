@@ -37,7 +37,7 @@ const ClassroomList = ({EID}) => {
             style={[styles.card, { backgroundColor: "#ffdcb2" }]}
             href={{
                 pathname: 'Screens/Educator/AssignmentList',
-                params: { CID: item.CID },
+                params: { CID: item.CID,Count: item.Count },
             }}
         >
             <View
