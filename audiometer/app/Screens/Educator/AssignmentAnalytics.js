@@ -3,7 +3,6 @@ import { View, Text, TextInput, FlatList, TouchableOpacity, StyleSheet, Activity
 import { baseurl } from '../../Constants/ip.js';
 import { Link, router, useLocalSearchParams } from "expo-router";
 import { VictoryChart, VictoryPie, VictoryTooltip, VictoryLabel } from "victory-native";
-import { get } from 'react-native/Libraries/TurboModule/TurboModuleRegistry.js';
 
 
 const AssignmentAnalytics = () => {
@@ -11,6 +10,7 @@ const AssignmentAnalytics = () => {
     const [loading, setLoading] = useState(true);
     const [assignmentResults, setAssignmentResults] = useState([]);
     const [listUserCard, setListUserCard] = useState([]);
+    const [selectedCategory, setSelectedCategory] = useState(null);
 
     const params = useLocalSearchParams();
     let AID = params.AID;
@@ -23,9 +23,9 @@ const AssignmentAnalytics = () => {
                 const response = await fetch(url);
                 if (response.ok) {
                     const data = await response.json();
-                  
+
                     setAssignmentResults(data);
-                    
+
                     let card_details = []
 
                     data.forEach(element => {
@@ -91,7 +91,7 @@ const AssignmentAnalytics = () => {
         <TouchableOpacity
             style={[styles.card, { backgroundColor: hearingCategoryColors[getCategory(Math.max(item.Results.pta_left, item.Results.pta_right))] }]}
             onPress={() => {
-                router.push({pathname:'Screens/Results', params: {results: JSON.stringify(item["Results"]["info"]) }});
+                router.push({ pathname: 'Screens/Results', params: { results: JSON.stringify(item["Results"]["info"]) } });
             }}
         >
             <Text style={styles.cardTitle}>{item.UserName}</Text>
@@ -101,10 +101,10 @@ const AssignmentAnalytics = () => {
         </TouchableOpacity>
     );
 
-    const searchFilter = (item) => {
-        const query = searchQuery.toLowerCase();
-        return item.UserName.toLowerCase().includes(query);
-    };
+    // const searchFilter = (item) => {
+    //     const query = searchQuery.toLowerCase();
+    //     return item.UserName.toLowerCase().includes(query);
+    // };
 
     if (loading) {
         return (
@@ -128,35 +128,68 @@ const AssignmentAnalytics = () => {
 
     const colorScale = filterData.map((point) => hearingCategoryColors[point.x]);
 
+    const handleCategoryClick = (category) => {
+        setSelectedCategory(category === selectedCategory ? null : category);
+    };
+
+    const searchFilter = (item) => {
+        const query = searchQuery.toLowerCase();
+        const categoryMatch = selectedCategory ? getCategory(Math.max(item.Results.pta_left, item.Results.pta_right)) === selectedCategory : true;
+        return item.UserName.toLowerCase().includes(query) && categoryMatch;
+    };
+
     return (
-        
+
         <View style={styles.container}>
             <Text style={styles.title}>Assignments Analytics</Text>
-           
+
+
+            <View style={styles.chartContainer}>
+                <VictoryPie
+                    height={250}
+                    data={filterData}
+                    outerRadius={100}
+                    innerRadius={45}
+                    colorScale={colorScale}
+                    style={{ labels: { fill: 'white', fontSize: 16, fontWeight: 'bold' } }}
+                    events={
+                        [{
+                            target: "data",
+                            eventHandlers: {
+                                onPressIn: () => {
+                                    return [
+                                        {
+                                            target: "data",
+                                            mutation: ({ style, datum }) => {
+                                                const category = datum.x;
+
+                                                setSelectedCategory((prevCategory) => (
+                                                    prevCategory === category ? null : category
+                                                ));
+
+                                                return style.fill === hearingCategoryColors[category]
+                                                    ? null
+                                                    : { style: { fill: hearingCategoryColors[category] } };
+                                            },
+                                        },
+                                    ];
+                                }
+                            }
+                        }]
+                    }
+                />
+                {filterData.map((point) => (
+                    <VictoryLabel
+                        key={point.x}
+                        style={{ fontSize: 14, color: 'white' }}
+                        dx={5}
+                        dy={5}
+                        text={`${point.x}\n(${((point.y / totalStudents) * 100).toFixed(2)}%)`}
+                    />
+                ))}
+            </View>
             <FlatList
                 contentContainerStyle={styles.listContainer}
-                ListHeaderComponent={
-                    <View style={styles.chartContainer}>
-                        <VictoryPie
-                            height={300}
-                            data={filterData}
-                            outerRadius={120}
-                            innerRadius={60}
-                            colorScale= {colorScale}
-                            style={{ labels: { fill: 'white', fontSize: 16, fontWeight: 'bold' } }}
-                        />
-                        {filterData.map((point) => (
-                            <VictoryLabel
-                                key={point.x}
-                                textAnchor="middle"
-                                style={{ fontSize: 14, color: 'white' }}
-                                x={175}
-                                y={175 + 25} // Adjust based on the chart size
-                                text={`${point.x}\n10(${((point.y / totalStudents) * 100).toFixed(2)}%)`}
-                            />
-                        ))}
-                    </View>
-                }
                 data={listUserCard.filter(searchFilter)}
                 renderItem={renderAssignmentCard}
                 keyExtractor={(item) => item.UID}
