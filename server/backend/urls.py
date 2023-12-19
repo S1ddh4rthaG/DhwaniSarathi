@@ -16,7 +16,7 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
-from apigateway.views import logininfo_list,logininfo_detail,user_list, user_detail, educator_list, educator_detail, educator_classrooms, classroom_list, classroom_detail, classroom_assignments, assignment_list, assignment_detail, assignment_userassignmentresults, assignment_validate,userassignmentresults_list, userassignmentresults_detail, useronlyresults_list, useronlyresults_detail
+from apigateway.views import logininfo_list,logininfo_detail,user_list, user_detail, educator_list, educator_detail, educator_classrooms, classroom_list, classroom_detail, classroom_assignments, assignment_list, assignment_detail, assignment_userassignmentresults, assignment_validate,userassignmentresults_list, userassignmentresults_detail, useronlyresults_list, useronlyresults_detail,results_detail
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -38,4 +38,5 @@ urlpatterns = [
     path('userassignmentresults/<str:UID>/', userassignmentresults_detail),
     path('useronlyresults/', useronlyresults_list),
     path('useronlyresults/<str:UID>/', useronlyresults_detail),
+    path('results/<str:UID>/', results_detail),
 ]
