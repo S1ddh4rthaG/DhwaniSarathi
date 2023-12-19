@@ -104,12 +104,12 @@ const QuietPlaceDetection = () => {
       <ProgressBar progress={0.25} color={'#2B3467'} style={{ margin: 15, marginTop: 50 }} />
       <View style={{ flex: 1, justifyContent: 'top', padding: 32 }}>
         <Text style={{ fontSize: 24, alignSelf: 'center', fontWeight: 'bold', marginBottom: 40, color: "#2B3467" }}>{t('Check Your Surrounding')}</Text>
-        <Image style={{ width: 300, height: 300, alignSelf: 'center' }} source={require('../assets/images/microphone.png')} resizeMode='cover' />
+        <Image style={{ width: 200, height: 200, alignSelf: 'center' }} source={require('../assets/images/microphone.png')} resizeMode='cover' />
 
         <View
           style={[
             styles.bar,
-            { width: 100 + getWidth(160 + decibels), height: 90, backgroundColor: calculateRGB(decibels) },
+            { width: 300 , height: 90, backgroundColor: calculateRGB(decibels) },
           ]}
         >
           <Text style={styles.barText}>{decibels} dB</Text>

@@ -17,7 +17,7 @@ const theme = {
 const UDCard = (props) => {
   const { t } = useTranslation();
 
-  const [selfTest] = useState(props.selfTest || true);
+  const [selfTest] = useState(props.selfTest && true);
   const [timestamp] = useState(props.timestamp || Date.now());
   const [name] = useState(props.name || 'John Doe');
   const [viewResults] = useState(props.viewResults || 'View Results');
@@ -55,6 +55,7 @@ const UDCard = (props) => {
       paddingVertical: 2,
       borderWidth: 2,
       borderRadius: 100,
+      fontFamily: 'monospace'
     },
     text: {
       marginHorizontal: 10,

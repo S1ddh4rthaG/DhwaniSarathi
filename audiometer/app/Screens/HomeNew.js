@@ -9,6 +9,7 @@ import { Button, Provider as PaperProvider, DefaultTheme, Appbar, Tooltip, Card,
 // Use icons
 import Icon from 'react-native-vector-icons/FontAwesome';
 import UDCard from './UDCard';
+import Draggable from 'react-native-draggable';
 const theme = {
   ...DefaultTheme,
   roundness: 2,
@@ -36,10 +37,10 @@ const Home = () => {
         <View style={{ flexDirection: 'row', justifyContent: 'space-between', padding: 0, margin: 0, width: "100%", }}>
           <Image source={require('../assets/images/logo.png')} style={{ width: 150, height: 150 }} />
           <Text style={styles.bigTitle}>
-            <Text style={{ width: "100%" }}>
+            <Text style={{ width: "100%", color: '#2B3467' }}>
               Hi,
             </Text>
-            <Text style={{ width: "100%", marginStart: 12, paddingTop: 10, paddingStart: 10, paddingEnd: 10 }}>
+            <Text style={{ width: "100%", marginStart: 12, paddingTop: 10, paddingStart: 10, paddingEnd: 10, fontFamily: 'notoserif' }}>
               {" Siddhartha G"}
             </Text>
           </Text>
@@ -48,7 +49,7 @@ const Home = () => {
           {/* <Text style={styles.classHeading}>
             Classroom Test
           </Text> */}
-          <Card style={{ margin: 20, padding: 10 }}>
+          <Card style={{ margin: 20, padding: 10}}>
             <Text style={styles.classTitle}>
               {t("Enter Classroom Details")}
             </Text>
@@ -86,6 +87,17 @@ const Home = () => {
         ))}
       </View>
     </ScrollView>
+
+    <Draggable
+        x={0}
+        y={0}
+        renderSize={56}
+        renderColor="#2B3467"
+        renderText={<Icon name='settings' size={20} color="white" />}
+        isCircle
+        onPress={() => router.push('/MapData')}
+        onShortPressRelease={() => console.log('Short press released')}
+      />
       </View>
 
 
@@ -154,6 +166,15 @@ const styles = StyleSheet.create({
   },
   classInput: {
     marginHorizontal: 10
+  },
+  floatingButton: {
+    position: 'absolute',
+    left: 16,
+    bottom: 16,
+    backgroundColor: '#B5B6BA',
+    borderRadius: 25,
+    padding: 15,
+    elevation: 5,
   },
   classButton: {
     margin: 15
