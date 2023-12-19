@@ -3,7 +3,7 @@ import { View, Text, TextInput, FlatList, Image, TouchableOpacity, StyleSheet, A
 import { baseurl } from "../Constants/ip.js";
 import { Link } from 'expo-router';
 
-const ClassroomList = ({EID}) => {
+const ClassroomList = ({ EID }) => {
     const [searchQuery, setSearchQuery] = useState('');
     const [classrooms, setClassrooms] = useState([]);
     const [loading, setLoading] = useState(true);
@@ -34,19 +34,26 @@ const ClassroomList = ({EID}) => {
 
     const renderClassroomCard = ({ item }) => (
         <Link
-            style={[styles.card, { backgroundColor: "#ffdcb2" }]}
+            style={[styles.card, { backgroundColor: "", borderColor: '#eb455f', borderWidth: 1 }]}
             href={{
                 pathname: 'Screens/Educator/AssignmentList',
-                params: { CID: item.CID,Count: item.Count },
+                params: { CID: item.CID, Count: item.Count },
             }}
         >
-            <View
-            >
+            <View style={{ width: 350, height: 100, }}>
                 <Text style={styles.cardTitle}>{item.ClassroomName}</Text>
-                {/* Add more relevant data based on your response */}
-                <Text style={styles.cardCode}>Classroom ID: {item.CID}</Text>
-                <Text style={styles.cardCode}>Educator ID: {item.EID}</Text>
-                {/* Add more data as needed */}
+                {/* Add more relevant data based on your response 
+                <Text style={styles.cardCode}><Text style={{ color: '#eb455f' }}>Classroom ID:</Text> {item.CID}</Text>
+                <Text style={styles.cardCode}><Text style={{ color: '#eb455f' }}>Educator ID: </Text>{item.EID}</Text>
+                */}
+                <Text style={styles.cardCode}><Text style={{ color: '#eb455f' }}>Classroom Strength: </Text>{item.Count}</Text>
+
+                {/*<TouchableOpacity
+                    style={[styles.button, { borderColor: '#2b3467', borderWidth: 1, width: 50 + '%', alignSelf: 'center', margin: 10, padding: 5, borderRadius: 5 }]}
+                    onPress={(() => alert("Classroom ID: " + item.CID))}
+                >
+                    <Text style={[styles.buttonText, { color: '#2b3467' }]}>View Assignments</Text>
+            </TouchableOpacity>*/}
             </View>
         </Link>
     );
@@ -86,7 +93,7 @@ const ClassroomList = ({EID}) => {
 const styles = StyleSheet.create({
     container: {
 
-        backgroundColor: '#B5B6BA',
+        backgroundColor: 'white',
         justifyContent: 'center',
 
         borderColor: 'white',
@@ -109,25 +116,36 @@ const styles = StyleSheet.create({
         height: 40,
         borderWidth: 1,
         borderRadius: 5,
-        borderColor: 'white',
+        borderColor: '#2b3467',
         marginBottom: 10,
         paddingHorizontal: 10,
         margin: 10,
     },
     card: {
         marginBottom: 20,
-        padding: 10,
+
         borderRadius: 10,
+
 
     },
     cardTitle: {
         fontSize: 18,
         fontWeight: 'bold',
         paddingVertical: 5,
+        backgroundColor: '#eb455f',
+        borderTopLeftRadius: 10,
+        borderTopRightRadius: 10,
+        paddingHorizontal: 10,
+        color: 'white',
+
+
     },
     cardCode: {
-        fontSize: 18,
+        fontSize: 15,
         paddingVertical: 5,
+        color: 'black',
+        paddingHorizontal: 10,
+        overflow: 'hidden'
     },
     cardDates: {
         flexDirection: 'row',
