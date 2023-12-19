@@ -17,7 +17,7 @@ export default () => {
     return <Redirect href="/Screens/Home" />;
   }
 
-  return <Redirect href="/Screens/HomeNew" />;
+  return <Redirect href="/AudiometryTest" />;
 };
 
 // const styles = StyleSheet.create({

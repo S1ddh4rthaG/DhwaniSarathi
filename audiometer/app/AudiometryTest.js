@@ -9,6 +9,8 @@ import {
   Provider as PaperProvider,
   Button,
   Card,
+  Icon,
+  ProgressBar,
 } from "react-native-paper";
 import { useTranslation } from "react-i18next";
 import { useLocalSearchParams } from "expo-router";
@@ -55,7 +57,7 @@ const AudiometryTest = () => {
       console.error(`Error posting ${resulttype} Results:`, error);
     }
   };
-  
+
   // Update state values with view getters
   const updateState = () => {
     setEar(audiometry.getEar());
@@ -74,18 +76,17 @@ const AudiometryTest = () => {
     const over = audiometry.regResponse(response);
     setIsTestOver(over);
     updateState();
-  
+
     if (over) {
-      console.log("hi");
       const resulttype = "userassignmentresults";
       const userAID = "6f85bbb3-1ee1-4159-9d08-ec76acc82b68";
       const userCID = "354598f9-2d73-4272-9cbc-3e27da8ec238";
       const userId = "BNyCI19R1GgqUCSPqqBpKG3uxGD3";
-    //  const userId = await AsyncStorage.getItem("userID");
+      //  const userId = await AsyncStorage.getItem("userID");
 
       const userassignmentresults = `${baseurl}/userassignmentresults/`;
       const useronlyresults = `${baseurl}/useronlyresults/`;
-  
+
       if (resulttype === "userassignmentresults") {
         const url = userassignmentresults;
         const data = {
@@ -119,7 +120,7 @@ const AudiometryTest = () => {
         {playState !== 1 && (
           <View>
             <Image
-              style={styles.image}
+              style={styles.imageAudio}
               source={require("./assets/images/atest_icon.jpeg")}
             />
             <Text style={styles.title}>{t("Pure Tone Audiometry Test")}</Text>
@@ -130,7 +131,7 @@ const AudiometryTest = () => {
         )}
 
         {isTestOver && (
-          <Button style={styles.Button2} mode="contained" onPress={() => {}}>
+          <Button style={styles.Button2} mode="contained" onPress={() => { }}>
             Results
             <Text>{JSON.stringify(getResults())}</Text>
           </Button>
@@ -139,24 +140,50 @@ const AudiometryTest = () => {
         {!isTestOver && playState === 1 && (
           <View>
             <View>
+              <Button
+                style={styles.ButtonFTM}
+                mode="contained-tonal"
+                theme={{ colors: { primary: "#2B3467" } }}
+              >
+                <Text style={styles.buttonTextFT}>
+                  {masking ? "MASKED TEST" : "UNMASKED TEST"}
+                </Text>
+              </Button>
+
               <Text style={styles.titleTest}>
                 {t("Can you hear the sound?")}
               </Text>
+              <Text style={{ width: "100%", fontStyle: "italic", fontWeight: "bold" }}>
+                Progress
+              </Text>
+              <ProgressBar progress={
+                audiometry.Fptr / audiometry.MAX_F
+              } style={styles.FBar} />
               <Text style={styles.titleEar}>
                 {t(ear === "left" ? "Left Ear" : "Right Ear")}
               </Text>
-              {ear === "left" && (
-                <Image
-                  style={styles.image}
-                  source={require("./assets/images/left_ear.png")}
-                />
-              )}
-              {ear === "right" && (
-                <Image
-                  style={styles.image}
-                  source={require("./assets/images/right_ear.png")}
-                />
-              )}
+              <View style={{ flexDirection: "column", }}>
+                {ear === "left" && (
+                  <Image
+                    style={styles.image}
+                    source={require("./assets/images/left_ear.png")}
+                  />
+                )}
+                {ear === "right" && (
+                  <Image
+                    style={styles.image}
+                    source={require("./assets/images/right_ear.png")}
+                  />
+                )}
+                <Card style={{ padding: 10, marginVertical: 20, width: "100%" }}>
+                  <Text style={{ width: "100%", fontStyle: "italic", fontWeight: "bold" }}>
+                    Threshold
+                  </Text>
+                  <ProgressBar progress={
+                    audiometry.Aptr / audiometry.MAX_A
+                  } style={styles.TBar} />
+                </Card>
+              </View>
               <View style={styles.buttonContainer2}>
                 <Button
                   style={styles.ButtonFT}
@@ -168,30 +195,21 @@ const AudiometryTest = () => {
                 <Button
                   style={styles.ButtonFT}
                   mode="contained"
-                  theme={{ colors: { primary: "#2B3467" } }}
+                  icon={"play-circle"}
+                  onPress={() => audiometry.playTone()}
                 >
-                  <Text style={styles.buttonTextFT}>{threshold + " dB"}</Text>
+                  {t("Replay")}
                 </Button>
                 <Button
                   style={styles.ButtonFT}
                   mode="contained"
                   theme={{ colors: { primary: "#2B3467" } }}
                 >
-                  <Text style={styles.buttonTextFT}>
-                    {masking ? "MSK" : "UNMSK"}
-                  </Text>
+                  <Text style={styles.buttonTextFT}>{threshold + " dB"}</Text>
                 </Button>
+
               </View>
             </View>
-
-            <Button
-              style={styles.Button}
-              mode="contained"
-              icon={"play-circle"}
-              onPress={() => audiometry.playTone()}
-            >
-              {t("replay?")}
-            </Button>
             <View style={styles.buttonContainer}>
               <Button
                 style={styles.ButtonYes}
@@ -218,10 +236,16 @@ const AudiometryTest = () => {
 };
 
 const styles = StyleSheet.create({
+  FBar: {
+    margin: 10,
+  },
+  TBar: {
+    margin: 10,
+  },
   container: {
     flex: 1,
     backgroundColor: "#fff",
-    padding: 24,
+    padding: 20,
     justifyContent: "center",
     borderColor: "white",
     borderWidth: 5,
@@ -246,12 +270,21 @@ const styles = StyleSheet.create({
     flex: 1,
     width: "100%",
   },
-  image: {
+  imageAudio: {
     width: 300,
     height: 300,
     alignContent: "center",
     alignSelf: "center",
     marginBottom: 40,
+    borderWidth: 5,
+    borderColor: "black",
+    borderRadius: 10,
+  },
+  image: {
+    width: 250,
+    height: 250,
+    alignContent: "center",
+    alignSelf: "center",
     borderWidth: 5,
     borderColor: "black",
     borderRadius: 10,
@@ -285,6 +318,7 @@ const styles = StyleSheet.create({
   titleEar: {
     fontSize: 20,
     textAlign: "center",
+    fontStyle: "italic",
     fontWeight: "bold",
     marginBottom: 10,
     padding: 10,
@@ -307,6 +341,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center",
+    marginTop: 10
   },
   Button: {
     // backgroundColor: 'blue', // Greenish Yellow
@@ -315,12 +350,16 @@ const styles = StyleSheet.create({
     marginTop: 20,
     width: "40%",
   },
+  ButtonCircle: {
+    borderRadius: 30,
+    marginHorizontal: 5,
+    marginTop: 20,
+    fontSize: 30,
+  },
   ButtonYes: {
-    // backgroundColor: 'blue', // Greenish Yellow
-    // borderRadius: 10,
     paddingVertical: 10,
     marginTop: 20,
-    width: "45%",
+    width: "41%",
     color: "green",
   },
   ButtonFT: {
@@ -330,6 +369,11 @@ const styles = StyleSheet.create({
     width: "32%",
     borderRadius: 50,
   },
+  ButtonFTM: {
+    borderRadius: 20,
+    marginBottom: 15,
+    fontSize: 11
+  },
   buttonTextFT: {
     fontSize: 15,
   },
@@ -338,7 +382,7 @@ const styles = StyleSheet.create({
     // borderRadius: 10,
     paddingVertical: 10,
     marginTop: 20,
-    width: "45%",
+    width: "41%",
     color: "red",
   },
   Button2: {

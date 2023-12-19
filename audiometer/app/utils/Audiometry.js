@@ -126,11 +126,9 @@ class Audiometry {
     console.log(this.player.getStatusAsync())
     if (this.player.getStatusAsync()._j.isLoaded !== false) {
       this.player.setVolumeAsync(0);
-      this.player.unloadAsync();
-
-      this.player = new Audio.Sound();
     }
-    // this.player.unloadAsync();
+    
+    this.player.unloadAsync();
 
     if (this.isTestOver()) return true;
 
