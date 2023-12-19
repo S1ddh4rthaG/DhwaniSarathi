@@ -151,7 +151,7 @@ const Home = () => {
           {/* <Text style={styles.classHeading}>
             Self Test
           </Text> */}
-          <Button style={styles.classButton} mode="contained">
+          <Button style={styles.classButton} mode="contained" onPress={() => router.push("/Screens/BeforeTest1")}>
             <Text style={styles.classButtonText}>{t("Self Test!")}</Text>
           </Button>
         </View>
@@ -206,7 +206,7 @@ const Home = () => {
             <Button
               mode="contained"
               style={styles.bNav}
-              onPress={() => router.push("/Screens/FillDetails")}
+              onPress={() => router.push("/Screens/BeforeTest1")}
             >
               <Icon name="play" size={18} color="white" style={styles.bIcon} />
             </Button>

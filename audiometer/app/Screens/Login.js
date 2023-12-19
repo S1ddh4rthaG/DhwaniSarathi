@@ -74,7 +74,7 @@ const Login = () => {
           else {
             router.push(
               {
-                pathname: "/Screens/Home",
+                pathname: "/Screens/HomeNew",
                 params: { UID:  response.user.uid},
               }
             );

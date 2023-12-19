@@ -81,7 +81,7 @@ const getData = async () => {
 const Results = ({ leftEarData, rightEarData }) => {
     const viewShotRef = useRef();
     const params = useLocalSearchParams();
-    console.log('params id', params.id);
+    // console.log('params id', params.id);
     let resultProp = params.results;
     if (typeof resultProp === 'string') {
         try {

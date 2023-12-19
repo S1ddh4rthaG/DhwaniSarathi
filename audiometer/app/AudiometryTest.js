@@ -15,6 +15,7 @@ import {
 import { useTranslation } from "react-i18next";
 import { useLocalSearchParams } from "expo-router";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { ActivityIndicator, MD2Colors } from 'react-native-paper';
 
 const theme = {
   ...DefaultTheme,
@@ -104,6 +105,12 @@ const AudiometryTest = () => {
         };
         await typeBasedPost(url, data, resulttype);
       }
+     
+      router.push({
+        pathname: '/Screens/Results',
+        params: { results: JSON.stringify(getResults()) },
+      });
+      
     } else {
       audiometry.playTone();
     }
@@ -131,10 +138,11 @@ const AudiometryTest = () => {
         )}
 
         {isTestOver && (
-          <Button style={styles.Button2} mode="contained" onPress={() => { }}>
-            Results
-            <Text>{JSON.stringify(getResults())}</Text>
-          </Button>
+          // <Button style={styles.Button2} mode="contained" onPress={() => { }}>
+          //   Results
+          //   <Text>{JSON.stringify(getResults())}</Text>
+          // </Button>
+          <ActivityIndicator animating={true} color={MD2Colors.red800} />
         )}
 
         {!isTestOver && playState === 1 && (
