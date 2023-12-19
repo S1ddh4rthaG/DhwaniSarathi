@@ -2,6 +2,24 @@ import React, { useState, useEffect } from 'react';
 import { View, Text, TextInput, FlatList, TouchableOpacity, StyleSheet, ActivityIndicator } from 'react-native';
 import { baseurl } from '../../Constants/ip.js';
 import { Link, router, useLocalSearchParams } from "expo-router";
+import { Card, Title, Paragraph } from 'react-native-paper';
+import {
+    DefaultTheme,
+    Provider as PaperProvider,
+    Button,
+    Icon,
+    ProgressBar,
+} from "react-native-paper";
+
+const theme = {
+    ...DefaultTheme,
+    roundness: 2,
+    colors: {
+        ...DefaultTheme.colors,
+        primary: "#EB455F",
+        accent: "#f1c40f",
+    },
+};
 
 const AssignmentList = () => {
     const [searchQuery, setSearchQuery] = useState('');
@@ -128,36 +146,40 @@ const AssignmentList = () => {
     };
 
     const renderAssignmentCard = ({ item }) => (
-        <Link style={styles.card}
-            href={{
-                pathname: 'Screens/Educator/AssignmentAnalytics',
-                params: { AID: item.AID }
-            }}
-        >
-            {/* <TouchableOpacity onPress={()=>{
-                router.push({pathname: '/Screens/Educator/ClassResults', params: {id: 456, AID: item.AID, CID: CID}}); 
-            }}> */}
-
-            <Text style={styles.cardTitle}>{item.AssignmentName}</Text>
-            <Text style={styles.cardDate}>Deadline: {item.Deadline}</Text>
-            <Text style={styles.cardField}>Class Strength: {Count}</Text>
-            <View style={styles.progressBarContainer}>
-                <Text style={styles.cardField}>
-                    Progress: {item.SubmittedCount}/{Count}
-                </Text>
-                <View style={styles.progressBar}>
-                    <View
-                        style={{
-                            width: `${(item.SubmittedCount / Count) * 100}%`,
-                            height: 10,
-                            backgroundColor: '#eb4557',
-                            borderRadius: 5,
-                        }}
-                    />
-                </View>
-            </View>
-            {/* </TouchableOpacity> */}
-        </Link>
+        // <Link style={styles.card}
+        // href={{
+        //     pathname: 'Screens/Educator/AssignmentAnalytics',
+        //     params: { AID: item.AID }
+        // }}
+        // >        
+        <Card style={{ margin: 10., padding: 5 }}>
+            <Link style={styles.card}
+                href={{
+                    pathname: 'Screens/Educator/AssignmentAnalytics',
+                    params: { AID: item.AID }
+                }}>
+                <Card.Content>
+                    <Title style={styles.cardTitle}>{item.AssignmentName}</Title>
+                    <Paragraph style={styles.cardDate}>Deadline: {item.Deadline}</Paragraph>
+                    <Paragraph style={styles.cardField}>Class Strength: {Count}</Paragraph>
+                    <View style={styles.progressBarContainer}>
+                        <Paragraph style={styles.cardField}>
+                            Progress: {item.SubmittedCount}/{Count}
+                        </Paragraph>
+                        <View style={styles.progressBar}>
+                            <View
+                                style={{
+                                    width: `${(item.SubmittedCount / Count) * 100}%`,
+                                    height: 10,
+                                    backgroundColor: '#eb4557',
+                                    borderRadius: 5,
+                                }}
+                            />
+                        </View>
+                    </View>
+                </Card.Content>
+            </Link>
+        </Card>
     );
 
     const searchFilter = (item) => {
@@ -174,56 +196,58 @@ const AssignmentList = () => {
     }
 
     return (
-        <View style={styles.container}>
-            <Text style={styles.title}>Assignments</Text>
-            <TextInput
-                style={styles.searchInput}
-                placeholder="Search..."
-                value={searchQuery}
-                onChangeText={setSearchQuery}
-                placeholderTextColor="grey"
-            />
-            <FlatList
-                contentContainerStyle={styles.listContainer}
-                data={assignments.filter(searchFilter)}
-                renderItem={renderAssignmentCard}
-                keyExtractor={(item) => item.AID}
-            />
-            <Text style={styles.title}>Create New Assignment</Text>
+        <PaperProvider theme={theme}>
+            <View style={styles.container}>
+                <Text style={styles.title}>Assignments</Text>
+                <TextInput
+                    style={styles.searchInput}
+                    placeholder="Search..."
+                    value={searchQuery}
+                    onChangeText={setSearchQuery}
+                    placeholderTextColor="grey"
+                />
+                <FlatList
+                    contentContainerStyle={styles.listContainer}
+                    data={assignments.filter(searchFilter)}
+                    renderItem={renderAssignmentCard}
+                    keyExtractor={(item) => item.AID}
+                />
+                <Text style={styles.title}>Create New Assignment</Text>
 
-            <TextInput
-                style={styles.searchInput}
-                placeholder="Assignment Name"
-                placeholderTextColor="grey"
-                value={assignmentName}
-                onChangeText={setAssignmentName}
-            />
-            <TextInput
-                style={styles.searchInput}
-                placeholder="Deadline"
-                placeholderTextColor="grey"
-            />
+                <TextInput
+                    style={styles.searchInput}
+                    placeholder="Assignment Name"
+                    placeholderTextColor="grey"
+                    value={assignmentName}
+                    onChangeText={setAssignmentName}
+                />
+                <TextInput
+                    style={styles.searchInput}
+                    placeholder="Deadline"
+                    placeholderTextColor="grey"
+                />
 
 
-            <TouchableOpacity
-                style={styles.button}
-                onPress={() => {
-                    // Handle button press for creating a new assignment
-                    // You can navigate to a new screen or show a modal, etc.
-                    console.log('Create New Assignment');
-                    handleNewAssignment();
-                }}
-            >
-                <Text style={styles.buttonText}>Create New Assignment</Text>
-            </TouchableOpacity>
-        </View>
+                <TouchableOpacity
+                    style={styles.button}
+                    onPress={() => {
+                        // Handle button press for creating a new assignment
+                        // You can navigate to a new screen or show a modal, etc.
+                        console.log('Create New Assignment');
+                        handleNewAssignment();
+                    }}
+                >
+                    <Text style={styles.buttonText}>Create New Assignment</Text>
+                </TouchableOpacity>
+            </View>
+        </PaperProvider>
     );
 };
 
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: '#f0f0f0',
+        padding: 10,
         borderWidth: 2,
         borderColor: 'white',
         borderRadius: 10
@@ -233,74 +257,53 @@ const styles = StyleSheet.create({
         opacity: 0.9,
     },
     title: {
-        fontSize: 20,
+        fontSize: 25,
         fontWeight: 'bold',
-        marginBottom: 10,
-        color: 'white',
-        backgroundColor: '#eb455f',
-        height: 40,
-        textAlign: 'center',
-        justifyContent: 'center',
-        textAlignVertical: 'center',
+        marginBottom: 15,
     },
     searchInput: {
         height: 40,
         borderWidth: 1,
         borderRadius: 5,
-        borderColor: '#eb455f',
+        borderColor: '#2b3467',
         marginBottom: 15,
         paddingHorizontal: 10,
-        marginHorizontal: 10,
-        color: 'black',
-        width: 90 + '%',
-        alignSelf: 'center',
     },
     card: {
         flex: 1,
         marginBottom: 20,
-        padding: 10,
+        padding: 1,
+        paddingVertical: 5,
         borderRadius: 5,
-        marginHorizontal: 15,
-        borderWidth: 1,
-        borderColor: '#eb455f',
-        backgroundColor: 'white',
-        elevation: 5,
+        marginHorizontal: 10,
     },
     cardTitle: {
         fontSize: 18,
         fontWeight: 'bold',
-        color: '#eb455f',
-
     },
     cardDate: {
-        color: 'black',
     },
     cardField: {
-        color: 'black',
         marginTop: 5,
     },
     progressBarContainer: {
         marginTop: 5,
     },
     progressBar: {
-        backgroundColor: '#bad7e9',
+        backgroundColor: 'lightgrey',
         borderRadius: 5,
         marginTop: 5,
     },
     button: {
-        backgroundColor: '#2b3467',
+        backgroundColor: '#EB455F',
         borderRadius: 5,
         padding: 10,
         marginTop: 10,
-        width: 80 + '%',
-        alignSelf: 'center',
-        margin: 5,
-
     },
     buttonText: {
-        color: 'white',
         textAlign: 'center',
         fontWeight: 'bold',
+        color: 'white',
     },
 });
 
