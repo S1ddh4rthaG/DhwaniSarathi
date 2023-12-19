@@ -97,21 +97,21 @@ const AudiometryTest = () => {
           CID: userCID,
           UID: userId,
           AID: userAID,
-          Results: JSON.stringify(getResults()),
+          Results: getResults(),
         };
         await typeBasedPost(url, data, resulttype);
       } else {
         const url = useronlyresults;
         const data = {
           UID: userId,
-          Results: JSON.stringify(getResults()),
+          Results: getResults(),
         };
         await typeBasedPost(url, data, resulttype);
       }
      
       router.push({
         pathname: '/Screens/Results',
-        params: { results: JSON.stringify(getResults()) },
+        params: { results: JSON.stringify(getResults().info) },
       });
       
     } else {
@@ -120,7 +120,38 @@ const AudiometryTest = () => {
   };
 
   const getResults = () => {
-    return audiometry.getResults();
+    let newResults = {};
+    newResults["info"] = audiometry.getResults();
+    let pta_left = 0;
+    let pta_right = 0;
+
+    let left_count = 0;
+    let right_count = 0;
+
+    let left = newResults["info"].filter((item) => item.ear === "left" && item.measurementType === "AIR_UNMASKED_LEFT")
+    let right = newResults["info"].filter((item) => item.ear === "right"&& item.measurementType === "AIR_UNMASKED_RIGHT")
+
+    left.forEach((item) => {
+      if (item.frequency == 500 || item.frequency == 1000 || item.frequency == 2000 || item.frequency == 4000) {
+        pta_left += item.threshold;
+        left_count++;
+      }
+    });
+
+    right.forEach((item) => {
+      if (item.frequency == 500 || item.frequency == 1000 || item.frequency == 2000 || item.frequency == 4000) {
+        pta_right += item.threshold;
+        right_count++;
+      }
+    });
+
+    pta_left = Math.round(pta_left / left_count);
+    pta_right = Math.round(pta_right / right_count);
+
+    newResults["pta_left"] = pta_left;
+    newResults["pta_right"] = pta_right;
+
+    return newResults;
   };
   console.log(JSON.stringify(getResults()));
 
