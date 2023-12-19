@@ -1,67 +1,101 @@
-import React from 'react';
-import MapView, { PROVIDER_GOOGLE, Marker } from 'react-native-maps';
-import { View, StyleSheet } from 'react-native';
-// import {AppBar} from 'react-native-paper'; 
-import { useNavigation } from '@react-navigation/native';
-// import './locales/i18n';  
-import { useTranslation } from 'react-i18next';
-import { Image } from 'react-native';
-import { Button, Provider as PaperProvider, DefaultTheme, Appbar } from 'react-native-paper';
+import React, { useState } from 'react';
+import { View, StyleSheet, TouchableOpacity, Text} from 'react-native';
+import MapView, { Marker } from 'react-native-maps';
+import { Picker } from "@react-native-picker/picker";
+const MapData = () => {
+  const [selectedLocation, setSelectedLocation] = useState(null);
+  const [noiseLevel, setNoiseLevel] = useState(0);
 
-const theme = {
-  ...DefaultTheme,
-  roundness: 2,
-  colors: {
-    ...DefaultTheme.colors,
-    primary: '#EB455F',
-    accent: '#f1c40f',
-  },
-};
-const Maps = () => {
-  const markers = [
-    { id: 1, title: 'Udaipur Arogya', coordinate: { latitude: 24.5854, longitude: 73.7125} },
-    { id: 2, title: 'Sankalp Speclialist', coordinate: { latitude: 24.1820, longitude: 73.339 } },
-    { id: 3, title: 'Sutar Arogya center', coordinate: { latitude: 24.3839, longitude: 73.2809 } },
-    // Add more markers as needed
-  ];
+  const handleMapPress = (event) => {
+    const { coordinate } = event.nativeEvent;
+
+    // Set the selected location and reset noise level
+    setSelectedLocation(coordinate);
+    setNoiseLevel(0);
+  };
+
+  const handlePickerChange = (value) => {
+    setNoiseLevel(value);
+  };
+
+  const handleSubmit = () => {
+    if (!selectedLocation) {
+      alert('Please select a location on the map.');
+      return;
+    }
+
+    // Handle submission logic here (e.g., integrate with Firebase)
+    alert(`Location: ${selectedLocation.latitude}, ${selectedLocation.longitude}\nNoise Level: ${noiseLevel}`);
+    
+    // Reset selected location and noise level
+    setSelectedLocation(null);
+    setNoiseLevel(0);
+  };
 
   return (
-    <PaperProvider theme={theme}>
     <View style={styles.container}>
       <MapView
-        provider={PROVIDER_GOOGLE}
-        style={{ flex: 1 }}
+        style={styles.map}
         initialRegion={{
-          latitude: 24.5854,
-          longitude: 73.7125,
-          latitudeDelta: 0.0922,
-          longitudeDelta: 0.0421,
+          latitude: 20.5937,
+          longitude: 78.9629,
+          latitudeDelta: 15,
+          longitudeDelta: 15,
         }}
+        onLongPress={handleMapPress}
       >
-        {markers.map((marker) => (
-          <Marker
-            key={marker.id}
-            coordinate={marker.coordinate}
-            title={marker.title}
-            description={`Lat: ${marker.coordinate.latitude}, Long: ${marker.coordinate.longitude}`}
-
-          >
-            
-            <Image source={require('../assets/images/logo.png')} style={{ width: 30, height: 30, alignSelf: 'center' }} />
-           </Marker>
-        ))}
+        {selectedLocation && (
+          <Marker coordinate={selectedLocation} pinColor="blue" />
+        )}
       </MapView>
+      {selectedLocation && (
+        <View style={styles.noiseLevelContainer}>
+          <Text>Select Noise Level:</Text>
+          <Picker
+            selectedValue={noiseLevel}
+            style={styles.picker}
+            onValueChange={handlePickerChange}
+          >
+            <Picker.Item label="Low" value={1} color="green" />
+            <Picker.Item label="Moderate" value={2} color="yellow" />
+            <Picker.Item label="High" value={3} color="orange" />
+            <Picker.Item label="Very High" value={4} color="red" />
+          </Picker>
+          <TouchableOpacity style={styles.submitButton} onPress={handleSubmit}>
+            <Text>Submit</Text>
+          </TouchableOpacity>
+        </View>
+      )}
     </View>
-    </PaperProvider>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
+    ...StyleSheet.absoluteFillObject,
     flex: 1,
+  },
+  map: {
+    ...StyleSheet.absoluteFillObject,
+  },
+  noiseLevelContainer: {
+    position: 'absolute',
+    bottom: 20,
+    left: 10,
+    flexDirection: 'column',
+    alignItems: 'center',
+  },
+  picker: {
+    width: 200,
+    height: 50,
+    marginVertical: 10,
+  },
+  submitButton: {
+    marginVertical: 10,
     padding: 10,
-    justifyContent: 'center',
+    backgroundColor: 'green',
+    borderRadius: 5,
   },
 });
 
-export default Maps;
+export default MapData;

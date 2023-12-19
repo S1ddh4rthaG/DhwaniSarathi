@@ -258,12 +258,12 @@ const HomeNew = () => {
 
           {/* Button 2 */}
           <View style={{ alignItems: "center" }}>
-            <Button mode="contained" style={styles.bNav} onPress={() => {}}>
+            <Button mode="contained" style={styles.bNav} onPress={() => {router.push("/Screens/MapData")}}>
               {/* Test results */}
               <Icon name="list" size={18} color="white" style={styles.bIcon} />
             </Button>
             <Text style={{ color: "white", fontSize: 10, fontWeight: "bold" }}>
-              Results
+              Noise Pollution Data
             </Text>
           </View>
 
