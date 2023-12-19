@@ -5,6 +5,7 @@ import {
   TouchableOpacity,
   Image,
   StyleSheet,
+  Alert
 } from "react-native";
 import { Button, Text, Card, TextInput } from "react-native-paper";
 import { DefaultTheme, Provider as PaperProvider } from "react-native-paper";
@@ -80,11 +81,13 @@ const Login = () => {
             );
           }
         } else {
+          Alert.alert('Failed to fetch the data', 'Retry again!');
           console.error("Failed to fetch user data:", response1.status);
         }
       }
     
     } catch (error) {
+      Alert.alert('Check your credentials again', 'Retry again!');
       console.log(error);
     } finally {
       setLoading(false);
