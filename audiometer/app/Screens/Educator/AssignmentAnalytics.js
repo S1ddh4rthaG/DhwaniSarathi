@@ -89,12 +89,12 @@ const AssignmentAnalytics = () => {
 
     const renderAssignmentCard = ({ item }) => (
         <TouchableOpacity
-            style={[styles.card, { backgroundColor: hearingCategoryColors[getCategory(Math.max(item.Results.pta_left, item.Results.pta_right))] }]}
+            style={[styles.card,]}
             onPress={() => {
                 router.push({ pathname: 'Screens/Results', params: { results: JSON.stringify(item["Results"]["info"]) } });
             }}
         >
-            <Text style={styles.cardTitle}>{item.UserName}</Text>
+            <Text style={[styles.cardTitle, { backgroundColor: hearingCategoryColors[getCategory(Math.max(item.Results.pta_left, item.Results.pta_right))] }]}>{item.UserName}</Text>
             <Text style={styles.cardDate}>Age: {item.Age}</Text>
             <Text style={styles.cardDate}>Gender: {item.Gender}</Text>
             <Text style={styles.cardMore}>More Details</Text>
@@ -257,7 +257,7 @@ const styles = StyleSheet.create({
         borderTopRightRadius: 5,
     },
     cardDate: {
-        color: 'white',
+        color: 'black',
         paddingHorizontal: 10,
         paddingVertical: 5,
     },
