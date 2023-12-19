@@ -470,3 +470,36 @@ def useronlyresults_detail(request, UID):
         useronlyresults.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
    
+# url/results/UID
+@api_view(['GET'])
+def results_detail(request, UID):
+    """
+    Retrieve all results of a user.
+    """
+    try:
+        userassignmentresults = UserAssignmentResults.objects.filter(UID=UID)
+        useronlyresults = UserOnlyResults.objects.filter(UID=UID)
+    except UserAssignmentResults.DoesNotExist:
+        return Response(status=status.HTTP_404_NOT_FOUND)
+    
+    if(request.method == 'GET'):
+        serializer1 = UserAssignmentResultsSerializer(userassignmentresults, many=True)
+        serializer2 = UserOnlyResultsSerializer(useronlyresults, many=True)
+
+        for item in serializer1.data:
+            item['isSelf'] = False
+            item['ClassroomName'] = Classroom.objects.get(CID=item['CID']).ClassroomName
+            item['AssignmentName'] = Assignment.objects.get(AID=item['AID']).AssignmentName
+            item['Timestamp'] = item['Timestamp'][0:10]
+            serializer1.data[serializer1.data.index(item)] = item
+
+        for item in serializer2.data:
+            item['isSelf'] = True
+            item['Timestamp'] = item['Timestamp'][0:10]
+            serializer2.data[serializer2.data.index(item)] = item
+        
+
+        results = serializer1.data + serializer2.data
+
+        results.sort(key=lambda x: x['Timestamp'], reverse=True)
+        return Response(results)
