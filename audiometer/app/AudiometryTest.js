@@ -36,10 +36,7 @@ const AudiometryTest = () => {
 
   const { t, i18n } = useTranslation();
 
-  const typeBasedPost = async (...args) => {
-    const url = args.url;
-    const data = args.data;
-    const type = args.type;
+  const typeBasedPost = async (url, data, resulttype) => {
     try {
       const response = await fetch(url, {
         method: "POST",
@@ -49,14 +46,16 @@ const AudiometryTest = () => {
         body: JSON.stringify(data),
       });
       if (response.ok) {
-        console.log(`${type} Results Posted`);
+        console.log(response);
+        console.log(`${resulttype} Results Posted`);
       } else {
-        console.error(`Failed to post ${type} Results:`, response.status);
+        console.error(`Failed to post ${resulttype} Results:`, response.status);
       }
     } catch (error) {
-      console.error(`Error posting ${type} Results:`, error);
+      console.error(`Error posting ${resulttype} Results:`, error);
     }
   };
+  
   // Update state values with view getters
   const updateState = () => {
     setEar(audiometry.getEar());
@@ -71,45 +70,38 @@ const AudiometryTest = () => {
     updateState();
     setPlayState(1);
   };
-
   const updateResponse = async (response) => {
     const over = audiometry.regResponse(response);
     setIsTestOver(over);
     updateState();
-
+  
     if (over) {
-      //Based on  wether its userassignmenttesults or userresultsonly
-      const params = useLocalSearchParams();
-      const resulttype = params.resulttype;
-      const userAID = params.AID;
-      const userCID = params.CID;
-      const userId = await AsyncStorage.getItem("userId");
+      console.log("hi");
+      const resulttype = "userassignmentresults";
+      const userAID = "6f85bbb3-1ee1-4159-9d08-ec76acc82b68";
+      const userCID = "354598f9-2d73-4272-9cbc-3e27da8ec238";
+      const userId = "BNyCI19R1GgqUCSPqqBpKG3uxGD3";
+    //  const userId = await AsyncStorage.getItem("userID");
 
-      if (isTestOver) {
-        const userassignmentresults = `${baseurl}/userassignmentresults`;
-        const useronlyresults = `${baseurl}/useronlyresults`;
-
-        if ((resulttype = "userassignmentresults")) {
-          const data = {
-            CID: userCID,
-            UID: userId,
-            AID: userAID,
-            Results: JSON.stringify(getResults()),
-          };
-          typeBasedPost(userassignmentresults, data, "userassignmentresults");
-        } else {
-          const data = {
-            UID: userId,
-            Results: JSON.stringify(getResults()),
-          };
-          typeBasedPost(useronlyresults, data, "useronlyresults");
-        }
-
-        router.push({
-          pathname: "/Screens/Results",
-          // the aid here is useless
-          params: { id: 42, results: JSON.stringify(getResults()) },
-        });
+      const userassignmentresults = `${baseurl}/userassignmentresults/`;
+      const useronlyresults = `${baseurl}/useronlyresults/`;
+  
+      if (resulttype === "userassignmentresults") {
+        const url = userassignmentresults;
+        const data = {
+          CID: userCID,
+          UID: userId,
+          AID: userAID,
+          Results: JSON.stringify(getResults()),
+        };
+        await typeBasedPost(url, data, resulttype);
+      } else {
+        const url = useronlyresults;
+        const data = {
+          UID: userId,
+          Results: JSON.stringify(getResults()),
+        };
+        await typeBasedPost(url, data, resulttype);
       }
     } else {
       audiometry.playTone();
@@ -137,14 +129,12 @@ const AudiometryTest = () => {
           </View>
         )}
 
-        {/* {
-          isTestOver && (
-            <Button style={styles.Button2} mode="contained" onPress={() => { }}>
-              Results
-              <Text>{JSON.stringify(getResults())}</Text>
-            </Button>
-          )
-        } */}
+        {isTestOver && (
+          <Button style={styles.Button2} mode="contained" onPress={() => {}}>
+            Results
+            <Text>{JSON.stringify(getResults())}</Text>
+          </Button>
+        )}
 
         {!isTestOver && playState === 1 && (
           <View>
