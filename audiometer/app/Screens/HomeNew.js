@@ -74,25 +74,49 @@ const Home = () => {
           flexDirection: 'row', justifyContent: 'space-between', padding: 10, margin: 8, backgroundColor: '#EB4557', width: "96%",
           justifyContent: 'center', alignItems: 'center', borderRadius: 25
         }}>
-          <Button mode="contained" style={styles.bNav} onPress={() => router.push('/Screens/FillDetails')}>
-            <Icon name='play' size={18} color="white" style={styles.bIcon} />
-          </Button>
-          <Button mode="contained" style={styles.bNav} onPress={() => { }}>
-            {/* Test results */}
-            <Icon name="list" size={18} color="white" style={styles.bIcon} />
-          </Button>
-          <Button mode="contained" style={styles.bNav} onPress={() => { }}>
-            {/* Instructions */}
-            <Icon name="info" size={18} color="white" style={styles.bIcon} />
-          </Button>
-          <Button mode="contained" style={styles.bNav} onPress={() => { router.push('/Screens/LegalComplianceInformation') }}>
-            {/* Legal compliance */}
-            <Icon name="legal" size={18} color="white" style={styles.bIcon} />
-          </Button>
-          <Button mode="contained" style={styles.bNav} onPress={() => { router.push('/Screens/Maps') }}>
-            {/* Doctors near me */}
-            <Icon name="map-marker" size={18} color="white" style={styles.bIcon} />
-          </Button>
+          {/* Button 1 */}
+          <View style={{ alignItems: 'center' }}>
+            <Button mode="contained" style={styles.bNav} onPress={() => router.push('/Screens/FillDetails')}>
+              <Icon name='play' size={18} color="white" style={styles.bIcon} />
+            </Button>
+            <Text style={{  color: 'white', fontSize: 10, fontWeight: 'bold' }}>Start Test</Text>
+          </View>
+
+          {/* Button 2 */}
+          <View style={{ alignItems: 'center' }}>
+            <Button mode="contained" style={styles.bNav} onPress={() => { }}>
+              {/* Test results */}
+              <Icon name="list" size={18} color="white" style={styles.bIcon} />
+            </Button>
+            <Text style={{ color: 'white', fontSize: 10, fontWeight: 'bold'}}>Results</Text>
+          </View>
+
+          {/* Button 3 */}
+          <View style={{ alignItems: 'center' }}>
+            <Button mode="contained" style={styles.bNav} onPress={() => { }}>
+              {/* Instructions */}
+              <Icon name="info" size={18} color="white" style={styles.bIcon} />
+            </Button>
+            <Text style={{  color: 'white', fontSize: 10, fontWeight: 'bold' }}>Instructions</Text>
+          </View>
+
+          {/* Button 4 */}
+          <View style={{ alignItems: 'center' }}>
+            <Button mode="contained" style={styles.bNav} onPress={() => { router.push('/Screens/LegalComplianceInformation') }}>
+              {/* Legal compliance */}
+              <Icon name="legal" size={18} color="white" style={styles.bIcon} />
+            </Button>
+            <Text style={{ color: 'white', fontSize: 10, fontWeight: 'bold' }}>Legal Rules</Text>
+          </View>
+
+          {/* Button 5 */}
+          <View style={{ alignItems: 'center' }}>
+            <Button mode="contained" style={styles.bNav} onPress={() => { router.push('/Screens/Maps') }}>
+              {/* Doctors near me */}
+              <Icon name="map-marker" size={18} color="white" style={styles.bIcon} />
+            </Button>
+            <Text style={{ color: 'white', fontSize: 10, fontWeight: 'bold' }}>Doctors Near Me</Text>
+          </View>
         </View>
       </View>
     </PaperProvider>
