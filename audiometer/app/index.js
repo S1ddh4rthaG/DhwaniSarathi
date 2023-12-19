@@ -17,7 +17,7 @@ export default () => {
     return <Redirect href="/Screens/HomeNew" />;
   }
 
-  return <Redirect href="/Screens/Educator/AssignmentList" />;
+  return <Redirect href="/Screens/HomeNew" />;
 };
 
 // const styles = StyleSheet.create({
