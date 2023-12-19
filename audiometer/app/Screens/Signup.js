@@ -5,6 +5,7 @@ import {
   Image,
   StyleSheet,
   TouchableOpacity,
+  Alert, // Import Alert
 } from "react-native";
 import { Button, TextInput, Text, Card } from 'react-native-paper';
 import { Picker } from "@react-native-picker/picker";
@@ -32,7 +33,7 @@ const Signup = () => {
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [userType, setUserType] = useState("User");
-  const [age, setAge] = useState(40);
+  const [selectedAge, setSelectedAge] = useState(null); // Changed to null initially
   const [gender, setGender] = useState("male");
   const [educatorName, setEducatorName] = useState("");
   const [instituteName, setInstituteName] = useState("");
@@ -40,6 +41,32 @@ const Signup = () => {
 
   const handleSignup = async () => {
     try {
+      // Email format validation
+      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      if (!emailRegex.test(email)) {
+        Alert.alert('Email Error', 'Please enter a valid email address');
+        return;
+      }
+
+      // Name validation (no numbers allowed)
+      const nameRegex = /^[^\d]+$/;
+      if (!nameRegex.test(name)) {
+        Alert.alert('Name Error', 'Numbers are not allowed in the name field');
+        return;
+      }
+
+      // Password strength validation
+      if (password.length < 8) {
+        Alert.alert('Password Error', 'Password must be at least 8 characters long');
+        return;
+      }
+
+      // Age validation
+      if (selectedAge === null) {
+        Alert.alert('Age Error', 'Please select a valid age');
+        return;
+      }
+
       const response = await createUserWithEmailAndPassword(
         auth,
         email,
@@ -53,28 +80,13 @@ const Signup = () => {
         };
 
         if (userType === "User") {
-          if (name == "") {
-            alert("Please enter your name");
-            return;
-          }
           payload["UserName"] = name;
-          payload["Age"] = age;
+          payload["Age"] = selectedAge;
           payload["Gender"] = gender;
         } else {
-          if (educatorName == "") {
-            alert("Please enter your name");
-            return;
-          }
-
-          if (instituteName == "") {
-            alert("Please enter your institute name");
-            return;
-          }
           payload["EducatorName"] = educatorName;
           payload["InstituteName"] = instituteName;
         }
-
-
 
         let url = baseurl + "/logininfos/";
 
@@ -85,17 +97,24 @@ const Signup = () => {
           },
           body: JSON.stringify(payload),
         });
-
       }
 
-
-      alert("User created successfully");
+      Alert.alert("Success", "User created successfully");
 
       router.push("/Screens/Login");
 
     } catch (error) {
+      Alert.alert('Username Already In Use', 'Email Already Registered.');
       console.log(error);
     }
+  };
+
+  const renderAgePickerItems = () => {
+    const ageItems = [];
+    for (let i = 1; i <= 130; i++) {
+      ageItems.push(<Picker.Item key={i} label={`${i}`} value={i} />);
+    }
+    return ageItems;
   };
 
   return (
@@ -117,13 +136,6 @@ const Signup = () => {
           mode="outlined"
         />
         <TextInput
-          label={t("Age")}
-          value={String(age)}
-          onChangeText={(text) => setAge(text)}
-          style={styles.input}
-          mode="outlined"
-        />
-        <TextInput
           label={t("Password")}
           value={password}
           onChangeText={(text) => setPassword(text)}
@@ -139,6 +151,15 @@ const Signup = () => {
           style={styles.input}
           mode="outlined"
         />
+        <Picker
+          selectedValue={selectedAge}
+          style={styles.picker}
+          itemStyle={styles.pickerItem}
+          onValueChange={(itemValue) => setSelectedAge(itemValue)}
+        >
+          <Picker.Item label={t("Select Age")} value={null} />
+          {renderAgePickerItems()}
+        </Picker>
         <Picker
           selectedValue={userType}
           style={styles.picker}
