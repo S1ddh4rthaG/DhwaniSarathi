@@ -109,7 +109,7 @@ const AssignmentAnalytics = () => {
     if (loading) {
         return (
             <View style={styles.container}>
-                <ActivityIndicator size="large" color="#0096FF" />
+                <ActivityIndicator size="large" color="#eb455f" />
             </View>
         );
     }
@@ -120,9 +120,9 @@ const AssignmentAnalytics = () => {
 
     const hearingCategoryColors = {
         'Normal': '#00FF00',    // Green
-        'Mild': '#FFFF00',      // Yellow
+        'Mild': '#ffbf00',      // Yellow
         'Moderate': '#FFA500',  // Orange
-        'Severe': 'red',    // Red
+        'Severe': '#d22b2b',    // Red
         'Profound': '#800080',  // Purple
     };
 
@@ -151,7 +151,7 @@ const AssignmentAnalytics = () => {
                     outerRadius={100}
                     innerRadius={45}
                     colorScale={colorScale}
-                    style={{ labels: { fill: 'white', fontSize: 16, fontWeight: 'bold' } }}
+                    style={{ labels: { fill: '#2b3467', fontSize: 16, fontWeight: 'bold' } }}
                     events={
                         [{
                             target: "data",
@@ -181,7 +181,7 @@ const AssignmentAnalytics = () => {
                 {filterData.map((point) => (
                     <VictoryLabel
                         key={point.x}
-                        style={{ fontSize: 14, color: 'white' }}
+                        style={{ fontSize: 14, color: 'black' }}
                         dx={5}
                         dy={5}
                         text={`${point.x}\n(${((point.y / totalStudents) * 100).toFixed(2)}%)`}
@@ -204,8 +204,8 @@ const styles = StyleSheet.create({
         flex: 1,
         paddingLeft: 5,
         paddingRight: 5,
-        paddingTop: 40,
-        backgroundColor: 'black',
+
+        backgroundColor: '#f0f0f0',
         borderWidth: 2,
         borderColor: 'white',
         borderRadius: 10
@@ -222,12 +222,16 @@ const styles = StyleSheet.create({
         fontWeight: 'bold',
         marginBottom: 10,
         color: 'white',
+        backgroundColor: '#eb455f',
+        height: 40,
+        textAlign: 'center',
+        textAlignVertical: 'center',
     },
     searchInput: {
         height: 40,
         borderWidth: 1,
         borderRadius: 5,
-        borderColor: '#0096FF',
+        borderColor: '#eb455f',
         marginBottom: 10,
         paddingHorizontal: 10,
         color: 'white',
@@ -235,25 +239,33 @@ const styles = StyleSheet.create({
     card: {
         flex: 1,
         marginBottom: 20,
-        padding: 10,
+        paddingBottom: 10,
         borderRadius: 5,
         marginHorizontal: 10,
         borderWidth: 1,
-        backgroundColor: 'green',
-        borderColor: '#0096FF',
+        backgroundColor: 'white',
+        borderColor: 'white',
     },
     cardTitle: {
         fontSize: 18,
         fontWeight: 'bold',
         color: 'white',
+        backgroundColor: '#eb455f',
+        paddingHorizontal: 10,
+        paddingVertical: 5,
+        borderTopLeftRadius: 5,
+        borderTopRightRadius: 5,
     },
     cardDate: {
         color: 'white',
+        paddingHorizontal: 10,
+        paddingVertical: 5,
     },
     cardMore: {
-        color: '#0096FF',
+        color: 'black',
         fontWeight: 'bold',
         textAlign: 'right',
+        paddingHorizontal: 10,
     },
 });
 
