@@ -26,7 +26,7 @@ const BeforeTest2 = () => {
   return (
     <PaperProvider theme={theme}>
       <View style={styles.container}>
-        <ProgressBar progress={0.75} color={'#2B3467'} style={{}} />
+        <ProgressBar progress={0.75} color={'#2B3467'} style={{margin: 15}} />
         <Text style={styles.title}>{t('We recommend..')}</Text>
         <Image
           style={styles.image1}
@@ -61,7 +61,7 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: '#fff',
     padding: 24,
-    maxHeight: 100,
+    justifyContent: 'flex-start',
     borderColor: 'white',
     borderWidth: 5,
     borderRadius: 10

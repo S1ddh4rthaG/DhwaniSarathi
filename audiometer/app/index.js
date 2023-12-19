@@ -14,10 +14,10 @@ export default () => {
 
   console.log('user', user);
   if (user) {
-    return <Redirect href="/Screens/UDCard" />;
+    return <Redirect href="/Screens/Home" />;
   }
 
-  return <Redirect href="/Screens/UDCard" />;
+  return <Redirect href="/Screens/Login" />;
 };
 
 // const styles = StyleSheet.create({
