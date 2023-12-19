@@ -26,22 +26,65 @@ const BeforeTest1 = () => {
   return (
     <PaperProvider theme={theme}>
       <View style={styles.container}>
-        <ProgressBar progress={0.25} color={'#2B3467'} style={{margin: 15}} /> 
+        <ProgressBar progress={0.25} color={'#2B3467'} style={{ margin: 15 }} />
         <Text style={styles.title}>{t('Make sure..')}</Text>
-        <Image
-          style={styles.image1}
-          source={require('../assets/images/shh.png')}
-          resizeMode='cover'
-        />
-        <Text style={styles.title2}>{t('Quiet Place')}</Text>
+        <View style={{ flexDirection: "row", margin: "auto", justifyContent: "space-evenly" }}>
+          <View style={{padding: 0, margin: 0, width: "50%"}}>
+            <Image
+              style={styles.image1}
+              source={require('../assets/images/shh.png')}
+              resizeMode='cover'
+            />
+            <Text style={styles.title2}>{t('Quiet Place')}</Text>
+          </View>
 
-        <Image
-          style={styles.image2}
-          source={require('../assets/images/headphones.png')}
-          resizeMode='cover'
-        />
-        <Text style={styles.title2}>{t('Headphones')}</Text>
+          <View style={{padding: 0, margin: 0, width: "50%"}}>
+            <Image
+              style={styles.image2}
+              source={require('../assets/images/headphones.png')}
+              resizeMode='cover'
+            />
+            <Text style={styles.title2}>{t('Headphones')}</Text>
+          </View>
+        </View>
+        <View style={{ flexDirection: "row", margin: "auto", justifyContent: "space-evenly" }}>
+        <View style={{padding: 0, margin: 0, width: "50%"}}>
+            <Image
+              style={styles.image1}
+              source={require('../assets/images/mute.png')}
+              resizeMode='cover'
+            />
+            <Text style={styles.title2}>{t('Notifications Off')}</Text>
+          </View>
 
+          <View style={{padding: 0, margin: 0, width: "50%"}}>
+            <Image
+              style={styles.image2}
+              source={require('../assets/images/equalizer.png')}
+              resizeMode='cover'
+            />
+            <Text style={styles.title2}>{t('Equalizer Neutral')}</Text>
+          </View>
+        </View>
+        <View style={{ flexDirection: "row", justifyContent: "space-evenly" }}>
+        <View style={{padding: 0, margin: 0, width: "50%"}}>
+            <Image
+              style={styles.image1}
+              source={require('../assets/images/silence.png')}
+              resizeMode='cover'
+            />
+            <Text style={styles.title2}>{t('No Talking')}</Text>
+          </View>
+
+          <View style={{padding: 0, margin: 0, width: "50%"}}>
+            <Image
+              style={styles.image2}
+              source={require('../assets/images/noise-pollution.png')}
+              resizeMode='cover'
+            />
+            <Text style={styles.title2}>{t('Noise-Cancel Off')}</Text>
+          </View>
+        </View>
         <Button
           style={styles.button}
           mode="contained"
@@ -86,15 +129,22 @@ const styles = StyleSheet.create({
     width: '100%',
   },
   image1: {
-    width: 150,
-    height: 150,
+    width: 90,
+    height: 90,
+    alignContent: 'center',
+    alignSelf: 'center',
+    marginBottom: 10,
+  },
+  image3: {
+    width: 140,
+    height: 140,
     alignContent: 'center',
     alignSelf: 'center',
     marginBottom: 10,
   },
   image2: {
-    width: 120,
-    height: 120,
+    width: 83,
+    height: 83,
     alignContent: 'center',
     alignSelf: 'center',
     marginBottom: 15,
@@ -106,7 +156,7 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
   },
   title2: {
-    fontSize: 24,
+    fontSize: 18,
     fontWeight: 'bold',
     alignContent: 'center',
     alignSelf: 'center',
