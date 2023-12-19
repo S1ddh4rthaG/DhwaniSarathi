@@ -115,11 +115,11 @@ export default function EducatorHome() {
 
                         <View style={styles.body}>
 
-                            <Pressable style={styles.RectangleShapeView}>
+                            <Pressable style={[styles.RectangleShapeView, { marginTop: 40, marginBottom: 10 }]}>
                                 <Text style={styles.headtText}>Date: {currentDate}</Text>
                             </Pressable>
                             <View styles={{
-                                flexDirection: 'row', alignItems: 'center', margin: 0, padding: 0
+                                flexDirection: 'row', alignItems: 'center', marginBottom: 10,
                             }}>
 
                                 <View style={{
@@ -142,7 +142,7 @@ export default function EducatorHome() {
                                 </View>
 
                             </View>
-                            <View style={{ width: '100%', backgroundColor: '#2b3467', height: 50, justifyContent: 'center' }}>
+                            <View style={{ width: '100%', backgroundColor: '#2b3467', height: 50, justifyContent: 'center', marginTop: 40 }}>
                                 <Text style={{ textAlign: 'center', color: 'white', fontWeight: 'bold', fontSize: 20 }}>Classrooms</Text>
                             </View>
 
@@ -244,7 +244,8 @@ const styles = StyleSheet.create({
     body: {
         backgroundColor: 'white',
         flex: 1,
-        alignItems: 'center'
+        alignItems: 'center',
+
     },
 
     RectangleShapeView: {
