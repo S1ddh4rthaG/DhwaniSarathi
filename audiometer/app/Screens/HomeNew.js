@@ -16,6 +16,7 @@ import { baseurl } from "../Constants/ip.js";
 import { useNavigation } from "@react-navigation/native";
 // import './locales/i18n';
 import { useTranslation } from "react-i18next";
+import { useLocalSearchParams } from "expo-router";
 import { Image } from "react-native";
 import {
   Button,
@@ -27,9 +28,10 @@ import {
   TextInput,
 } from "react-native-paper";
 // Use icons
-import Icon from 'react-native-vector-icons/FontAwesome';
-import UDCard from './UDCard';
-import Draggable from 'react-native-draggable';
+import Icon from "react-native-vector-icons/FontAwesome";
+import UDCard from "./UDCard";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import Draggable from "react-native-draggable";
 const theme = {
   ...DefaultTheme,
   roundness: 2,
@@ -43,11 +45,40 @@ import { router } from "expo-router";
 
 const Home = () => {
   const { t, i18n } = useTranslation();
+
+
+  const [assignmentCode, setAssignmentCode] = useState("");
+
+  const verifyAID = async (resulttype) => {
+    if (assignmentCode !== "") {
+      const url = `${baseurl}/assignments/${assignmentCode}`;
+      try {
+        const response = await fetch(url);
+        const data = await response.json();
+        console.log(data.CID);
+
+        router.push({
+          pathname: "/Screens/BeforeTest1",
+          params: {
+            resulttype: resulttype,
+            AID: assignmentCode,
+            CID: data.CID,
+          },
+        });
+      } catch (error) {
+        console.error("Error fetching Assignment:", error);
+      }
+
+      
+    } else {
+      alert("Assignment Code cannot be empty");
+    }
+  };
   const [assignments, setAssignments] = useState([]);
   useEffect(() => {
     const getresult = async () => {
-      //const userId = await AsyncStorage.getItem("userId");
-      const userId = "00001";
+      const userId = await AsyncStorage.getItem("userId");
+      ///const userId = "00001";
       const url = `${baseurl}/results/${userId}/`;
       const response = await fetch(url, { method: "GET" });
       const data = await response.json();
@@ -126,16 +157,22 @@ const Home = () => {
           {/* <Text style={styles.classHeading}>
             Classroom Test
           </Text> */}
-          <Card style={{ margin: 20, padding: 10}}>
+          <Card style={{ margin: 20, padding: 10 }}>
             <Text style={styles.classTitle}>
               {t("Enter Classroom Details")}
             </Text>
             <TextInput
               label={t("Enter Room Code")}
               style={styles.classInput}
+              value={assignmentCode}
+              onChangeText={(text) => setAssignmentCode(text)}
               mode="outlined"
             />
-            <Button style={styles.classButton} mode="contained">
+            <Button
+              style={styles.classButton}
+              mode="contained"
+              onPress={() => verifyAID("userassignmentresults")}
+            >
               <Text style={styles.classButtonText}>{t("Enter")}</Text>
             </Button>
           </Card>
@@ -151,7 +188,11 @@ const Home = () => {
           {/* <Text style={styles.classHeading}>
             Self Test
           </Text> */}
-          <Button style={styles.classButton} mode="contained" onPress={() => router.push("/Screens/BeforeTest1")}>
+          <Button
+            style={styles.classButton}
+            mode="contained"
+            onPress={() => verifyAID("useronlyresults")}
+          >
             <Text style={styles.classButtonText}>{t("Self Test!")}</Text>
           </Button>
         </View>
@@ -290,10 +331,10 @@ const styles = StyleSheet.create({
     marginHorizontal: 10,
   },
   floatingButton: {
-    position: 'absolute',
+    position: "absolute",
     left: 16,
     bottom: 16,
-    backgroundColor: '#B5B6BA',
+    backgroundColor: "#B5B6BA",
     borderRadius: 25,
     padding: 15,
     elevation: 5,

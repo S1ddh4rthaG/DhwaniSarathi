@@ -113,6 +113,7 @@ class Audiometry {
     // setInterval(() => {
     // console.log(this.player.getStatusAsync())
     // }, 10);
+    this.player.unloadAsync();
 
     const SoundFile = PureTones[this.getFrequency() + this.getEar()[0] + (this.getMask() == true ? 'm' : 'um')]
     this.player.loadAsync(SoundFile).then(() => {
@@ -123,10 +124,10 @@ class Audiometry {
 
   regResponse(response, onlyYes = true) {
     //check whether player is playing
-    console.log(this.player.getStatusAsync())
-    if (this.player.getStatusAsync()._j.isLoaded !== false) {
-      this.player.setVolumeAsync(0);
-    }
+    // console.log(this.player.getStatusAsync())
+    // if (this.player.getStatusAsync()._j.isLoaded !== false) {
+    //   this.player.setVolumeAsync(0);
+    // }
     
     this.player.unloadAsync();
 
