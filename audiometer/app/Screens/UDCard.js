@@ -1,9 +1,7 @@
 import React, { useState } from 'react';
-import { View, Text, Image, TouchableOpacity, StyleSheet } from 'react-native';
+import { View, Text, StyleSheet } from 'react-native';
 import { DefaultTheme, Provider as PaperProvider, Button, Card } from 'react-native-paper';
-// import './locales/i18n'; 
 import { useTranslation } from 'react-i18next';
-
 import { router } from 'expo-router';
 
 const theme = {
@@ -17,68 +15,75 @@ const theme = {
 };
 
 const UDCard = (props) => {
-  const { t, i18n } = useTranslation();
-  //  One state variable for each of the following
-  // - Self test or Class test
-  // - Timestamp
-  // - Name (either self or educator)
-  // - View Results button
-  const [selfTest, setSelfTest] = useState(props.selfTest || true);
-  const [timestamp, setTimestamp] = useState(props.timestamp || Date.now());
-  const [name, setName] = useState(props.name || 'John Doe');
-  const [viewResults, setViewResults] = useState(props.viewResults || 'View Results');
+  const { t } = useTranslation();
+
+  const [selfTest] = useState(props.selfTest || true);
+  const [timestamp] = useState(props.timestamp || Date.now());
+  const [name] = useState(props.name || 'John Doe');
+  const [viewResults] = useState(props.viewResults || 'View Results');
 
   const styles = StyleSheet.create({
     container: {
       flex: 1,
       backgroundColor: '#fff',
-      justifyContent: 'flex-start',
+      justifyContent: 'center',
+      alignItems: 'center',
+    },
+    card: {
+      margin: 10,
+      padding: 10,
+      width: 300, // Adjust the width as needed
+    },
+    contentContainer: {
+      flexDirection: 'column',
+      justifyContent: 'center',
+      alignItems: 'flex-start',
+    },
+    rowContainer: {
+      flexDirection: 'row',
+      justifyContent: 'space-between',
+      alignItems: 'center',
+      width: '100%',
+      marginBottom: 10,
     },
     title: {
       fontSize: 20,
       fontWeight: 'bold',
-      justifyContent: 'center',
-      alignContent: 'center',
       color: '#fff',
-      margin: "auto",
-      backgroundColor: { selfTest } ? '#EB455F' : '#00BFFF',
+      backgroundColor: selfTest ? '#EB455F' : '#00BFFF',
       paddingHorizontal: 10,
       paddingVertical: 2,
       borderWidth: 2,
       borderRadius: 100,
     },
-    timestamp: {
-      justifyContent: 'center',
-      alignContent: 'center',
-      margin: "auto",
-    },
-    name: {
-      margin: "auto",
+    text: {
+      marginHorizontal: 10,
+      fontWeight: 'bold',
+      alignSelf: 'center'
     },
     button: {
-      alignItems: 'center',
-      margin: "auto",
-      padding: 2,
+      margin: 5,
+      alignSelf: 'flex-end',
     },
   });
 
   return (
     <PaperProvider theme={theme}>
       <View style={styles.container}>
-        <Card style={{ margin: 10, padding: 5 }}>
-          <Card.Content style={{ flexDirection: 'row', justifyContent: 'space-between', padding: 0 }}>
-            <Text style={styles.title}
-            >{
-                selfTest ? t('S') : t('C')
-              }</Text>
-            <Text style={styles.timestamp}>{timestamp}</Text>
-            <Text style={styles.name}>{name}</Text>
-            <Button style={styles.button} mode="contained" onPress={() => router.push(viewResults)}>
-              <Text>
-
-                {t('View Results')}
-              </Text>
-            </Button>
+        <Card style={styles.card}>
+          <Card.Content>
+            <View style={styles.contentContainer}>
+              <View style={styles.rowContainer}>
+                <Text style={styles.title}>{selfTest ? t('S') : t('C')}</Text>
+                <Text style={styles.text}>{timestamp}</Text>
+              </View>
+              <View style={styles.rowContainer}>
+                <Text style={styles.text}>{name}</Text>
+                <Button style={styles.button} mode="contained" onPress={() => router.push(viewResults)}>
+                  {t('View Results')}
+                </Button>
+              </View>
+            </View>
           </Card.Content>
         </Card>
       </View>

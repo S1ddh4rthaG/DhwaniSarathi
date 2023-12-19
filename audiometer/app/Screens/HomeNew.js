@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Box, IconButton, HStack, MaterialIcons, StatusBar, View, Text, TouchableOpacity, StyleSheet } from 'react-native';
+import { Box, IconButton, HStack, MaterialIcons, StatusBar, View, Text, TouchableOpacity, ScrollView, StyleSheet } from 'react-native';
 // import {AppBar} from 'react-native-paper'; 
 import { useNavigation } from '@react-navigation/native';
 // import './locales/i18n';  
@@ -8,7 +8,7 @@ import { Image } from 'react-native';
 import { Button, Provider as PaperProvider, DefaultTheme, Appbar, Tooltip, Card, TextInput } from 'react-native-paper';
 // Use icons
 import Icon from 'react-native-vector-icons/FontAwesome';
-
+import UDCard from './UDCard';
 const theme = {
   ...DefaultTheme,
   roundness: 2,
@@ -23,6 +23,11 @@ import { router } from "expo-router";
 const Home = () => {
   const { t, i18n } = useTranslation();
 
+  const dummyData = [
+    { id: 1, selfTest: true, timestamp: Date.now(), name: 'John Doe', viewResults: '/Screens/Result1' },
+    { id: 2, selfTest: false, timestamp: Date.now(), name: 'Jane Doe', viewResults: '/Screens/Result2' },
+    // Add more dummy data as needed
+  ];
 
 
   return (
@@ -67,7 +72,25 @@ const Home = () => {
         </View>
         <View style={{ flexDirection: 'column', justifyContent: 'space-between', padding: 1, margin: 5 }}>
         </View>
+
+        <ScrollView horizontal showsHorizontalScrollIndicator={false}>
+      <View style={{ flexDirection: 'row' }}>
+        {dummyData.map((item) => (
+          <UDCard
+            key={item.id}
+            selfTest={item.selfTest}
+            timestamp={item.timestamp}
+            name={item.name}
+            viewResults={item.viewResults}
+          />
+        ))}
       </View>
+    </ScrollView>
+      </View>
+
+
+     
+
       {/* Flex fill */}
       <View style={{ flexDirection: 'row', justifyContent: 'space-between', padding: 0 }}>
         <View style={{
