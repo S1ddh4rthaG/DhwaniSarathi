@@ -2,24 +2,6 @@ import React, { useState, useEffect } from 'react';
 import { View, Text, TextInput, FlatList, TouchableOpacity, StyleSheet, ActivityIndicator } from 'react-native';
 import { baseurl } from '../../Constants/ip.js';
 import { Link, router, useLocalSearchParams } from "expo-router";
-import { Card, Title, Paragraph } from 'react-native-paper';
-import {
-    DefaultTheme,
-    Provider as PaperProvider,
-    Button,
-    Icon,
-    ProgressBar,
-} from "react-native-paper";
-
-const theme = {
-    ...DefaultTheme,
-    roundness: 2,
-    colors: {
-        ...DefaultTheme.colors,
-        primary: "#EB455F",
-        accent: "#f1c40f",
-    },
-};
 
 const AssignmentList = () => {
     const [searchQuery, setSearchQuery] = useState('');
@@ -40,8 +22,7 @@ const AssignmentList = () => {
         const fetchData = async () => {
             const url = `${baseurl}/classrooms/${CID}/assignments/`;
 
-            try {
-            try {
+            try{
                 const response = await fetch(url);
                 if (response.ok) {
                     const data = await response.json();
@@ -54,7 +35,7 @@ const AssignmentList = () => {
                         AID: 'dummy-assignment-id',
                         AssignmentName: 'Dummy Assignment',
                         Deadline: '2023-12-31',
-
+                       
                         SubmittedCount: 10
                     };
 
@@ -63,7 +44,7 @@ const AssignmentList = () => {
                     console.error('Failed to fetch Assignments:', response.status);
                 }
             }
-            catch (error) {
+            catch(error){
                 console.error('Error fetching Assignments:', error);
             }
 
@@ -91,7 +72,7 @@ const AssignmentList = () => {
             //     }
             // } catch (error) {
             //     console.error('Error fetching Assignments:', error);
-
+                
             // }
 
             // Dummy Assignment
@@ -112,7 +93,7 @@ const AssignmentList = () => {
         fetchData();
     }, []);
 
-    const handleNewAssignment = async () => {
+    const handleNewAssignment = async() => {
         // Handle button press for creating a new assignment
         //post request
 
@@ -147,38 +128,36 @@ const AssignmentList = () => {
     };
 
     const renderAssignmentCard = ({ item }) => (
-
-        <Card
-            onPress={() => {
-                router.push({ pathname: '/Screens/Educator/ClassResults', params: { id: 456, AID: item.AID, CID: CID } });
-            }}>
-            <Link style={styles.card}
-                href={{
-                    pathname: 'Screens/Educator/ClassResults',
-                    params: { AID: item.AID }
-                }}>
-                <Card.Content>
-                    <Title style={styles.cardTitle}>{item.AssignmentName}</Title>
-                    <Paragraph style={styles.cardDate}>Deadline: {item.Deadline}</Paragraph>
-                    <Paragraph style={styles.cardField}>Class Strength: {Count}</Paragraph>
-                    <View style={styles.progressBarContainer}>
-                        <Paragraph style={styles.cardField}>
-                            Progress: {item.SubmittedCount}/{Count}
-                        </Paragraph>
-                        <View style={styles.progressBar}>
-                            <View
-                                style={{
-                                    width: `${(item.SubmittedCount / Count) * 100}%`,
-                                    height: 10,
-                                    backgroundColor: '#0096FF',
-                                    borderRadius: 5,
-                                }}
-                            />
-                        </View>
+        <Link style={styles.card}
+            href={{
+                pathname: 'Screens/Educator/AssignmentAnalytics',
+                params: {  AID: item.AID }
+            }}
+        >
+            {/* <TouchableOpacity onPress={()=>{
+                router.push({pathname: '/Screens/Educator/ClassResults', params: {id: 456, AID: item.AID, CID: CID}}); 
+            }}> */}
+                
+                <Text style={styles.cardTitle}>{item.AssignmentName}</Text>
+                <Text style={styles.cardDate}>Deadline: {item.Deadline}</Text>
+                <Text style={styles.cardField}>Class Strength: {Count}</Text>
+                <View style={styles.progressBarContainer}>
+                    <Text style={styles.cardField}>
+                        Progress: {item.SubmittedCount}/{Count}
+                    </Text>
+                    <View style={styles.progressBar}>
+                        <View
+                            style={{
+                                width: `${(item.SubmittedCount / Count) * 100}%`,
+                                height: 10,
+                                backgroundColor: '#0096FF',
+                                borderRadius: 5,
+                            }}
+                        />
                     </View>
-                </Card.Content>
-            </Link>
-        </Card>
+                </View>
+            {/* </TouchableOpacity> */}
+        </Link>
     );
 
     const searchFilter = (item) => {
@@ -189,45 +168,44 @@ const AssignmentList = () => {
     if (loading) {
         return (
             <View style={styles.container}>
-                <ActivityIndicator size="large" color="#eb455f" />
+                <ActivityIndicator size="large" color="#0096FF" />
             </View>
         );
     }
 
     return (
-        <PaperProvider theme={theme}>
-            <View style={styles.container}>
-                <Text style={styles.title}>Assignments</Text>
-                <TextInput
-                    style={styles.searchInput}
-                    placeholder="Search..."
-                    value={searchQuery}
-                    onChangeText={setSearchQuery}
-                    placeholderTextColor="grey"
-                />
-                <FlatList
-                    contentContainerStyle={styles.listContainer}
-                    data={assignments.filter(searchFilter)}
-                    renderItem={renderAssignmentCard}
-                    keyExtractor={(item) => item.AID}
-                />
-                <Text style={styles.title}>Create New Assignment</Text>
+        <View style={styles.container}>
+            <Text style={styles.title}>Assignments</Text>
+            <TextInput
+                style={styles.searchInput}
+                placeholder="Search..."
+                value={searchQuery}
+                onChangeText={setSearchQuery}
+                placeholderTextColor="grey"
+            />
+            <FlatList
+                contentContainerStyle={styles.listContainer}
+                data={assignments.filter(searchFilter)}
+                renderItem={renderAssignmentCard}
+                keyExtractor={(item) => item.AID}
+            />
+            <Text style={styles.title}>Create New Assignment</Text>
 
-                <TextInput
-                    style={styles.searchInput}
-                    placeholder="Assignment Name"
-                    placeholderTextColor="grey"
-                    value={assignmentName}
-                    onChangeText={setAssignmentName}
-                />
-                <TextInput
-                    style={styles.searchInput}
-                    placeholder="Deadline"
-                    placeholderTextColor="grey"
-                />
+            <TextInput
+                style={styles.searchInput}
+                placeholder="Assignment Name"
+                placeholderTextColor="grey"
+                value={assignmentName}
+                onChangeText={setAssignmentName}
+            />
+            <TextInput
+                style={styles.searchInput}
+                placeholder="Deadline"
+                placeholderTextColor="grey"
+            />
+          
 
-
-                <TouchableOpacity
+            <TouchableOpacity
                     style={styles.button}
                     onPress={() => {
                         // Handle button press for creating a new assignment
@@ -237,9 +215,8 @@ const AssignmentList = () => {
                     }}
                 >
                     <Text style={styles.buttonText}>Create New Assignment</Text>
-                </TouchableOpacity>
-            </View>
-        </PaperProvider>
+            </TouchableOpacity>
+        </View>
     );
 };
 
@@ -247,6 +224,8 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         padding: 10,
+        paddingTop: 60,
+        backgroundColor: 'black',
         borderWidth: 2,
         borderColor: 'white',
         borderRadius: 10
@@ -256,50 +235,57 @@ const styles = StyleSheet.create({
         opacity: 0.9,
     },
     title: {
-        fontSize: 25,
+        fontSize: 20,
         fontWeight: 'bold',
-        marginBottom: 15,
+        marginBottom: 10,
+        color: 'white',
     },
     searchInput: {
         height: 40,
         borderWidth: 1,
         borderRadius: 5,
         borderColor: '#0096FF',
-        marginBottom: 15,
+        marginBottom: 10,
         paddingHorizontal: 10,
+        color: 'white',
     },
     card: {
         flex: 1,
         marginBottom: 20,
-        borderWidth: 1,
-        padding: 20,
+        padding: 10,
         borderRadius: 5,
         marginHorizontal: 10,
+        borderWidth: 1,
+        borderColor: '#0096FF',
     },
     cardTitle: {
         fontSize: 18,
         fontWeight: 'bold',
+        color: 'white',
     },
     cardDate: {
+        color: 'white',
     },
     cardField: {
+        color: 'white',
         marginTop: 5,
     },
     progressBarContainer: {
         marginTop: 5,
     },
     progressBar: {
-        backgroundColor: '#bad7e9',
+        backgroundColor: 'lightgrey',
         borderRadius: 5,
         marginTop: 5,
     },
     button: {
-        backgroundColor: '#2b3467',
+        backgroundColor: '#0096FF',
         borderRadius: 5,
         padding: 10,
         marginTop: 10,
     },
     buttonText: {
+        color: 'white',
         textAlign: 'center',
         fontWeight: 'bold',
     },
