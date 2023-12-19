@@ -19,7 +19,7 @@ class EducatorSerializer(serializers.ModelSerializer):
 class ClassroomSerializer(serializers.ModelSerializer):
     class Meta:
         model = Classroom
-        fields = ['CID', 'EID', 'ClassroomName']
+        fields = ['CID', 'EID', 'ClassroomName','Count']
 
 class AssignmentSerializer(serializers.ModelSerializer):
     class Meta:

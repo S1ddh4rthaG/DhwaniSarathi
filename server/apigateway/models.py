@@ -33,6 +33,7 @@ class Classroom(models.Model):
     CID = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     EID = models.ForeignKey('Educator', on_delete=models.CASCADE)
     ClassroomName = models.CharField(max_length=100)
+    Count = models.IntegerField(default=30)
 
     def __str__(self):
         return self.ClassroomName
