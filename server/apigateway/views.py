@@ -256,6 +256,13 @@ def classroom_assignments(request, CID):
     
     if(request.method == 'GET'):
         serializer = AssignmentSerializer(assignments, many=True)
+        for item in serializer.data:
+            submitted_count = UserAssignmentResults.objects.filter(AID=item['AID']).count()
+            #change the Deadline format to YYYY-MM-DD
+            item['Deadline'] = item['Deadline'][0:10]
+            item['SubmittedCount'] = submitted_count
+            serializer.data[serializer.data.index(item)] = item
+            
         return Response(serializer.data)
     
 # views for Assignment
