@@ -161,12 +161,7 @@ const AssignmentList = () => {
     };
 
     const renderAssignmentCard = ({ item }) => (
-        // <Link style={styles.card}
-        // href={{
-        //     pathname: 'Screens/Educator/AssignmentAnalytics',
-        //     params: { AID: item.AID }
-        // }}
-        // >        
+
         <Card style={{ margin: 10., padding: 5 }}>
             <Card.Cover source={getRandomImage()} />
             <Link style={styles.card}
@@ -195,10 +190,25 @@ const AssignmentList = () => {
                         </View>
                     </View>
                 </Card.Content>
-
-
             </Link>
+            {/* only icon and a copy button should be displayed
+                no need to display the whole id
+                on click of copy button, the id should be copied to clipboard
+                Add Label as CODE: <Assignment ID>
+            */}
 
+            <Card.Actions>
+                <Button
+                    icon="content-copy"
+                    onPress={() => {
+                        // Handle button press for copying the assignment ID
+                        // You can use the Clipboard API to copy the assignment ID
+                        console.log('Copy Assignment ID');
+                    }}
+                >
+                    Copy Assignment ID
+                </Button>
+            </Card.Actions>
         </Card>
     );
 
