@@ -32,7 +32,7 @@ const BeforeTest1 = () => {
   return (
     <PaperProvider theme={theme}>
       <View style={styles.container}>
-        <ProgressBar progress={0.25} color={"#2B3467"} style={{ margin: 15 }} />
+        <ProgressBar progress={0.3} color={"#2B3467"} style={{ margin: 15 }} />
         <Text style={styles.title}>{t("Make sure..")}</Text>
         <View
           style={{

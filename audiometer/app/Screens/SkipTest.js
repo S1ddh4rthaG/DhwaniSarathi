@@ -44,7 +44,7 @@ const SkipTest = () => {
       <View style={{ flex: 1, justifyContent: "top", padding: 32 }}>
         <Image
           source={require("../assets/images/logo.png")}
-          style={{ width: 300, height: 300, alignSelf: "center" }}
+          style={{ width: 300, height: 250, alignSelf: "center" }}
         />
         <Text
           style={{
@@ -55,7 +55,7 @@ const SkipTest = () => {
             color: "#2B3467",
           }}
         >
-          {t("Hertz hEARing Test")}
+          Dhwani Sarathi
         </Text>
         <Button
           mode="contained"
@@ -109,6 +109,26 @@ const SkipTest = () => {
           style={{ margin: 5 }}
         >
           {t("Contribute To Noise Data")}
+        </Button>
+
+        <Button
+          mode="contained"
+          onPress={() => {
+            router.push("/Screens/JewelleryDetection");
+          }}
+          style={{ margin: 5 }}
+        >
+          Obstacle Detection (β)
+        </Button>
+
+        <Button
+          mode="contained"
+          onPress={() => {
+            router.push("/Screens/ML");
+          }}
+          style={{ margin: 5 }}
+        >
+          Digitization (β)
         </Button>
       </View>
     </PaperProvider>

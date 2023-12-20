@@ -197,7 +197,7 @@ const QuietPlaceDetection = () => {
   return (
     <PaperProvider theme={theme}>
       <ProgressBar
-        progress={0.25}
+        progress={0.6}
         color={"#2B3467"}
         style={{ margin: 15, marginTop: 50 }}
       />

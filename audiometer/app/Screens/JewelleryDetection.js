@@ -109,7 +109,7 @@ const JewelleryDetection = () => {
     return (
         <ScrollView style={{ backgroundColor: 'black' }}>
             <View style={{ backgroundColor: 'black', justifyContent: 'center', flex: 1 }}>
-                <Text style={styles.title}>{t('Test JewelleryDetection')}</Text>
+                <Text style={styles.title}>Obstacle Detection</Text>
                 <View style={styles.container}>
                     <View style={styles.tableRow}>
 

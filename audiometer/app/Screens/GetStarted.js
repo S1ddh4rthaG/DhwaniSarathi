@@ -27,7 +27,7 @@ const GetStarted = () => {
     <PaperProvider theme={theme}>
       <View style={styles.container}>
         <Image source={require('../assets/images/logo.png')} style={{ width: 300, height: 300, alignSelf: 'center' }} />
-        <Text style={styles.title}>{t('Hertz hEARing Test')}</Text>
+        <Text style={styles.title}>"Dhwani Sarathi"</Text>
         <Text style={styles.subtitle}>{t('App based audiometer')}</Text>
 
         <Button style={styles.getStartedButton} mode="contained" onPress={() => console.log('Pressed')}>
