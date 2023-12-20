@@ -116,6 +116,16 @@ const Login = () => {
         <Button style={styles.Button} mode="contained" onPress={signIn}>
           <Text style={styles.buttonText}>{t("Login")}</Text>
         </Button>
+        <Button style={styles.Button} mode="contained" onPress={()=> router.push({
+          pathname: "/Screens/SkipTest",
+          params: {
+            resulttype: "selftest",
+            AID: "selftest",
+            CID: "selftest",
+          },
+        })}>
+          <Text style={styles.buttonText}>{t("Skip To Home")}</Text>
+        </Button>
         <Card style={styles.signUpCard}>
           <Text style={styles.educatorText}>
             {t("Don't have an Account? Sign Up here")}
