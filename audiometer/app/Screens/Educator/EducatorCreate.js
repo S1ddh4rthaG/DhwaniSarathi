@@ -8,70 +8,13 @@ import { useState } from 'react';
 import { baseurl } from '../../Constants/ip.js';
 
 
-export default function EducatorHome() {
+export default function EducatorCreate() {
 
     const params = useLocalSearchParams();
-    const [profile, setProfile] = useState({});
-    const [loading, setLoading] = useState(true);
-    const [userId, setUserId] = useState(''); // To store the user ID of the logged in user
+    const [loading, setLoading] = useState(false);
     const [currentDate, setCurrentDate] = useState('');
     const [classroomName, onChangeName] = useState('');
     const [classroomStrength, onChangeStrength] = useState('');
-    const [reload, setReload] = useState(false);
-
-    useEffect(() => {
-        //get the profile data from the backend
-        const fetchData = async () => {
-            const userId = await AsyncStorage.getItem('userId');
-            setUserId(userId);
-            var EID;
-            if (params.EID) {
-
-                EID = params.EID;
-            }
-            const url = `${baseurl}/educators/${EID}`;
-
-            try {
-                const response = await fetch(url);
-                if (response.ok) {
-                    const data = await response.json();
-                    console.log(data);
-                    setProfile(data);
-                    setLoading(false);
-                } else {
-                    console.error("Failed to fetch Profile:", response.status);
-                }
-            } catch (error) {
-                console.error("Error fetching Profile:", error);
-            }
-        };
-        fetchData();
-
-        // Function to get the current date
-        const fetchCurrentDate = () => {
-            const date = new Date();
-            const year = date.getFullYear();
-            const month = date.getMonth() + 1; // Month is zero-indexed
-            const day = date.getDate();
-
-            const formattedDate = `${day < 10 ? '0' + day : day}-${month < 10 ? '0' + month : month}-${year}`;
-            setCurrentDate(formattedDate);
-        };
-
-        fetchCurrentDate(); // Fetch the date when the component mounts
-
-        //state should be effected only on reload 
-    }
-        , []);
-
-
-    //  const sampleProfile =
-    //     {
-    //         "EID": "124",
-    //         "EducatorName": "Sachin",
-    //         "InstituteName": "IIT Tirupati"
-    //     }
-
 
     return (
         (loading == true) ? (<Text>Loading...</Text>) :
@@ -95,32 +38,12 @@ export default function EducatorHome() {
                                         </View>
                                         <View style={{ flex: 1, flexWrap: 'wrap-reverse' }}>
                                             <Text style={styles.name}>Welcome</Text>
-                                            <Text style={styles.userInfo}>{profile.EducatorName}</Text>
-                                            <Text style={styles.userInfo}>{profile.InstituteName}</Text>
                                         </View>
 
                                     </View>
                                 </ImageBackground>
-
-
-                                {/* <View style={styles.content}>
-
-                            <View style={styles.profileDataContainer}>
-                                <Text style={styles.ptext}>{profile.Age} years</Text>
-                                <Text style={styles.ptext}>{profile.Gender}</Text>
-                                <Text style={styles.ptext}>ID: {profile.EducatorID}</Text>
                             </View>
-
-                        </View> */}
-
-
-                            </View>
-
                             <View style={styles.body}>
-
-                                <Pressable style={[styles.RectangleShapeView, { marginTop: 20, marginBottom: 10 }]}>
-                                    <Text style={styles.headtText}>Date: {currentDate}</Text>
-                                </Pressable>
                                 <View style={{ width: "100%", }}>
                                     <View style={{
                                         width: '90%',  // To align the avatar and texts horizontally,
@@ -152,12 +75,6 @@ export default function EducatorHome() {
                                         </TouchableOpacity>
                                     </View>
                                 </View>
-                                <View style={{ width: '90%', backgroundColor: '#2b3467', height: 50, justifyContent: 'center', marginTop: 12, borderWidth: 1, borderRadius: 30 }}>
-                                    <Text style={{ textAlign: 'center', color: 'white', fontWeight: 'bold', fontSize: 20 }}>Classrooms</Text>
-                                </View>
-
-                                <ClassroomList EID={profile.EID} />
-
                             </View>
                         </View>
                     </ScrollView>
