@@ -83,7 +83,7 @@ export default function EducatorHome() {
                         <View style={styles.container2}>
                             <View style={styles.header}>
                                 <View style={[styles.content, { backgroundColor: '#eb455f', opacity: 1 }]}>
-                                    <Text style={[styles.text, styles.heading, { color: 'white', padding: 2 }]}>Educator Profile Page</Text>
+                                    <Text style={[styles.text, styles.heading, { color: 'white', padding: 2 }]}>Teacher Profile Page</Text>
                                 </View>
                                 <ImageBackground source={require('../../assets/background.png')}
                                     style={styles.backgroundImage} >

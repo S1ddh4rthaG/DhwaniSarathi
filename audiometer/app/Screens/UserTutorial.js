@@ -13,40 +13,61 @@ const UserTutorial = () => {
   const tutorialData = [
     {
       title: 'Step 1',
+      description: 'Login and validate your account',
+      image: require('../assets/tutorialNew/Login.png'),
+    },
+    {
+      title: 'Step 2',
+      description: 'Signup Screen',
+      image: require('../assets/tutorialNew/Signup_user.png'),
+    },
+    {
+      title: 'Step 3',
+      description: 'User Dashboard',
+      image: require('../assets/tutorialNew/User_welcome.png'),
+    },
+    ,
+    {
+      title: 'Step 4',
+      description: 'Direct test page (No login needed)',
+      image: require('../assets/tutorialNew/Hertz.png'),
+    },
+    {
+      title: 'Step 5',
       description: 'Ensure a quiet environment',
       image: require('../assets/tutorialNew/Make_sure.png'),
     },
     {
-      title: 'Step 2',
+      title: 'Step 6',
       description: 'Check for any background noise',
       image: require('../assets/tutorialNew/Surrounding_Check.png'),
     },
     {
-      title: 'Step 3',
+      title: 'Step 7',
       description: 'Click on the start test button',
       image: require('../assets/tutorialNew/Start_test.png'),
     },
     {
-      title: 'Step 4',
+      title: 'Step 8',
       description: 'Audio test starts',
       image: require('../assets/tutorialNew/Test.png'),
     },
 
     {
-      title: 'Step 5',
+      title: 'Step 9',
       description: 'Result page',
       image: require('../assets/tutorialNew/Result_user.png'),
     },
 
     {
-      title: 'Step 6',
+      title: 'Step 10',
       description: 'Export results',
       image: require('../assets/tutorialNew/Share_page.png'),
     }
 
     ,
     {
-      title: 'Step 7',
+      title: 'Step 11',
       description: 'Select export option',
       image: require('../assets/tutorialNew/Share_selection.png'),
     }
@@ -110,8 +131,8 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
   },
   image: {
-    width: 300,
-    height: 300,
+    width: 500,
+    height: 500,
     resizeMode: 'contain',
   },
 });

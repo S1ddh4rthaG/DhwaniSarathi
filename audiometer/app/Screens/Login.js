@@ -41,9 +41,19 @@ const Login = () => {
     setLoading(true);
 
     try {
+
+      let username_current = username;
+
+      if (username == "9999999999"){
+        username_current = "edu";
+      }
+      else if (username == "8888888888"){
+        username_current = "dev";
+      }
+
       const response = await signInWithEmailAndPassword(
         auth,
-        username+"@gmail.com",
+        username_current+"@gmail.com",
         password
       );
 

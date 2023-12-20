@@ -159,7 +159,7 @@ const Signup = () => {
         <Picker.Item style={styles.pickerItem} label={t("User")} value="User" />
         <Picker.Item
           style={styles.pickerItem}
-          label={t("Educator")}
+          label={"Teacher"}
           value="Educator"
         />
       </Picker>
@@ -176,7 +176,7 @@ const Signup = () => {
         </>
       ) : (
         <>
-        <Text style={styles.title2}>{t("Educator Name")}</Text>
+        <Text style={styles.title2}>{"Teacher Name"}</Text>
         <TextInput
           style={styles.input}
           // placeholder={t("Enter your name")}

@@ -30,6 +30,7 @@ const EarTest = () => {
   const { t } = useTranslation();
   const [ear, setEar] = useState(Math.random() < 0.5 ? "left" : "right");
   const [player, setPlayer] = useState(new Audio.Sound());
+  const params = useLocalSearchParams();
 
   useEffect(() => {
 
@@ -89,7 +90,14 @@ const EarTest = () => {
 
                 if (ear == "left") {
                   Alert.alert(t("Correct!"));
-                  // write here
+                  router.push({
+                    pathname: "/AudiometryTest",
+                    params: {
+                      resulttype: params.resulttype,
+                      AID: params.AID,
+                      CID: params.CID,
+                    },
+                  })
                 } else {
                   Alert.alert(t("Please switch your headphones!"));
                 }
@@ -106,7 +114,14 @@ const EarTest = () => {
                 console.log(ear, "RIGHT");
                 if (ear == "right") {
                   Alert.alert(t("Correct!"));
-                  // write here
+                  router.push({
+                    pathname: "/AudiometryTest",
+                    params: {
+                      resulttype: params.resulttype,
+                      AID: params.AID,
+                      CID: params.CID,
+                    },
+                  })
                 } else {
                   Alert.alert(t("Incorrect Configuration!"));
                 }
