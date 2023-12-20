@@ -19,6 +19,7 @@ import { DefaultTheme, Provider as PaperProvider } from "react-native-paper";
 import { useTogglePasswordVisibility } from "../Components/useTogglePasswordVisibility.js";
 import { router } from "expo-router";
 import { ScrollView } from "react-native-virtualized-view";
+import { use } from "i18next";
 const theme = {
   ...DefaultTheme,
   roundness: 2,
@@ -50,11 +51,14 @@ const Signup = () => {
         return;
       }
 
-      // Name validation (no numbers allowed)
-      const nameRegex = /^[^\d]+$/;
-      if (!nameRegex.test(name)) {
-        Alert.alert('Name Error', 'Numbers are not allowed in the name field');
-        return;
+      if(userType === "User") {
+
+        // Name validation (no numbers allowed)
+        const nameRegex = /^[^\d]+$/;
+        if (!nameRegex.test(name)) {
+          Alert.alert('Name Error', 'Numbers are not allowed in the name field');
+          return;
+        }
       }
 
       // Password strength validation
@@ -63,10 +67,13 @@ const Signup = () => {
         return;
       }
 
-      // Age validation
-      if (selectedAge === null) {
-        Alert.alert('Age Error', 'Please select a valid age');
-        return;
+      if(userType === "User") {
+
+        // Age validation
+        if (selectedAge === null) {
+          Alert.alert('Age Error', 'Please select a valid age');
+          return;
+        }
       }
 
       const response = await createUserWithEmailAndPassword(
@@ -161,47 +168,6 @@ const Signup = () => {
           style={styles.input}
           mode="outlined"
         />
-        <TextInput
-          label={t("Email")}
-          value={email}
-          onChangeText={(text) => setEmail(text)}
-          style={styles.input}
-          mode="outlined"
-        />
-        <TextInput
-          label={t("Password")}
-          value={password}
-          onChangeText={(text) => setPassword(text)}
-          secureTextEntry={passwordVisibility}
-          style={styles.input}
-          mode="outlined"
-        />
-        <TextInput
-          label={t("Confirm Password")}
-          value={confirmPassword}
-          onChangeText={(text) => setConfirmPassword(text)}
-          secureTextEntry={passwordVisibility}
-          style={styles.input}
-          mode="outlined"
-        />
-        <Picker
-          selectedValue={selectedAge}
-          style={styles.picker}
-          itemStyle={styles.pickerItem}
-          onValueChange={(itemValue) => setSelectedAge(itemValue)}
-        >
-          <Picker.Item label={t("Select Age")} value={null} />
-          {renderAgePickerItems()}
-        </Picker>
-        <Picker
-          selectedValue={gender}
-          style={styles.picker}
-          itemStyle={styles.pickerItem}
-          onValueChange={(itemValue) => setGender(itemValue)}
-        >
-          <Picker.Item style={styles.pickerItem} label={t("Male")} value="Male" />
-          <Picker.Item style={styles.pickerItem} label={t("Female")} value="Female" />
-        </Picker>
         </>
       ) : (
         <>
@@ -227,6 +193,54 @@ const Signup = () => {
         />
       </>
       )}
+
+        <TextInput
+          label={t("Email")}
+          value={email}
+          onChangeText={(text) => setEmail(text)}
+          style={styles.input}
+          mode="outlined"
+        />
+        <TextInput
+          label={t("Password")}
+          value={password}
+          onChangeText={(text) => setPassword(text)}
+          secureTextEntry={passwordVisibility}
+          style={styles.input}
+          mode="outlined"
+        />
+        <TextInput
+          label={t("Confirm Password")}
+          value={confirmPassword}
+          onChangeText={(text) => setConfirmPassword(text)}
+          secureTextEntry={passwordVisibility}
+          style={styles.input}
+          mode="outlined"
+        />
+
+{userType === "User" ? (
+  <>
+        <Picker
+          selectedValue={selectedAge}
+          style={styles.picker}
+          itemStyle={styles.pickerItem}
+          onValueChange={(itemValue) => setSelectedAge(itemValue)}
+        >
+          <Picker.Item label={t("Select Age")} value={null} />
+          {renderAgePickerItems()}
+        </Picker>
+        <Picker
+          selectedValue={gender}
+          style={styles.picker}
+          itemStyle={styles.pickerItem}
+          onValueChange={(itemValue) => setGender(itemValue)}
+        >
+          <Picker.Item style={styles.pickerItem} label={t("Male")} value="Male" />
+          <Picker.Item style={styles.pickerItem} label={t("Female")} value="Female" />
+        </Picker>
+        
+        </>
+      ) : null}
      
         <Button style={styles.Button} mode="contained" onPress={handleSignup}>
           <Text style={styles.buttonText}>{t("Sign Up")}</Text>
