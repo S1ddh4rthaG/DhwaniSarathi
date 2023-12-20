@@ -271,7 +271,7 @@ const HomeNew = () => {
               <Icon name="list" size={18} color="white" style={styles.bIcon} />
             </Button>
             <Text style={{ color: "white", fontSize: 10, fontWeight: "bold" }}>
-              Noise Pollution Data
+              Noise Data
             </Text>
           </View>
 
@@ -321,7 +321,7 @@ const HomeNew = () => {
               />
             </Button>
             <Text style={{ color: "white", fontSize: 10, fontWeight: "bold" }}>
-              Doctors Near Me
+              Doctors Nearby
             </Text>
           </View>
         </View>
@@ -422,8 +422,8 @@ const styles = StyleSheet.create({
   },
   bNav: {
     padding: 0,
-    marginStart: 3,
-    marginEnd: 3,
+    marginStart: 1.9,
+    marginEnd: 0,
     backgroundColor: "#2B3467",
     justifyContent: "center",
   },
