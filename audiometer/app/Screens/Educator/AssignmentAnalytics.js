@@ -204,8 +204,6 @@ const styles = StyleSheet.create({
         flex: 1,
         paddingLeft: 5,
         paddingRight: 5,
-
-        backgroundColor: 'white',
         borderWidth: 2,
         borderColor: 'white',
         borderRadius: 10
