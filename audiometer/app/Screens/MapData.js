@@ -55,6 +55,7 @@ const MapData = () => {
             selectedValue={noiseLevel}
             style={styles.picker}
             onValueChange={handlePickerChange}
+            
           >
             <Picker.Item label="Low" value={1} color="green" />
             <Picker.Item label="Moderate" value={2} color="yellow" />
@@ -84,6 +85,9 @@ const styles = StyleSheet.create({
     left: 10,
     flexDirection: 'column',
     alignItems: 'center',
+    backgroundColor: 'white',
+    elevation: 5,
+    borderRadius: 10
   },
   picker: {
     width: 200,
