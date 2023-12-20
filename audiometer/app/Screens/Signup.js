@@ -117,6 +117,8 @@ const Signup = () => {
     return ageItems;
   };
 
+
+
   const { passwordVisibility, rightIcon, handlePasswordVisibility } =
   useTogglePasswordVisibility();
 
@@ -168,13 +170,13 @@ const Signup = () => {
           {renderAgePickerItems()}
         </Picker>
         <Picker
-          selectedValue={userType}
+          selectedValue={gender}
           style={styles.picker}
           itemStyle={styles.pickerItem}
           onValueChange={(itemValue) => setGender(itemValue)}
         >
-          <Picker.Item style={styles.pickerItem} label={t("Male")} value="Male" />
-          <Picker.Item label={t("Female")} value="Female" />
+          <Picker.Item label={t("Male")} value="male" />
+          <Picker.Item label={t("Female")} value="female" />
         </Picker>
         <Button style={styles.Button} mode="contained" onPress={handleSignup}>
           <Text style={styles.buttonText}>{t("Sign Up")}</Text>

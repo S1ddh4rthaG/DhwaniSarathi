@@ -59,10 +59,10 @@ const MapData = () => {
       <MapView
         style={styles.map}
         initialRegion={{
-          latitude: 20.5937,
-          longitude: 78.9629,
-          latitudeDelta: 15,
-          longitudeDelta: 15,
+          latitude: 24.5854,
+          longitude: 73.7125,
+          latitudeDelta: 0.0922,
+          longitudeDelta: 0.0421,
         }}
         onLongPress={handleMapPress}
       >
