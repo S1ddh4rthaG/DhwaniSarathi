@@ -56,6 +56,11 @@ const EarTest = () => {
       <Card style={styles.container}>
         <View>
           <View>
+            <ProgressBar
+              progress={1}
+              color={"#2B3467"}
+              style={{ margin: 15, marginVertical: 50 }}
+            />
             <Text style={styles.titleTest}>
               {t("Which ear do you hear the sound in?")}
             </Text>
@@ -69,9 +74,9 @@ const EarTest = () => {
           </View>
           <View style={{ flexDirection: "row", justifyContent: "center" }}>
             <Button
-              style={[styles.ButtonNo, { width: "40%", marginBottom: 0 }]}
+              style={[styles.ButtonNo, { width: "40%", marginBottom: 0, backgroundColor: "#EB455F" }]}
               mode="contained"
-              theme={{ colors: { primary: "red" } }}
+
               onPress={() => {
                 player.stopAsync();
                 player.playAsync();
@@ -224,6 +229,7 @@ const styles = StyleSheet.create({
     marginBottom: 20,
     textAlign: "center",
     fontWeight: "bold",
+    color: "#EB455F",
   },
   title2: {
     fontSize: 25,
