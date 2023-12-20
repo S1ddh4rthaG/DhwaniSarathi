@@ -9,7 +9,7 @@ import img0 from '../../assets/AssignmentImages/0.jpg';
 import img3 from '../../assets/AssignmentImages/3.jpg';
 import img4 from '../../assets/AssignmentImages/4.jpg';
 import img5 from '../../assets/AssignmentImages/5.jpg';
-
+import * as Clipboard from 'expo-clipboard';
 import Icon from 'react-native-vector-icons/FontAwesome';
 
 import {
@@ -200,12 +200,7 @@ const AssignmentList = () => {
             <Card.Actions>
                 <Button
                     icon="content-copy"
-                    onPress={() => {
-                        // Handle button press for copying the assignment ID
-                        // You can use the Clipboard API to copy the assignment ID
-                        console.log('Copy Assignment ID');
-                    }}
-                >
+                    onPress={() => Clipboard.setStringAsync(item.AID)}                >
                     Copy Assignment ID
                 </Button>
             </Card.Actions>

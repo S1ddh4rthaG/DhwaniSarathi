@@ -61,7 +61,8 @@
     "react-native-web": "~0.19.6",
     "react-native-webview": "13.2.2",
     "react-native-wheel-of-fortune": "^1.5.4",
-    "victory-native": "^36.7.0"
+    "victory-native": "^36.7.0",
+    "expo-clipboard": "~4.3.1"
   },
   "devDependencies": {
     "@babel/core": "^7.20.0"
