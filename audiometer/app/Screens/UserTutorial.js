@@ -13,42 +13,42 @@ const UserTutorial = () => {
   const tutorialData = [
     {
       title: 'Step 1',
-      description: 'Enter your classroom code (optional) and click on self test button',
-      image: require('../assets/tutorials/homenew.jpeg'),
+      description: 'Ensure a quiet environment',
+      image: require('../assets/tutorialNew/Make_sure.png'),
     },
     {
       title: 'Step 2',
-      description: 'Make sure you follow the instructions before you start the test',
-      image: require('../assets/tutorials/beforetests.jpeg'),
+      description: 'Check for any background noise',
+      image: require('../assets/tutorialNew/Surrounding_Check.png'),
     },
     {
       title: 'Step 3',
-      description: 'Check your surrounding sounds',
-      image: require('../assets/tutorials/checkyousurrounding.jpeg'),
+      description: 'Click on the start test button',
+      image: require('../assets/tutorialNew/Start_test.png'),
     },
     {
       title: 'Step 4',
-      description: 'Its time to start the Test',
-      image: require('../assets/tutorials/pureToneAudiometry.jpeg'),
+      description: 'Audio test starts',
+      image: require('../assets/tutorialNew/Test.png'),
     },
 
     {
       title: 'Step 5',
-      description: 'Follow the instructions and click yes and no based on the sound audible',
-      image: require('../assets/tutorials/TestPage.jpeg'),
+      description: 'Result page',
+      image: require('../assets/tutorialNew/Result_user.png'),
     },
 
     {
       title: 'Step 6',
-      description: 'Result page consists of a audiogram and other details',
-      image: require('../assets/tutorials/Results.jpeg'),
+      description: 'Export results',
+      image: require('../assets/tutorialNew/Share_page.png'),
     }
 
     ,
     {
       title: 'Step 7',
-      description: 'You can export your results and share it in different methods',
-      image: require('../assets/tutorials/Export.jpeg'),
+      description: 'Select export option',
+      image: require('../assets/tutorialNew/Share_selection.png'),
     }
 
     // Add more steps as needed
