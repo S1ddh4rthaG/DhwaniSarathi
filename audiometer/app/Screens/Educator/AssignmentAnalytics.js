@@ -205,7 +205,7 @@ const styles = StyleSheet.create({
         paddingLeft: 5,
         paddingRight: 5,
 
-        backgroundColor: '#f0f0f0',
+        backgroundColor: 'white',
         borderWidth: 2,
         borderColor: 'white',
         borderRadius: 10
@@ -243,8 +243,9 @@ const styles = StyleSheet.create({
         borderRadius: 5,
         marginHorizontal: 10,
         borderWidth: 1,
-
+        backgroundColor: 'white',
         borderColor: 'white',
+        elevation: 5,
     },
     cardTitle: {
         fontSize: 18,
