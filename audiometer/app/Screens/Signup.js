@@ -45,9 +45,14 @@ const Signup = () => {
   const handleSignup = async () => {
     try {
       // Email format validation
-      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-      if (!emailRegex.test(email)) {
-        Alert.alert('Email Error', 'Please enter a valid email address');
+      const mobileRegex = /^[0-9]{10}$/;
+      // if email doesnt have @gmail.com append 
+
+      // setEmail(email + "@gmail.com");
+      const email_current = email + "@gmail.com";
+
+      if (!mobileRegex.test(email)) {
+        Alert.alert('Mobile Number Error', 'Please enter a valid mobile number');
         return;
       }
 
@@ -78,7 +83,7 @@ const Signup = () => {
 
       const response = await createUserWithEmailAndPassword(
         auth,
-        email,
+        email_current,
         password
       );
 
@@ -113,7 +118,7 @@ const Signup = () => {
       router.push("/Screens/Login");
 
     } catch (error) {
-      Alert.alert('Username Already In Use', 'Email Already Registered.');
+      Alert.alert('Username Already In Use', 'Mobile Already Registered.');
       console.log(error);
     }
   };
@@ -195,7 +200,7 @@ const Signup = () => {
       )}
 
         <TextInput
-          label={t("Email")}
+          label={t("Mobile Number")}
           value={email}
           onChangeText={(text) => setEmail(text)}
           style={styles.input}
