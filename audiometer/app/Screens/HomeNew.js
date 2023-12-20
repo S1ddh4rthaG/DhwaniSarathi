@@ -263,7 +263,7 @@ const HomeNew = () => {
               <Icon name="list" size={18} color="white" style={styles.bIcon} />
             </Button>
             <Text style={{ color: "white", fontSize: 10, fontWeight: "bold" }}>
-              Noise Pollution Data
+              Noise Data
             </Text>
           </View>
 
