@@ -89,7 +89,7 @@ const EarTest = () => {
 
                 if (ear == "left") {
                   Alert.alert(t("Correct!"));
-                  // write here
+                  router.push("/AudiometryTest");
                 } else {
                   Alert.alert(t("Please switch your headphones!"));
                 }
@@ -106,7 +106,7 @@ const EarTest = () => {
                 console.log(ear, "RIGHT");
                 if (ear == "right") {
                   Alert.alert(t("Correct!"));
-                  // write here
+                  router.push("/AudiometryTest");
                 } else {
                   Alert.alert(t("Incorrect Configuration!"));
                 }

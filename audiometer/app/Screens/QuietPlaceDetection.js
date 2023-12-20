@@ -164,7 +164,7 @@ const QuietPlaceDetection = () => {
           mode="contained"
           onPress={() =>
             router.push({
-              pathname: "/AudiometryTest",
+              pathname: "/Screens/EarTest",
               params: {
                 resulttype: params.resulttype,
                 AID: params.AID,
