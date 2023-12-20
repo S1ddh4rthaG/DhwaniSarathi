@@ -43,7 +43,7 @@ const Login = () => {
     try {
       const response = await signInWithEmailAndPassword(
         auth,
-        username,
+        username+"@gmail.com",
         password
       );
 
@@ -99,7 +99,7 @@ const Login = () => {
       <Card style={styles.container}>
         <Image style={styles.image} source={require('../assets/images/login.png')} resizeMode='cover' />
         <TextInput
-          label={t("Email")}
+          label={t("Mobile Number")}
           value={username}
           onChangeText={(text) => setUsername(text)}
           style={styles.input}
