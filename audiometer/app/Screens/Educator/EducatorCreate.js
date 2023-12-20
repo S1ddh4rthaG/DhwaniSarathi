@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import { StyleSheet, View, Text, Image, KeyboardAvoidingView, TouchableWithoutFeedback, Platform, ImageBackground, Pressable, Button, Alert, TouchableOpacity, TextInput } from 'react-native';
 import ClassroomList from '../../Components/ClassroomList.js';
 import { ScrollView } from 'react-native-virtualized-view';
-import { Link, useLocalSearchParams } from "expo-router";
+import { Link, router, useLocalSearchParams } from "expo-router";
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useState } from 'react';
 import { baseurl } from '../../Constants/ip.js';
@@ -12,16 +12,50 @@ export default function EducatorCreate() {
 
     const params = useLocalSearchParams();
     const [loading, setLoading] = useState(false);
-    const [currentDate, setCurrentDate] = useState('');
     const [classroomName, onChangeName] = useState('');
     const [classroomStrength, onChangeStrength] = useState('');
 
+    let EID = params.EID;
+
+    const handleCreateClassroom = async () => {
+        const url = `${baseurl}/classrooms/`;
+        const data = {
+            "ClassroomName": classroomName,
+            "Count": classroomStrength,
+            "EID": EID
+        };
+
+        try {
+            const response = await fetch(url, {
+                method: 'POST',
+                body: JSON.stringify(data),
+                headers: {
+                    'Content-Type': 'application/json',
+                }
+            });
+            if (response.ok) {
+                const data = await response.json();
+                console.log(data);
+                Alert.alert('Classroom created successfully');
+                setLoading(false);
+
+                alert("Classroom created successfully");
+
+                router.push({ pathname: '/Screens/Educator/EducatorHome', params: { EID: EID } });
+
+            } else {
+                console.error("Failed to create classroom:", response.status);
+            }
+        } catch (error) {
+            console.error("Error creating classroom:", error);
+        }
+    }
+
     return (
         (loading == true) ? (<Text>Loading...</Text>) :
-
             (
                 <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
-                    <ScrollView style={styles.container2}>
+                    
                         <View style={styles.container2}>
                             <View style={styles.header}>
                                 <View style={[styles.content, { backgroundColor: '#eb455f', opacity: 1 }]}>
@@ -70,14 +104,14 @@ export default function EducatorCreate() {
                                             onChangeText={(text) => onChangeStrength(text)}
                                             value={classroomStrength}
                                         />
-                                        <TouchableOpacity style={styles.btn} onPress={() => Alert.alert('Button pressed')}>
+                                        <TouchableOpacity style={styles.btn} onPress={() => handleCreateClassroom()}>
                                             <Text style={styles.btnText}>Create Classroom</Text>
                                         </TouchableOpacity>
                                     </View>
                                 </View>
                             </View>
                         </View>
-                    </ScrollView>
+                   
                 </TouchableWithoutFeedback>
             )
     );

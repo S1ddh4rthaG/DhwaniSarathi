@@ -3,7 +3,7 @@
 import { useNavigation } from '@react-navigation/native';
 
 import React, { useState } from 'react';
-import { Box, IconButton, HStack, Icon, MaterialIcons, StatusBar, View, Text, TouchableOpacity, StyleSheet } from 'react-native';
+import { Box, IconButton, HStack, Icon, MaterialIcons, ScrollView, StatusBar, View, Text, TouchableOpacity, StyleSheet } from 'react-native';
 // import {AppBar} from 'react-native-paper'; 
 // import './locales/i18n';  
 import { useTranslation } from 'react-i18next';
@@ -36,6 +36,30 @@ const pollutionBoards = [
     websiteUrl: 'https://mpcb.gov.in/noise-pollution',
     imagepath: require('../assets/images/maharashtra.jpg')
   },
+  {
+    id: 3,
+    name: 'Delhi Pollution Control Board',
+    websiteUrl: 'https://www.dpcc.delhigovt.nic.in/noise_standards#gsc.tab=0',
+    imagepath: require('../assets/images/delhi.jpg')
+  },
+  {
+    id: 4,
+    name: 'Rajasthan Pollution Control Board',
+    websiteUrl: 'https://environment.rajasthan.gov.in/content/environment/en/rajasthan-state-pollution-control-board.html',
+    imagepath: require('../assets/images/rajasthan.webp')
+  },
+  {
+    id: 5,
+    name: 'Andhra Pradesh Pollution Control Board',
+    websiteUrl: 'https://pcb.ap.gov.in/UI/Home.aspx',
+    imagepath: require('../assets/images/andhra.webp')
+  },
+  {
+    id: 6,
+    name: 'Karntaka Pollution Control Board',
+    websiteUrl: 'https://kspcb.karnataka.gov.in/',
+    imagepath: require('../assets/images/karantaka.webp')
+  },
   // Add more boards as needed
 ];
 
@@ -46,11 +70,12 @@ const LegalComplianceInformation = () => {
   // Function to handle card click
   const handleCardClick = (board) => {
     // Navigate to the Pollution Control Board website
-    router.push({pathname: '/Screens/LegalWebViewScreen', params:  board });
+    router.push({pathname: '/Screens/LegalWebViewScreen', params: {uri: board.websiteUrl}});
   };
 
   return (
     <PaperProvider theme={theme}>
+      <ScrollView>
     <View style={styles.container}>
       {/* Header Image */}
       <Image
@@ -59,6 +84,7 @@ const LegalComplianceInformation = () => {
       />
 
       {/* List of Pollution Control Board Cards */}
+
       {pollutionBoards.map((board) => (
         <TouchableOpacity
           key={board.id}
@@ -70,6 +96,7 @@ const LegalComplianceInformation = () => {
         </TouchableOpacity>
       ))}
     </View>
+    </ScrollView>
     </PaperProvider>
   );
 };
@@ -80,6 +107,7 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
+    
   },
   headerImage: {
     width: 200,
@@ -87,7 +115,7 @@ const styles = StyleSheet.create({
     resizeMode: 'cover',
   },
   card: {
-    marginTop: 20,
+    marginTop: 10,
     backgroundColor: '#fff',
     borderRadius: 10,
     shadowColor: '#000',
@@ -95,6 +123,8 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.2,
     shadowRadius: 4,
     elevation: 3,
+    borderColor: '#EB455F',
+    borderWidth: 2,
     width: '80%'
   },
   cardImage: {

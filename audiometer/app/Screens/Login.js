@@ -43,7 +43,7 @@ const Login = () => {
     try {
       const response = await signInWithEmailAndPassword(
         auth,
-        username,
+        username+"@gmail.com",
         password
       );
 
@@ -99,7 +99,7 @@ const Login = () => {
       <Card style={styles.container}>
         <Image style={styles.image} source={require('../assets/images/login.png')} resizeMode='cover' />
         <TextInput
-          label={t("Email")}
+          label={t("Mobile Number")}
           value={username}
           onChangeText={(text) => setUsername(text)}
           style={styles.input}
@@ -115,6 +115,16 @@ const Login = () => {
         />
         <Button style={styles.Button} mode="contained" onPress={signIn}>
           <Text style={styles.buttonText}>{t("Login")}</Text>
+        </Button>
+        <Button style={styles.Button} mode="contained" onPress={()=> router.push({
+          pathname: "/Screens/SkipTest",
+          params: {
+            resulttype: "selftest",
+            AID: "selftest",
+            CID: "selftest",
+          },
+        })}>
+          <Text style={styles.buttonText}>{t("Skip To Home")}</Text>
         </Button>
         <Card style={styles.signUpCard}>
           <Text style={styles.educatorText}>
