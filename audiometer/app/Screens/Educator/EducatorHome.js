@@ -6,6 +6,7 @@ import { Link, useLocalSearchParams } from "expo-router";
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useState } from 'react';
 import { baseurl } from '../../Constants/ip.js';
+import { router } from 'expo-router';
 
 
 export default function EducatorHome() {
@@ -121,37 +122,12 @@ export default function EducatorHome() {
                                 <Pressable style={[styles.RectangleShapeView, { marginTop: 20, marginBottom: 10 }]}>
                                     <Text style={styles.headtText}>Date: {currentDate}</Text>
                                 </Pressable>
-                                <View style={{ width: "100%", }}>
-                                    <View style={{
-                                        width: '90%',  // To align the avatar and texts horizontally,
-                                        padding: 0,
-                                        flexDirection: 'column',
-                                        alignItems: 'center',
-                                        borderWidth: 1,
-                                        marginHorizontal: 25,
-                                        padding: 5,
-                                        paddingVertical: 15,
-                                        borderRadius: 10,
-                                        marginVertical: 10
-                                    }}>
-                                        <Text style={{ color: 'black', fontWeight: 'bold', fontSize: 20, marginBottom: 13 }}>Create Classroom</Text>
-                                        <TextInput
-                                            style={styles.input}
-                                            placeholder='Classroom Name'
-                                            onChangeText={(text) => onChangeName(text)}
-                                            value={classroomName}
-                                        />
-                                        <TextInput
-                                            style={styles.input}
-                                            placeholder='Classroom Strength'
-                                            onChangeText={(text) => onChangeStrength(text)}
-                                            value={classroomStrength}
-                                        />
-                                        <TouchableOpacity style={styles.btn} onPress={() => Alert.alert('Button pressed')}>
+                       
+                                        <TouchableOpacity style={styles.btn} onPress={() => router.push({ pathname: '/Screens/Educator/EducatorCreate', params: { EID: profile.EID } })}>
                                             <Text style={styles.btnText}>Create Classroom</Text>
                                         </TouchableOpacity>
-                                    </View>
-                                </View>
+                                    
+                                
                                 <View style={{ width: '90%', backgroundColor: '#2b3467', height: 50, justifyContent: 'center', marginTop: 12, borderWidth: 1, borderRadius: 30 }}>
                                     <Text style={{ textAlign: 'center', color: 'white', fontWeight: 'bold', fontSize: 20 }}>Classrooms</Text>
                                 </View>
