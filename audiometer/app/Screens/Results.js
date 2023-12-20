@@ -478,6 +478,13 @@ const Results = ({ leftEarData, rightEarData }) => {
                             />
                         </VictoryChart>
                     </View>
+                    <View style={styles.backgroundContainer2}>
+                        <Image
+                            style={styles.backgroundImage2}
+                            source={require('../assets/legend.jpeg')}
+                            resizeMode='cover'
+                        />
+                    </View>
                 </View>
             </View>
         </ScrollView>
@@ -590,6 +597,22 @@ const styles = StyleSheet.create({
         width: screenWidth,
         height: undefined,
         resizeMode: 'center'
+    },
+    backgroundContainer2: {
+        width: screenWidth,
+        position: 'absolute',
+        top: 250,
+        left: 0,
+        right: 0,
+        bottom: 0
+    },
+    backgroundImage2: {
+        alignItems: 'stretch',
+        justifyContent: 'center',
+        flex: 1,
+        width: screenWidth,
+        height: undefined,
+        resizeMode: 'contain'
     },
     chartContainer: {
         width: screenWidth,
