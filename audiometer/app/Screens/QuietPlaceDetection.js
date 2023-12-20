@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect } from "react";
 import {
   Box,
@@ -10,6 +11,7 @@ import {
   Text,
   TouchableOpacity,
   StyleSheet,
+  Alert
 } from "react-native";
 // import {AppBar} from 'react-native-paper';
 import { useNavigation } from "@react-navigation/native";
@@ -27,6 +29,7 @@ import {
 
 import { Audio } from "expo-av";
 import { router } from "expo-router";
+import { use } from "i18next";
 
 const theme = {
   ...DefaultTheme,
@@ -45,6 +48,8 @@ const QuietPlaceDetection = () => {
   const [decibels, setDecibels] = useState(0);
   const [barWidth, setBarWidth] = useState(60);
   const params = useLocalSearchParams();
+  const [queue, setqueue] = useState([]); 
+  const [decibelQueue, setDecibelQueue]= useState([]); 
   console.log(params);
   useEffect(() => {
     (async () => {
@@ -70,12 +75,24 @@ const QuietPlaceDetection = () => {
       setRecording(recordingObject);
       setIsRecording(true);
 
-      recordingObject.setProgressUpdateInterval(500); // Set update interval for metering
+      recordingObject.setProgressUpdateInterval(50); // Set update interval for metering
 
       recordingObject.setOnRecordingStatusUpdate((status) => {
         setDecibels(status.metering);
 
         // Change color based on decibel level (you can customize these thresholds)
+
+        setDecibelQueue((decibelQueue) => {
+          // Check if the element is defined before adding to the queue
+          if (status.metering !== undefined) {
+            return [...decibelQueue, status.metering];
+          }
+          if(decibelQueue.length > 1000){
+            decibelQueue.shift(); 
+          }
+          return decibelQueue;
+        });
+
         if (status.metering > 80) {
           setBarColor("red");
         } else if (status.metering > 60) {
@@ -115,6 +132,53 @@ const QuietPlaceDetection = () => {
     const blue = 0;
     return `rgb(${red}, ${green}, ${blue})`;
   };
+
+  const showAlert = () => {
+    console.log(decibelQueue); 
+    const averageDecibels =
+      decibelQueue.length > 0
+        ? decibelQueue.reduce((acc, val) => acc + val, 0) / decibelQueue.length
+        : 0;
+
+    let message = "";
+    let alertTitle = "Test Confirmation";
+
+    if (averageDecibels > -40) {
+        message = "High Noise Level Detected!";
+    } else if (averageDecibels <= -40 && averageDecibels > -70) {
+        message = "Moderate Noise Level Detected";
+    } else {
+        message = "Low Noise Level Detected";
+    }
+
+    message += `\nAverage Decibels: ${averageDecibels.toFixed(2)} dB`;
+
+    Alert.alert(
+        alertTitle,
+        message,
+        [
+            {
+                text: "Stop Test",
+                style: "cancel",
+                onPress: () => {
+                    // Add functionality for stopping the test
+                    console.log("Test Stopped");
+                },
+            },
+            {
+                text: "Continue Test",
+                onPress: () => {
+
+                    router.push('/Screens/EarTest')
+                    // Add functionality for continuing the test
+                    console.log("Test Continued");
+                },
+            },
+        ],
+        { cancelable: false }
+    );
+};
+
 
   const [barColor, setBarColor] = useState("#0096FF"); // Initial color
 
@@ -163,15 +227,8 @@ const QuietPlaceDetection = () => {
         <Button
           mode="contained"
           onPress={() =>
-            router.push({
-              pathname: "/Screens/EarTest",
-              params: {
-                resulttype: params.resulttype,
-                AID: params.AID,
-                CID: params.CID,
-              },
-            })
-          }
+            showAlert()}
+
           style={{ margin: 10 }}
         >
           {t("Continue")}
