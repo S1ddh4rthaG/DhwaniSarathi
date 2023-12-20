@@ -19,6 +19,7 @@ const styles = StyleSheet.create({
     margin: 16,
     alignItems: 'center',
     elevation: 3,
+
   },
   stepNumber: {
     fontSize: 18,
@@ -35,6 +36,7 @@ const styles = StyleSheet.create({
     fontSize: 16,
     textAlign: 'center',
     alignContent: 'center',
+
   },
 });
 

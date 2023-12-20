@@ -204,8 +204,6 @@ const styles = StyleSheet.create({
         flex: 1,
         paddingLeft: 5,
         paddingRight: 5,
-
-        backgroundColor: '#f0f0f0',
         borderWidth: 2,
         borderColor: 'white',
         borderRadius: 10
@@ -245,6 +243,7 @@ const styles = StyleSheet.create({
         borderWidth: 1,
         backgroundColor: 'white',
         borderColor: 'white',
+        elevation: 5,
     },
     cardTitle: {
         fontSize: 18,

@@ -31,7 +31,7 @@ const UserTutorial = () => {
       description: 'Its time to start the Test',
       image: require('../assets/tutorials/pureToneAudiometry.jpeg'),
     },
-   
+
     {
       title: 'Step 5',
       description: 'Follow the instructions and click yes and no based on the sound audible',
@@ -83,6 +83,9 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     textAlign: 'center',
     marginVertical: 16,
+    color: 'white',
+    backgroundColor: '#eb455f',
+    padding: 10,
   },
   scrollView: {
     flex: 1,
@@ -98,6 +101,7 @@ const styles = StyleSheet.create({
     fontSize: 24,
     fontWeight: 'bold',
     marginVertical: 16,
+
   },
   description: {
     textAlign: 'center',
