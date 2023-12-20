@@ -50,7 +50,19 @@ const HomeNew = () => {
   const [assignmentCode, setAssignmentCode] = useState("");
 
   const verifyAID = async (resulttype) => {
-    if (assignmentCode !== "") {
+
+    if(resulttype === "useronlyresults"){
+      router.push({
+        pathname: "/Screens/BeforeTest1",
+        params: {
+          resulttype: resulttype,
+          AID: "",
+          CID: "",
+        },
+      });
+      return;
+    }
+    else if (assignmentCode !== "") {
       const url = `${baseurl}/assignments/${assignmentCode}`;
       try {
         const response = await fetch(url);
@@ -68,11 +80,7 @@ const HomeNew = () => {
       } catch (error) {
         console.error("Error fetching Assignment:", error);
       }
-
-      
-    } else {
-      alert("Assignment Code cannot be empty");
-    }
+    } 
   };
   const [assignments, setAssignments] = useState([]);
   useEffect(() => {
@@ -132,8 +140,8 @@ const HomeNew = () => {
             style={{ width: 150, height: 150 }}
           />
           <Text style={styles.bigTitle}>
-            <Text style={{ width: "100%" }}>Hi,</Text>
-            <Text
+            <Text style={{ width: "100%" }}>Welcome</Text>
+            {/* <Text
               style={{
                 width: "100%",
                 marginStart: 12,
@@ -143,7 +151,7 @@ const HomeNew = () => {
               }}
             >
               {" Siddhartha G"}
-            </Text>
+            </Text> */}
           </Text>
         </View>
         <View
