@@ -15,7 +15,7 @@ import {
 import { useTranslation } from "react-i18next";
 import { useLocalSearchParams } from "expo-router";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import { ActivityIndicator, MD2Colors } from 'react-native-paper';
+import { ActivityIndicator, MD2Colors } from "react-native-paper";
 
 const theme = {
   ...DefaultTheme,
@@ -29,7 +29,7 @@ const theme = {
 
 const AudiometryTest = () => {
   const params = useLocalSearchParams();
-  console.log(params);  
+  console.log(params);
   const [playState, setPlayState] = useState(0); // 0: stopped, 1: playing, 2: paused
   const [ear, setEar] = useState("left");
   const [conduction, setConduction] = useState("air");
@@ -81,39 +81,39 @@ const AudiometryTest = () => {
     updateState();
 
     if (over) {
-    
       const resulttype = params.resulttype;
       const userAID = params.AID;
       const userCID = params.CID;
-      //const userId = "BNyCI19R1GgqUCSPqqBpKG3uxGD3";
-      const userId = await AsyncStorage.getItem("userId");
-      console.log(userId);
-      const userassignmentresults = `${baseurl}/userassignmentresults/`;
-      const useronlyresults = `${baseurl}/useronlyresults/`;
-      
-      if (resulttype == "userassignmentresults") {
-        const url = userassignmentresults;
-        const data = {
-          CID: userCID,
-          UID: userId,
-          AID: userAID,
-          Results: getResults(),
-        };
-        await typeBasedPost(url, data, resulttype);
-      } else {
-        const url = useronlyresults;
-        const data = {
-          UID: userId,
-          Results: getResults(),
-        };
-        await typeBasedPost(url, data, resulttype);
+      if (resulttype !== "selftest") {
+        //const userId = "BNyCI19R1GgqUCSPqqBpKG3uxGD3";
+        const userId = await AsyncStorage.getItem("userId");
+        console.log(userId);
+        const userassignmentresults = `${baseurl}/userassignmentresults/`;
+        const useronlyresults = `${baseurl}/useronlyresults/`;
+
+        if (resulttype == "userassignmentresults") {
+          const url = userassignmentresults;
+          const data = {
+            CID: userCID,
+            UID: userId,
+            AID: userAID,
+            Results: getResults(),
+          };
+          await typeBasedPost(url, data, resulttype);
+        } else {
+          const url = useronlyresults;
+          const data = {
+            UID: userId,
+            Results: getResults(),
+          };
+          await typeBasedPost(url, data, resulttype);
+        }
       }
-     
+
       router.push({
-        pathname: '/Screens/Results',
+        pathname: "/Screens/Results",
         params: { results: JSON.stringify(getResults().info) },
       });
-      
     } else {
       audiometry.playTone();
     }
@@ -128,18 +128,34 @@ const AudiometryTest = () => {
     let left_count = 0;
     let right_count = 0;
 
-    let left = newResults["info"].filter((item) => item.ear === "left" && item.measurementType === "AIR_UNMASKED_LEFT")
-    let right = newResults["info"].filter((item) => item.ear === "right"&& item.measurementType === "AIR_UNMASKED_RIGHT")
+    let left = newResults["info"].filter(
+      (item) =>
+        item.ear === "left" && item.measurementType === "AIR_UNMASKED_LEFT"
+    );
+    let right = newResults["info"].filter(
+      (item) =>
+        item.ear === "right" && item.measurementType === "AIR_UNMASKED_RIGHT"
+    );
 
     left.forEach((item) => {
-      if (item.frequency == 500 || item.frequency == 1000 || item.frequency == 2000 || item.frequency == 4000) {
+      if (
+        item.frequency == 500 ||
+        item.frequency == 1000 ||
+        item.frequency == 2000 ||
+        item.frequency == 4000
+      ) {
         pta_left += item.threshold;
         left_count++;
       }
     });
 
     right.forEach((item) => {
-      if (item.frequency == 500 || item.frequency == 1000 || item.frequency == 2000 || item.frequency == 4000) {
+      if (
+        item.frequency == 500 ||
+        item.frequency == 1000 ||
+        item.frequency == 2000 ||
+        item.frequency == 4000
+      ) {
         pta_right += item.threshold;
         right_count++;
       }
@@ -195,16 +211,23 @@ const AudiometryTest = () => {
               <Text style={styles.titleTest}>
                 {t("Can you hear the sound?")}
               </Text>
-              <Text style={{ width: "100%", fontStyle: "italic", fontWeight: "bold" }}>
+              <Text
+                style={{
+                  width: "100%",
+                  fontStyle: "italic",
+                  fontWeight: "bold",
+                }}
+              >
                 Progress
               </Text>
-              <ProgressBar progress={
-                audiometry.Fptr / audiometry.MAX_F
-              } style={styles.FBar} />
+              <ProgressBar
+                progress={audiometry.Fptr / audiometry.MAX_F}
+                style={styles.FBar}
+              />
               <Text style={styles.titleEar}>
                 {t(ear === "left" ? "Left Ear" : "Right Ear")}
               </Text>
-              <View style={{ flexDirection: "column", }}>
+              <View style={{ flexDirection: "column" }}>
                 {ear === "left" && (
                   <Image
                     style={styles.image}
@@ -217,13 +240,22 @@ const AudiometryTest = () => {
                     source={require("./assets/images/right_ear.png")}
                   />
                 )}
-                <Card style={{ padding: 10, marginVertical: 20, width: "100%" }}>
-                  <Text style={{ width: "100%", fontStyle: "italic", fontWeight: "bold" }}>
+                <Card
+                  style={{ padding: 10, marginVertical: 20, width: "100%" }}
+                >
+                  <Text
+                    style={{
+                      width: "100%",
+                      fontStyle: "italic",
+                      fontWeight: "bold",
+                    }}
+                  >
                     Threshold
                   </Text>
-                  <ProgressBar progress={
-                    audiometry.Aptr / audiometry.MAX_A
-                  } style={styles.TBar} />
+                  <ProgressBar
+                    progress={audiometry.Aptr / audiometry.MAX_A}
+                    style={styles.TBar}
+                  />
                 </Card>
               </View>
               <View style={styles.buttonContainer2}>
@@ -249,7 +281,6 @@ const AudiometryTest = () => {
                 >
                   <Text style={styles.buttonTextFT}>{threshold + " dB"}</Text>
                 </Button>
-
               </View>
             </View>
             <View style={styles.buttonContainer}>
@@ -383,7 +414,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center",
-    marginTop: 10
+    marginTop: 10,
   },
   Button: {
     // backgroundColor: 'blue', // Greenish Yellow
@@ -414,7 +445,7 @@ const styles = StyleSheet.create({
   ButtonFTM: {
     borderRadius: 20,
     marginBottom: 15,
-    fontSize: 11
+    fontSize: 11,
   },
   buttonTextFT: {
     fontSize: 15,
