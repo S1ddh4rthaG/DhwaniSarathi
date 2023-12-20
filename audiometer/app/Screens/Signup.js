@@ -5,7 +5,8 @@ import {
   Image,
   StyleSheet,
   TouchableOpacity,
-  Alert, // Import Alert
+  Alert,
+  KeyboardAvoidingView, // Import Alert
 } from "react-native";
 import { Button, TextInput, Text, Card } from 'react-native-paper';
 import { Picker } from "@react-native-picker/picker";
@@ -17,6 +18,7 @@ import { useTranslation } from "react-i18next";
 import { DefaultTheme, Provider as PaperProvider } from "react-native-paper";
 import { useTogglePasswordVisibility } from "../Components/useTogglePasswordVisibility.js";
 import { router } from "expo-router";
+import { ScrollView } from "react-native-virtualized-view";
 const theme = {
   ...DefaultTheme,
   roundness: 2,
@@ -90,7 +92,7 @@ const Signup = () => {
 
         let url = baseurl + "/logininfos/";
 
-        const createUserDB = await fetch(url, {
+        await fetch(url, {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
@@ -126,8 +128,30 @@ const Signup = () => {
 
   return (
     <PaperProvider theme={theme}>
+    
       <Card style={styles.container}>
         <Image style={styles.image} source={require('../assets/images/signup.png')} resizeMode='cover' />
+
+      
+        <Text style={styles.title2}>{t("User Type")}</Text>
+
+        <Picker
+          selectedValue={userType}
+          style={styles.picker}
+          itemStyle={styles.pickerItem}
+          onValueChange={(itemValue) => setUserType(itemValue)}
+        >
+          
+        <Picker.Item style={styles.pickerItem} label={t("User")} value="User" />
+        <Picker.Item
+          style={styles.pickerItem}
+          label={t("Educator")}
+          value="Educator"
+        />
+      </Picker>
+
+      {userType === "User" ? (
+        <>
         <TextInput
           label={t("Name")}
           value={name}
@@ -168,14 +192,40 @@ const Signup = () => {
           {renderAgePickerItems()}
         </Picker>
         <Picker
-          selectedValue={userType}
+          selectedValue={gender}
           style={styles.picker}
           itemStyle={styles.pickerItem}
           onValueChange={(itemValue) => setGender(itemValue)}
         >
           <Picker.Item style={styles.pickerItem} label={t("Male")} value="Male" />
-          <Picker.Item label={t("Female")} value="Female" />
+          <Picker.Item style={styles.pickerItem} label={t("Female")} value="Female" />
         </Picker>
+        </>
+      ) : (
+        <>
+        <Text style={styles.title2}>{t("Educator Name")}</Text>
+        <TextInput
+          style={styles.input}
+          // placeholder={t("Enter your name")}
+          onChangeText={(text) => setEducatorName(text)}
+          value={educatorName} // Use the 'educatorName' state variable
+          textAlign="left"
+          color="black"
+          placeholderTextColor="black"
+        />
+        <Text style={styles.title2}>{t("Institute Name")}</Text>
+        <TextInput
+          style={styles.input}
+          // placeholder={t("Enter Institute name")}
+          onChangeText={(text) => setInstituteName(text)}
+          value={instituteName} // Use the 'instituteName' state variable
+          textAlign="left"
+          color="black"
+          placeholderTextColor="black"
+        />
+      </>
+      )}
+     
         <Button style={styles.Button} mode="contained" onPress={handleSignup}>
           <Text style={styles.buttonText}>{t("Sign Up")}</Text>
         </Button>
@@ -215,9 +265,10 @@ const styles = StyleSheet.create({
   },
   image: {
     width: 250,
-    height: 250,
+    height: 150,
     alignContent: 'center',
     alignSelf: 'center',
+    marginBottom: 20,
   },
   title: {
     // fontSize: 24,

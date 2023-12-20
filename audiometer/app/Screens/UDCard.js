@@ -80,7 +80,7 @@ const UDCard = (props) => {
               </View>
               <View style={styles.rowContainer}>
                 <Text style={styles.text}>{name}</Text>
-                <Button style={styles.button} mode="contained" onPress={() =>router.push({pathname: '/Screens/Results', params: {results:viewResults}})}>
+                <Button style={styles.button} mode="contained" onPress={() =>router.push({pathname: '/Screens/Results', params: {results: JSON.stringify(viewResults)}})}>
                   {t('View Results')}
                 </Button>
               </View>

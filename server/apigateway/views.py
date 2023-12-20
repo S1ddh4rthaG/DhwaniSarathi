@@ -21,8 +21,31 @@ def logininfo_list(request):
         return Response(serializer.data)
     
     elif(request.method == 'POST'):
-        # serializer = LoginInfoSerializer(data=request.data)
+        serializer = LoginInfoSerializer(data=request.data)
         print(request.data)
+        if(serializer.is_valid()):
+            serializer.save()
+            #based on the type of user, create a new user or educator
+            if serializer.data['Type'] == 0:
+                # Create a new User
+                request.data['UID'] = serializer.data['FID']
+                user_serializer = UserSerializer(data=request.data)
+                if user_serializer.is_valid():
+                    user_serializer.save()
+                else:
+                    print(user_serializer.errors)
+                    return Response(user_serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+            else:
+                # Create a new Educator
+                request.data['EID'] = serializer.data['FID']
+                educator_serializer = EducatorSerializer(data=request.data)
+                if educator_serializer.is_valid():
+                    educator_serializer.save()
+                else:
+                    return Response(educator_serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+                    
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
 
