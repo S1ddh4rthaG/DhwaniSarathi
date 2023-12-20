@@ -20,8 +20,13 @@ const theme = {
 const Maps = () => {
   const markers = [
     { id: 1, title: 'Udaipur Arogya', coordinate: { latitude: 24.5854, longitude: 73.7125} },
-    { id: 2, title: 'Sankalp Speclialist', coordinate: { latitude: 24.1820, longitude: 73.339 } },
-    { id: 3, title: 'Sutar Arogya center', coordinate: { latitude: 24.3839, longitude: 73.2809 } },
+    { id: 2, title: 'Sankalp Speclialist', coordinate: { latitude: 24.560, longitude: 73.7124 } },
+    { id: 3, title: 'Sutar Arogya center', coordinate: { latitude: 24.543, longitude: 73.7129 } },
+    { id: 4, title: 'Karn Suvidha Kendra', coordinate: { latitude: 24.550, longitude: 73.7123 } },
+    { id: 5, title: 'Eklingapura Kendra', coordinate: { latitude: 24.453, longitude: 73.2123 } },
+    { id: 6, title: 'Eklingapura Kendra', coordinate: { latitude: 24.453, longitude: 73.2123 } },
+    { id: 7, title: 'Eklingapura Shravan Kendra', coordinate: { latitude: 24.443, longitude: 73.2103 } },
+    { id: 8, title: 'Eklingapura Kendra', coordinate: { latitude: 24.473, longitude: 73.213 } },
     // Add more markers as needed
   ];
 
@@ -47,7 +52,6 @@ const Maps = () => {
 
           >
             
-            <Image source={require('../assets/images/logo.png')} style={{ width: 30, height: 30, alignSelf: 'center' }} />
            </Marker>
         ))}
       </MapView>

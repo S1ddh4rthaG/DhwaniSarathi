@@ -100,6 +100,16 @@ const SkipTest = () => {
         >
           {t("Doctors Near Me")}
         </Button>
+
+        <Button
+          mode="contained"
+          onPress={() => {
+            router.push("/Screens/MapData");
+          }}
+          style={{ margin: 5 }}
+        >
+          {t("Contribute To Noise Data")}
+        </Button>
       </View>
     </PaperProvider>
   );

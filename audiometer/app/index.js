@@ -17,7 +17,7 @@ export default () => {
     return <Redirect href="/Screens/HomeNew" />;
   }
 
-  return <Redirect href="/Screens/HomeNew" />;
+  return <Redirect href="/Screens/Login" />;
 };
 
 // const styles = StyleSheet.create({
