@@ -169,7 +169,14 @@ const QuietPlaceDetection = () => {
                 text: "Continue Test",
                 onPress: () => {
 
-                    router.push('/Screens/EarTest')
+                    router.push({
+                      pathname: "/Screens/EarTest",
+                      params: {
+                        resulttype: params.resulttype,
+                        AID: params.AID,
+                        CID: params.CID,
+                      },
+                    })
                     // Add functionality for continuing the test
                     console.log("Test Continued");
                 },
