@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { View, Text, TouchableOpacity, Image, StyleSheet } from "react-native";
+import { View, Text, TouchableOpacity, Image, StyleSheet, Alert } from "react-native";
 import { router } from "expo-router";
 import { Audiometry } from "./utils/Audiometry.js";
 import { PureTone } from "./utils/PureTone.js";
@@ -10,8 +10,11 @@ import {
   Button,
   Card,
   Icon,
+  IconButton, 
   ProgressBar,
+  FAB
 } from "react-native-paper";
+import {FloatingAction} from 'react-native-floating-action'; 
 import { useTranslation } from "react-i18next";
 import { useLocalSearchParams } from "expo-router";
 import AsyncStorage from "@react-native-async-storage/async-storage";
@@ -38,7 +41,19 @@ const AudiometryTest = () => {
   const [threshold, setThreshold] = useState(0);
   const [audiometry, setAudiometry] = useState(new Audiometry());
   const [isTestOver, setIsTestOver] = useState(false);
+  const [fabVisible, setFabVisible] = useState(true); 
 
+  const actions = [
+    {
+      text: 'Help?',
+      icon: <Icon name="question-circle" size={20} color="white" />,
+      name: 'btn_help',
+      position: 1,
+    },
+  ];
+
+
+  const toggleFabVisibility= ()=> setFabVisible(!fabVisible); 
   const { t, i18n } = useTranslation();
 
   const typeBasedPost = async (url, data, resulttype) => {
@@ -173,6 +188,7 @@ const AudiometryTest = () => {
 
   return (
     <PaperProvider theme={theme}>
+      
       <Card style={styles.container}>
         {playState !== 1 && (
           <View>
@@ -198,6 +214,7 @@ const AudiometryTest = () => {
         {!isTestOver && playState === 1 && (
           <View>
             <View>
+              <View style={{flexDirection: 'row', alignItems: 'center'}}>
               <Button
                 style={styles.ButtonFTM}
                 mode="contained-tonal"
@@ -206,7 +223,30 @@ const AudiometryTest = () => {
                 <Text style={styles.buttonTextFT}>
                   {masking ? "MASKED TEST" : "UNMASKED TEST"}
                 </Text>
+                
               </Button>
+              <IconButton style={{alignSelf: 'center'}}
+                icon="help-circle-outline" // Use the appropriate icon name
+                color="black"
+                size={25}
+                onPress={() => {
+                  Alert.alert(
+                    "Un Masked / Masked Test",
+                    "Un-masked and masked tests are useful in case of assymmetric hearing losses which means that your both ears dont follow same trend of hearing losses.",
+                    [
+                      {
+                        text: "OK",
+                        onPress: () => console.log("OK Pressed"),
+                      },
+                    ],
+                    { cancelable: false }
+                  );
+                }}
+              />
+              </View>
+              
+
+              
 
               <Text style={styles.titleTest}>
                 {t("Can you hear the sound?")}
@@ -240,12 +280,13 @@ const AudiometryTest = () => {
                     source={require("./assets/images/right_ear.png")}
                   />
                 )}
+                <View style={{flexDirection: 'row', alignContent: 'center'}}>
                 <Card
-                  style={{ padding: 10, marginVertical: 20, width: "100%" }}
+                  style={{ padding: 2, marginVertical: 20, width: "95%" }}
                 >
                   <Text
                     style={{
-                      width: "100%",
+                      width: "90%",
                       fontStyle: "italic",
                       fontWeight: "bold",
                     }}
@@ -257,6 +298,25 @@ const AudiometryTest = () => {
                     style={styles.TBar}
                   />
                 </Card>
+                <IconButton style={{alignSelf: 'center'}}
+                icon="help-circle-outline" // Use the appropriate icon name
+                color="black"
+                size={25}
+                onPress={() => {
+                  Alert.alert(
+                    "Threshold",
+                    "Intensity for the given frequency",
+                    [
+                      {
+                        text: "OK",
+                        onPress: () => console.log("OK Pressed"),
+                      },
+                    ],
+                    { cancelable: false }
+                  );
+                }}
+              />
+                </View>
               </View>
               <View style={styles.buttonContainer2}>
                 <Button
@@ -446,6 +506,7 @@ const styles = StyleSheet.create({
     borderRadius: 20,
     marginBottom: 15,
     fontSize: 11,
+    width: '90%'
   },
   buttonTextFT: {
     fontSize: 15,

@@ -38,6 +38,8 @@
     "react-native": "0.72.6",
     "react-native-draggable": "^3.3.0",
     "react-native-firebase": "^5.6.0",
+    "react-native-flexbox-grid": "^0.3.2",
+    "react-native-floating-action": "^1.22.0",
     "react-native-gesture-handler": "~2.12.0",
     "react-native-linear-gradient": "^2.8.3",
     "react-native-localization": "^2.3.2",

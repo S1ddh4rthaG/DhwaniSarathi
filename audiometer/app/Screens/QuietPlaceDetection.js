@@ -143,22 +143,27 @@ const QuietPlaceDetection = () => {
     let message = "";
     let alertTitle = "Test Confirmation";
 
+    if(decibelQueue.length!=0){
     if (averageDecibels > -40) {
         message = "High Noise Level Detected!";
-    } else if (averageDecibels <= -40 && averageDecibels > -70) {
+    } else if (averageDecibels <= -40 && averageDecibels > -80) {
         message = "Moderate Noise Level Detected";
     } else {
         message = "Low Noise Level Detected";
     }
 
     message += `\nAverage Decibels: ${averageDecibels.toFixed(2)} dB`;
+  }
+  else{
+    message = "Please check the surrounding sound before you proceed for the test"
+  }
 
     Alert.alert(
         alertTitle,
         message,
         [
             {
-                text: "Stop Test",
+                text: "Stop",
                 style: "cancel",
                 onPress: () => {
                     // Add functionality for stopping the test
@@ -166,7 +171,7 @@ const QuietPlaceDetection = () => {
                 },
             },
             {
-                text: "Continue Test",
+                text: "Continue",
                 onPress: () => {
 
                     router.push('/AudiometryTest')
