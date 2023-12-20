@@ -3,11 +3,16 @@ import { View, Text, TextInput, FlatList, TouchableOpacity, StyleSheet, Activity
 import { baseurl } from '../../Constants/ip.js';
 import { Link, router, useLocalSearchParams } from "expo-router";
 import { Card, Title, Paragraph } from 'react-native-paper';
+import img1 from '../../assets/AssignmentImages/1.jpg';
+import img2 from '../../assets/AssignmentImages/2.jpg';
+import img0 from '../../assets/AssignmentImages/0.jpg';
+
+import Icon from 'react-native-vector-icons/FontAwesome';
+
 import {
     DefaultTheme,
     Provider as PaperProvider,
     Button,
-    Icon,
     ProgressBar,
 } from "react-native-paper";
 
@@ -19,6 +24,13 @@ const theme = {
         primary: "#EB455F",
         accent: "#f1c40f",
     },
+};
+
+const images = [img0, img1, img2];
+
+const getRandomImage = () => {
+    const randomIndex = Math.floor(Math.random() * images.length);
+    return images[randomIndex];
 };
 
 const AssignmentList = () => {
@@ -153,18 +165,20 @@ const AssignmentList = () => {
         // }}
         // >        
         <Card style={{ margin: 10., padding: 5 }}>
+            <Card.Cover source={getRandomImage()} />
             <Link style={styles.card}
                 href={{
                     pathname: 'Screens/Educator/AssignmentAnalytics',
                     params: { AID: item.AID }
                 }}>
+
                 <Card.Content>
                     <Title style={styles.cardTitle}>{item.AssignmentName}</Title>
-                    <Paragraph style={styles.cardDate}>Deadline: {item.Deadline}</Paragraph>
-                    <Paragraph style={styles.cardField}>Class Strength: {Count}</Paragraph>
+                    <Paragraph style={styles.cardDate}><Icon name='bell' style={{ color: '#eb4557' }} />   Deadline: {item.Deadline}</Paragraph>
+                    <Paragraph style={styles.cardField}> <Icon name='user' style={{ color: '#eb4557' }} />  Class Strength: {Count}</Paragraph>
                     <View style={styles.progressBarContainer}>
                         <Paragraph style={styles.cardField}>
-                            Progress: {item.SubmittedCount}/{Count}
+                            <Icon name='check' style={{ color: '#eb4557' }} /> Progress: {item.SubmittedCount}/{Count}
                         </Paragraph>
                         <View style={styles.progressBar}>
                             <View
@@ -178,7 +192,10 @@ const AssignmentList = () => {
                         </View>
                     </View>
                 </Card.Content>
+
+
             </Link>
+
         </Card>
     );
 
@@ -260,6 +277,12 @@ const styles = StyleSheet.create({
         fontSize: 25,
         fontWeight: 'bold',
         marginBottom: 15,
+        textAlign: 'center',
+        color: '#eb4557',
+        justifyContent: 'center',
+        alignContent: 'center',
+
+
     },
     searchInput: {
         height: 40,
@@ -276,6 +299,7 @@ const styles = StyleSheet.create({
         paddingVertical: 5,
         borderRadius: 5,
         marginHorizontal: 10,
+
     },
     cardTitle: {
         fontSize: 18,
