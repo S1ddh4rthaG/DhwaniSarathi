@@ -6,6 +6,9 @@ import { Card, Title, Paragraph } from 'react-native-paper';
 import img1 from '../../assets/AssignmentImages/1.jpg';
 import img2 from '../../assets/AssignmentImages/2.jpg';
 import img0 from '../../assets/AssignmentImages/0.jpg';
+import img3 from '../../assets/AssignmentImages/3.jpg';
+import img4 from '../../assets/AssignmentImages/4.jpg';
+import img5 from '../../assets/AssignmentImages/5.jpg';
 
 import Icon from 'react-native-vector-icons/FontAwesome';
 
@@ -26,7 +29,7 @@ const theme = {
     },
 };
 
-const images = [img0, img1, img2];
+const images = [img0, img1, img2, img3, img4, img5];
 
 const getRandomImage = () => {
     const randomIndex = Math.floor(Math.random() * images.length);
