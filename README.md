@@ -116,3 +116,19 @@ python manage.py runserver <ip_address>:80/<ip_address>:8081
 
 #Here <ip_address> is the ip address on which expo is running
 ```
+## Team
+<p>
+    <img src="Screenshots/Hackathon.jpeg" >&emsp;
+</p>
+<p>
+    <img src="Screenshots/winners.jpeg">&emsp;
+    </p>
+
+**Team Members** 
+
+- Sachin Kumar Sahu
+- Palivela Ganesh Priyatham
+- Preethi Varsha Marivina
+- Siddhartha G
+- Swami Ramchandra Kedari
+- Sirish Sekhar
