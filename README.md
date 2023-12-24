@@ -35,6 +35,7 @@ npm run web
 cd server 
 ```
 - Create Virtual Environment
+  
 You can use multiple methods to create a virtual environment, whatever suits your need
 
 ##### Conda
