@@ -21,8 +21,8 @@ Introducing an app-based audiometer for school screenings revolutionizes the way
 - Django
 
 ## Screenshots
-<p>
 <h3>Authentication</h3>
+<p>
  <img src="Screenshots/Login.jpeg" width="245">&emsp;
  <img src="Screenshots/Signup.jpeg" width="245">&emsp;
   <img src="Screenshots/StartTest.jpeg" width="245">&emsp;
@@ -33,30 +33,28 @@ Introducing an app-based audiometer for school screenings revolutionizes the way
  <img src="Screenshots/userScreens.png" >&emsp;
 </p>
 
-<p>
 <h3>Preliminary Checks</h3>
- <img src="Screenshots/preliminaryCheck1.png" width="245">&emsp;
- <img src="Screenshots/NoiseDetection.jpeg" width="245">&emsp;
- <br>
- <img src="Screenshots/Headphone Orientation.jpeg" width="245">&emsp;
- <img src="Screenshots/obstacle_detection.png" width="245">&emsp;
-
+<p>
+ <img src="Screenshots/preliminaryCheck1.png" width="230">&emsp;
+ <img src="Screenshots/NoiseDetection.jpeg" width="230">&emsp;
+ <img src="Screenshots/Headphone Orientation.jpeg" width="230">&emsp;
+ <img src="Screenshots/obstacle_detection.png" width="230">&emsp;
 </p>
 
-<p>
 <h3>Test</h3>
+<p>
  <img src="Screenshots/Test_audiometer.png">&emsp;
 </p>
 
-<p>
 <h3>Results</h3>
+<p>
  <img src="Screenshots/Results.png">&emsp;
  <br>
  <img src="Screenshots/Results_audiometer.png">&emsp;
 </p>
 
-<p>
 <h3>Teacher View</h3>
+<p>
  <img src="Screenshots/Teacher Profile Page.jpeg" width="245">&emsp;
  <img src="Screenshots/Assignments2.jpeg" width="245">&emsp;
 </p>
