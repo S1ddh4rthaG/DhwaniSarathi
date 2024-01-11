@@ -65,6 +65,10 @@ Introducing an app-based audiometer for school screenings revolutionizes the way
 </p>
 
 ## Getting Started
+### Firebase
+- Create a Firebase account
+- Add the firebase config in FirebaseConfig.js in audiometer/
+  
 ### Frontend
 - Clone the repository
 - Run the below commands:
